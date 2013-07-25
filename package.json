@@ -1,0 +1,22 @@
+{
+  "name": "iper",
+  "version": "0.0.0",
+  "description": "Hypergraphs for breakfast",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fibo/iper.git"
+  },
+  "keywords": [
+    "math",
+    "graph"
+  ],
+  "author": "fibo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fibo/iper/issues"
+  }
+}
