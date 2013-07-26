@@ -11,21 +11,25 @@ describe('IperGraph', function() {
       graph = new IperGraph();
       return graph.should.be.instanceOf(IperGraph);
     });
-    it('defaults edges to []', function() {
+    it('defaults edges to {}', function() {
       var graph;
       graph = new IperGraph();
       return graph.edges.should.eql({});
     });
-    return it('defaults nodes to []', function() {
+    return it('defaults nodes to {}', function() {
       var graph;
       graph = new IperGraph();
       return graph.nodes.should.eql({});
     });
   });
   return describe('methods', function() {
+    describe('createEdge', function() {});
+    describe('readEdge', function() {});
+    describe('updateEdge', function() {});
     describe('deleteEdge', function() {});
-    describe('pushEdge', function() {});
-    describe('deleteNode', function() {});
-    return describe('pushNode', function() {});
+    describe('createNode', function() {});
+    describe('readNode', function() {});
+    describe('updateNode', function() {});
+    return describe('deleteNode', function() {});
   });
 });
