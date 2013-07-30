@@ -20,16 +20,21 @@ describe('IperGraph', function() {
       graph = new IperGraph();
       return graph.should.be.instanceOf(IperGraph);
     });
-    it('defaults edges to {}', function() {
-      var graph;
-      graph = new IperGraph();
-      return graph.edges.should.eql({});
+    it('has signature (iperGraphData)', function() {
+      var data, graph;
+      data = {
+        nodes: {
+          1: 'foo',
+          2: 'bar'
+        },
+        edges: {
+          3: [1, 2]
+        }
+      };
+      graph = new IperGraph(data);
+      return graph.should.be.instanceOf(IperGraph);
     });
-    return it('defaults nodes to {}', function() {
-      var graph;
-      graph = new IperGraph();
-      return graph.nodes.should.eql({});
-    });
+    return it('checks iperGraphData is valid', function() {});
   });
   return describe('methods', function() {
     describe('createNode', function() {

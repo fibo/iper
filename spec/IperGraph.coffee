@@ -15,13 +15,30 @@ describe 'IperGraph', ->
       graph = new IperGraph()
       graph.should.be.instanceOf IperGraph
 
-    it 'defaults edges to {}', ->
-      graph = new IperGraph()
-      graph.edges.should.eql {}
+    it 'has signature (iperGraphData)', ->
+      # foo -> bar
+      data =
+        nodes:
+          1: 'foo'
+          2: 'bar'
+        edges:
+          3: [1, 2]
 
-    it 'defaults nodes to {}', ->
-      graph = new IperGraph()
-      graph.nodes.should.eql {}
+      graph = new IperGraph(data)
+      graph.should.be.instanceOf IperGraph
+
+    it 'checks iperGraphData is valid', ->
+      # # data with invalid edge
+      # data =
+      #   nodes:
+      #     1: 'foo'
+      #     2: 'bar'
+      #   edges:
+      #     3: [5, 6]
+
+      # (() ->
+      #   graph = new IperGraph(data)
+      # ).should.throwError()
 
   describe 'methods', ->
 
