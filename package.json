@@ -26,7 +26,8 @@
     "mocha": "~1.12.0",
     "grunt-mocha-cli": "~1.0.6",
     "grunt-contrib-watch": "~0.5.1",
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.1",
+    "grunt-docco": "~0.2.0"
   },
   "dependencies": {
     "underscore": "~1.5.1"
