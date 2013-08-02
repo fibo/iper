@@ -14,5 +14,8 @@ describe('IperEdge', function() {
       return edge.should.be.instanceOf(IperNode);
     });
   });
-  return describe('constructor', function() {});
+  describe('constructor', function() {
+    return it('has signature (iperEdgeData)', function() {});
+  });
+  return describe('methods', function() {});
 });

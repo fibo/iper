@@ -20,7 +20,7 @@ describe('IperGraph', function() {
       graph = new IperGraph();
       return graph.should.be.instanceOf(IperGraph);
     });
-    it('has signature (iperGraphData)', function() {
+    it('has signature (data)', function() {
       var data, graph;
       data = {
         nodes: {
@@ -34,7 +34,7 @@ describe('IperGraph', function() {
       graph = new IperGraph(data);
       return graph.should.be.instanceOf(IperGraph);
     });
-    return it('checks iperGraphData is valid', function() {});
+    return it('checks data is valid', function() {});
   });
   return describe('methods', function() {
     describe('createNode', function() {

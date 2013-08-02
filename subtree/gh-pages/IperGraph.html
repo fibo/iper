@@ -1,0 +1,61 @@
+<!DOCTYPE html>  <html> <head>   <title>IperGraph.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="index.html">                 index.js               </a>                                           <a class="source" href="IperEdge.html">                 IperEdge.js               </a>                                           <a class="source" href="IperGraph.html">                 IperGraph.js               </a>                                           <a class="source" href="IperNode.html">                 IperNode.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               IperGraph.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;util&#39;</span><span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">IperEdge</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./IperEdge.js&#39;</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">IperNode</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./IperNode.js&#39;</span><span class="p">)</span>
+
+<span class="kd">function</span> <span class="nx">check</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>TODO data.edges has existing nodeIds</p>             </td>             <td class="code">               <div class="highlight"><pre>
+  <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">IperGraph</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">IperNode</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">check</span><span class="p">)</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">__defineGetter__</span><span class="p">(</span><span class="s1">&#39;edges&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">edges</span> <span class="p">})</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">__defineGetter__</span><span class="p">(</span><span class="s1">&#39;nodes&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">nodes</span> <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">createEdge</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">IperEdge</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">}</span>
+<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">createEdge</span> <span class="o">=</span> <span class="nx">createEdge</span>
+
+<span class="kd">function</span> <span class="nx">readEdge</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">edges</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">readEdge</span> <span class="o">=</span> <span class="nx">readEdge</span>
+
+<span class="kd">function</span> <span class="nx">updateEdge</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">nodeData</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">}</span>
+<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">updateEdge</span> <span class="o">=</span> <span class="nx">updateEdge</span>
+
+<span class="kd">function</span> <span class="nx">deleteEdge</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">delete</span> <span class="k">this</span><span class="p">.</span><span class="nx">edges</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">deleteEdge</span> <span class="o">=</span> <span class="nx">deleteEdge</span>
+
+<span class="kd">function</span> <span class="nx">createNode</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nx">IperNode</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">}</span>
+<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">createNode</span> <span class="o">=</span> <span class="nx">createNode</span>
+
+<span class="kd">function</span> <span class="nx">readNode</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">nodes</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">readNode</span> <span class="o">=</span> <span class="nx">readNode</span>
+
+<span class="kd">function</span> <span class="nx">updateNode</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">nodeData</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">nodes</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">nodeData</span>
+<span class="p">}</span>
+<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">updateNode</span> <span class="o">=</span> <span class="nx">updateNode</span>
+
+<span class="kd">function</span> <span class="nx">deleteNode</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">delete</span> <span class="k">this</span><span class="p">.</span><span class="nx">nodes</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">deleteNode</span> <span class="o">=</span> <span class="nx">deleteNode</span>
+
+<span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">IperGraph</span><span class="p">,</span> <span class="nx">IperNode</span><span class="p">)</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">IperGraph</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

@@ -15,7 +15,7 @@ describe 'IperGraph', ->
       graph = new IperGraph()
       graph.should.be.instanceOf IperGraph
 
-    it 'has signature (iperGraphData)', ->
+    it 'has signature (data)', ->
       # foo -> bar
       data =
         nodes:
@@ -27,7 +27,7 @@ describe 'IperGraph', ->
       graph = new IperGraph(data)
       graph.should.be.instanceOf IperGraph
 
-    it 'checks iperGraphData is valid', ->
+    it 'checks data is valid', ->
       # # data with invalid edge
       # data =
       #   nodes:
