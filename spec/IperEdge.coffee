@@ -11,7 +11,7 @@ describe 'IperEdge', ->
       edge.should.be.instanceOf IperNode
 
   describe 'constructor', ->
-    it 'has signature (iperEdgeData)', ->
+    it 'has signature (data)', ->
 
   describe 'methods', ->
 

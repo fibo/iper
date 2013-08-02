@@ -15,7 +15,7 @@ describe('IperEdge', function() {
     });
   });
   describe('constructor', function() {
-    return it('has signature (iperEdgeData)', function() {});
+    return it('has signature (data)', function() {});
   });
   return describe('methods', function() {});
 });

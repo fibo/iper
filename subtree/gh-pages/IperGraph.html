@@ -70,10 +70,24 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="keyword">var</span> util = require(<span class="string">'util'</span>)
+<span class="keyword">var</span> _    = require(<span class="string">'underscore'</span>)
+  , util = require(<span class="string">'util'</span>)
 
 <span class="keyword">var</span> IperEdge = require(<span class="string">'./IperEdge'</span>)
   , IperNode = require(<span class="string">'./IperNode'</span>)
+
+<span class="function"><span class="keyword">function</span> <span class="title">IperGraph</span><span class="params">(data)</span> {</span>
+
+  <span class="keyword">if</span> (_.isUndefined(data))
+    data = {nodes:{}, edges:{}}
+
+  IperNode.call(<span class="keyword">this</span>, data, check)
+
+  <span class="keyword">this</span>.__defineGetter__(<span class="string">'edges'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="keyword">this</span>.data.edges })
+  <span class="keyword">this</span>.__defineGetter__(<span class="string">'nodes'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="keyword">this</span>.data.nodes })
+}
+
+util.inherits(IperGraph, IperNode)
 
 <span class="function"><span class="keyword">function</span> <span class="title">check</span><span class="params">(data)</span> {</span></pre></div></div>
             
@@ -86,18 +100,18 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>TODO data.edges has existing nodeIds</p>
+              <p>data.edges has existing nodeIds</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">return</span> <span class="literal">true</span>
-}
-
-<span class="function"><span class="keyword">function</span> <span class="title">IperGraph</span><span class="params">(data)</span> {</span>
-  IperNode.call(<span class="keyword">this</span>, data, check)
-
-  <span class="keyword">this</span>.__defineGetter__(<span class="string">'edges'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="keyword">this</span>.data.edges })
-  <span class="keyword">this</span>.__defineGetter__(<span class="string">'nodes'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="keyword">this</span>.data.nodes })
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">for</span> (<span class="keyword">var</span> edgeId <span class="keyword">in</span> data.edges) {
+    <span class="keyword">var</span> edgeData = data.edges[edgeId]
+    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> edgeData) {
+      <span class="keyword">var</span> nodeId = edgeData[i]
+      <span class="keyword">if</span> (<span class="keyword">typeof</span> data.nodes[nodeId] === <span class="string">'undefined'</span>)
+        <span class="keyword">throw</span> <span class="keyword">new</span> Error()
+    }
+  }
 }
 
 <span class="function"><span class="keyword">function</span> <span class="title">createEdge</span><span class="params">()</span> {</span>
@@ -119,13 +133,17 @@ IperGraph.prototype.updateEdge = updateEdge
 }
 IperGraph.prototype.deleteEdge = deleteEdge
 
-<span class="function"><span class="keyword">function</span> <span class="title">createNode</span><span class="params">()</span> {</span>
-  <span class="keyword">return</span> <span class="keyword">new</span> IperNode(arguments[<span class="number">0</span>])
+<span class="function"><span class="keyword">function</span> <span class="title">createNode</span><span class="params">(data)</span> {</span>
+  <span class="keyword">var</span> node = <span class="keyword">new</span> IperNode(data)
+  <span class="keyword">this</span>.nodes[node.id] = node
+  <span class="keyword">return</span> node.id
 }
 IperGraph.prototype.createNode = createNode
 
 <span class="function"><span class="keyword">function</span> <span class="title">readNode</span><span class="params">(id)</span> {</span>
-  <span class="keyword">return</span> <span class="keyword">this</span>.nodes[id]
+  <span class="keyword">var</span> node = <span class="keyword">this</span>.nodes[id]
+  <span class="keyword">if</span> (node <span class="keyword">instanceof</span> IperNode)
+    <span class="keyword">return</span> node.data
 }
 IperGraph.prototype.readNode = readNode
 
@@ -138,8 +156,6 @@ IperGraph.prototype.updateNode = updateNode
   <span class="keyword">delete</span> <span class="keyword">this</span>.nodes[id]
 }
 IperGraph.prototype.deleteNode = deleteNode
-
-util.inherits(IperGraph, IperNode)
 
 module.exports = IperGraph</pre></div></div>
             

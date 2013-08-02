@@ -1,20 +1,25 @@
 
+_ = require 'underscore'
+
 iper = require '../index'
 
 IperNode = iper.IperNode
 
-
 describe 'IperNode', ->
   describe 'constructor', ->
     it 'has signature (data)', ->
+      data = 1
+      node = new IperNode(data)
+      node.should.be.instanceOf IperNode
 
     it 'has signature (data, check)', ->
-      isArray = () -> return 'whatever'
+      check = _.isArray
+      data = [1, 2, 3]
 
-      arrayNode = new IperNode([], isArray)
-      arrayNode.should.be.instanceOf IperNode
+      node = new IperNode(data, check)
+      node.should.be.instanceOf IperNode
 
-      it 'requires `check` to be a function, if provided', ->
+      it 'requires `check` to be a function', ->
       (() ->
         node = new IperNode({}, 'not a function')
       ).should.throwError()
