@@ -21,10 +21,17 @@ module.exports = (grunt) ->
         ext: '.js'
     docco:
       lib:
-        src: ['index.js', 'lib/*.js']
+        src: ['lib/*.js']
         options:
-          layout: 'classic'
+          template: 'subtree/my-docco/class.jst'
           output: 'subtree/gh-pages/'
+          css: 'docco.css'
+      index:
+        src: ['index.js']
+        options:
+          template: 'subtree/my-docco/index.jst'
+          output: 'subtree/gh-pages/'
+          css: 'docco.css'
     mochacli:
       options:
         require: ['should']
