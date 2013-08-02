@@ -23,7 +23,7 @@ module.exports = (grunt) ->
       lib:
         src: ['index.js', 'lib/*.js']
         options:
-          layout: 'parallel'
+          layout: 'classic'
           output: 'subtree/gh-pages/'
     mochacli:
       options:
