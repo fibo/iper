@@ -7,6 +7,9 @@ module.exports = (grunt) ->
       mochacli:
         files: ['test/*.js', 'lib/*.js']
         tasks: 'mochacli'
+      docco:
+        files: ['index.js', 'lib/*.js']
+        tasks: 'docco'
     coffee:
       compile:
         options:
@@ -18,7 +21,7 @@ module.exports = (grunt) ->
         ext: '.js'
     docco:
       lib:
-        src: ['lib/*.js', 'index.js']
+        src: ['index.js', 'lib/*.js']
         options:
           layout: 'parallel'
           output: 'subtree/gh-pages/'
@@ -30,7 +33,7 @@ module.exports = (grunt) ->
       all: ['test/*.js']
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-docco'
+  grunt.loadNpmTasks 'grunt-docco-multi'
   grunt.loadNpmTasks 'grunt-mocha-cli'
   grunt.loadNpmTasks 'grunt-contrib-watch'
 

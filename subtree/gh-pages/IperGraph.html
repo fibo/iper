@@ -1,61 +1,137 @@
-<!DOCTYPE html>  <html> <head>   <title>IperGraph.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="index.html">                 index.js               </a>                                           <a class="source" href="IperEdge.html">                 IperEdge.js               </a>                                           <a class="source" href="IperGraph.html">                 IperGraph.js               </a>                                           <a class="source" href="IperNode.html">                 IperNode.js               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               IperGraph.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;util&#39;</span><span class="p">)</span>
+<!DOCTYPE html>
 
-<span class="kd">var</span> <span class="nx">IperEdge</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./IperEdge.js&#39;</span><span class="p">)</span>
-  <span class="p">,</span> <span class="nx">IperNode</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./IperNode.js&#39;</span><span class="p">)</span>
+<html>
+<head>
+  <title>IperGraph.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
 
-<span class="kd">function</span> <span class="nx">check</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>TODO data.edges has existing nodeIds</p>             </td>             <td class="code">               <div class="highlight"><pre>
-  <span class="k">return</span> <span class="kc">true</span>
-<span class="p">}</span>
+      <div class="header">
+        
+          <h1>IperGraph.js</h1>
+        
 
-<span class="kd">function</span> <span class="nx">IperGraph</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">IperNode</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">check</span><span class="p">)</span>
+        
+          <div class="toc">
+            <h3>Table of Contents</h3>
+            <ol>
+              
+                
+                <li>
+                  <a class="source" href="index.html">
+                    index.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="IperEdge.html">
+                    IperEdge.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="IperGraph.html">
+                    IperGraph.js
+                  </a>
+                </li>
+              
+                
+                <li>
+                  <a class="source" href="IperNode.html">
+                    IperNode.js
+                  </a>
+                </li>
+              
+            </ol>
+          </div>
+        
+      </div>
 
-  <span class="k">this</span><span class="p">.</span><span class="nx">__defineGetter__</span><span class="p">(</span><span class="s1">&#39;edges&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">edges</span> <span class="p">})</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">__defineGetter__</span><span class="p">(</span><span class="s1">&#39;nodes&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">nodes</span> <span class="p">})</span>
-<span class="p">}</span>
+      
+        
+        
+        
+      
+        
+        <p>IperGraph</p>
 
-<span class="kd">function</span> <span class="nx">createEdge</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="k">new</span> <span class="nx">IperEdge</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="p">}</span>
-<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">createEdge</span> <span class="o">=</span> <span class="nx">createEdge</span>
+        
+          <div class='highlight'><pre>
+<span class="keyword">var</span> util = require(<span class="string">'util'</span>)
 
-<span class="kd">function</span> <span class="nx">readEdge</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">edges</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
-<span class="p">}</span>
-<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">readEdge</span> <span class="o">=</span> <span class="nx">readEdge</span>
+<span class="keyword">var</span> IperEdge = require(<span class="string">'./IperEdge'</span>)
+  , IperNode = require(<span class="string">'./IperNode'</span>)
 
-<span class="kd">function</span> <span class="nx">updateEdge</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">nodeData</span><span class="p">)</span> <span class="p">{</span>
-<span class="p">}</span>
-<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">updateEdge</span> <span class="o">=</span> <span class="nx">updateEdge</span>
+<span class="function"><span class="keyword">function</span> <span class="title">check</span><span class="params">(data)</span> {</span></pre></div>
+        
+      
+        
+        <p>TODO data.edges has existing nodeIds</p>
 
-<span class="kd">function</span> <span class="nx">deleteEdge</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">delete</span> <span class="k">this</span><span class="p">.</span><span class="nx">edges</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
-<span class="p">}</span>
-<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">deleteEdge</span> <span class="o">=</span> <span class="nx">deleteEdge</span>
+        
+          <div class='highlight'><pre>  <span class="keyword">return</span> <span class="literal">true</span>
+}
 
-<span class="kd">function</span> <span class="nx">createNode</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="k">new</span> <span class="nx">IperNode</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="p">}</span>
-<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">createNode</span> <span class="o">=</span> <span class="nx">createNode</span>
+<span class="function"><span class="keyword">function</span> <span class="title">IperGraph</span><span class="params">(data)</span> {</span>
+  IperNode.call(<span class="keyword">this</span>, data, check)
 
-<span class="kd">function</span> <span class="nx">readNode</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">nodes</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
-<span class="p">}</span>
-<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">readNode</span> <span class="o">=</span> <span class="nx">readNode</span>
+  <span class="keyword">this</span>.__defineGetter__(<span class="string">'edges'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="keyword">this</span>.data.edges })
+  <span class="keyword">this</span>.__defineGetter__(<span class="string">'nodes'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="keyword">this</span>.data.nodes })
+}
 
-<span class="kd">function</span> <span class="nx">updateNode</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">nodeData</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">nodes</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">nodeData</span>
-<span class="p">}</span>
-<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">updateNode</span> <span class="o">=</span> <span class="nx">updateNode</span>
+<span class="function"><span class="keyword">function</span> <span class="title">createEdge</span><span class="params">()</span> {</span>
+  <span class="keyword">return</span> <span class="keyword">new</span> IperEdge(arguments[<span class="number">0</span>])
+}
+IperGraph.prototype.createEdge = createEdge
 
-<span class="kd">function</span> <span class="nx">deleteNode</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">delete</span> <span class="k">this</span><span class="p">.</span><span class="nx">nodes</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
-<span class="p">}</span>
-<span class="nx">IperGraph</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">deleteNode</span> <span class="o">=</span> <span class="nx">deleteNode</span>
+<span class="function"><span class="keyword">function</span> <span class="title">readEdge</span><span class="params">(id)</span> {</span>
+  <span class="keyword">return</span> <span class="keyword">this</span>.edges[id]
+}
+IperGraph.prototype.readEdge = readEdge
 
-<span class="nx">util</span><span class="p">.</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">IperGraph</span><span class="p">,</span> <span class="nx">IperNode</span><span class="p">)</span>
+<span class="function"><span class="keyword">function</span> <span class="title">updateEdge</span><span class="params">(id, nodeData)</span> {</span>
+}
+IperGraph.prototype.updateEdge = updateEdge
 
-<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">IperGraph</span>
+<span class="function"><span class="keyword">function</span> <span class="title">deleteEdge</span><span class="params">(id)</span> {</span>
+  <span class="keyword">delete</span> <span class="keyword">this</span>.edges[id]
+}
+IperGraph.prototype.deleteEdge = deleteEdge
 
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+<span class="function"><span class="keyword">function</span> <span class="title">createNode</span><span class="params">()</span> {</span>
+  <span class="keyword">return</span> <span class="keyword">new</span> IperNode(arguments[<span class="number">0</span>])
+}
+IperGraph.prototype.createNode = createNode
+
+<span class="function"><span class="keyword">function</span> <span class="title">readNode</span><span class="params">(id)</span> {</span>
+  <span class="keyword">return</span> <span class="keyword">this</span>.nodes[id]
+}
+IperGraph.prototype.readNode = readNode
+
+<span class="function"><span class="keyword">function</span> <span class="title">updateNode</span><span class="params">(id, nodeData)</span> {</span>
+  <span class="keyword">this</span>.nodes[id] = nodeData
+}
+IperGraph.prototype.updateNode = updateNode
+
+<span class="function"><span class="keyword">function</span> <span class="title">deleteNode</span><span class="params">(id)</span> {</span>
+  <span class="keyword">delete</span> <span class="keyword">this</span>.nodes[id]
+}
+IperGraph.prototype.deleteNode = deleteNode
+
+util.inherits(IperGraph, IperNode)
+
+module.exports = IperGraph</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

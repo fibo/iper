@@ -24,10 +24,10 @@
     "grunt-contrib-coffee": "~0.7.0",
     "coffee-script": "~1.6.3",
     "mocha": "~1.12.0",
+    "grunt": "~0.4.1",
     "grunt-mocha-cli": "~1.0.6",
     "grunt-contrib-watch": "~0.5.1",
-    "grunt": "~0.4.1",
-    "grunt-docco": "~0.2.0"
+    "grunt-docco-multi": "0.0.2"
   },
   "dependencies": {
     "underscore": "~1.5.1"
