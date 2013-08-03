@@ -3,24 +3,32 @@ _ = require 'underscore'
 
 iper = require '../index'
 
-IperNode = iper.IperNode
+IperEdge    = iper.IperEdge
+IperElement = iper.IperElement
+IperGraph   = iper.IperGraph
+IperNode    = iper.IperNode
+
+check = _.isArray
+data = [1, 2, 3]
+graph = new IperGraph()
 
 describe 'IperNode', ->
+  it 'is an IperElement', ->
+    node = new IperNode(graph)
+    node.should.be.instanceOf IperElement
+
   describe 'constructor', ->
-    it 'has signature (data)', ->
-      data = 1
-      node = new IperNode(data)
-      node.should.be.instanceOf IperNode
+    it 'has signature (graph, data, check)', ->
+      # node = new IperNode(graph, data, check)
+      # node.should.be.instanceOf IperNode
 
-    it 'has signature (data, check)', ->
-      check = _.isArray
-      data = [1, 2, 3]
-
-      node = new IperNode(data, check)
-      node.should.be.instanceOf IperNode
-
-      it 'requires `check` to be a function', ->
+    it 'requires `graph` to be an IperGraph', ->
       (() ->
-        node = new IperNode({}, 'not a function')
+        node = new IperNode('not a graph', check, data)
       ).should.throwError()
+
+    it 'requires `check` to be a function', ->
+      # (() ->
+      #   node = new IperNode({}, 'not a function')
+      # ).should.throwError()
 

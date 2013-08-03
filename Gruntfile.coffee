@@ -21,7 +21,7 @@ module.exports = (grunt) ->
         ext: '.js'
     docco:
       lib:
-        src: ['index', 'lib/*.js']
+        src: ['index.js', 'lib/*.js']
         options:
           template: 'docs/docco.jst'
           output: 'docs'

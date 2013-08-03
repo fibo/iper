@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
               <a class="source" href="IperEdge.html">
                 IperEdge.js
               </a>
@@ -78,7 +83,7 @@
 <span class="keyword">var</span> _    = require(<span class="string">'underscore'</span>)
   , util = require(<span class="string">'util'</span>)
 
-<span class="keyword">var</span> IperNode = require(<span class="string">'./IperNode'</span>)</pre></div></div>
+<span class="keyword">var</span> IperElement = require(<span class="string">'./IperElement'</span>)</pre></div></div>
             
         </li>
         
@@ -95,14 +100,14 @@
             
             <div class="content"><div class='highlight'><pre>
 <span class="function"><span class="keyword">function</span> <span class="title">IperEdge</span><span class="params">(data)</span> {</span>
-  IperNode.call(<span class="keyword">this</span>, data, check)
+  IperElement.call(<span class="keyword">this</span>)
 }
 
 <span class="function"><span class="keyword">function</span> <span class="title">check</span><span class="params">(data)</span> {</span>
   <span class="keyword">return</span> <span class="literal">true</span>
 }
 
-util.inherits(IperEdge, IperNode)
+util.inherits(IperEdge, IperElement)
 
 module.exports = IperEdge</pre></div></div>
             

@@ -1,14 +1,15 @@
 
 iper = require '../index'
 
-IperEdge = iper.IperEdge
-IperNode = iper.IperNode
+IperEdge    = iper.IperEdge
+IperElement = iper.IperElement
+IperGraph   = iper.IperGraph
+IperNode    = iper.IperNode
 
 describe 'IperEdge', ->
-  describe 'inheritance', ->
-    it 'is an IperNode', ->
-      edge = new IperEdge()
-      edge.should.be.instanceOf IperNode
+  it 'is an IperElement', ->
+    edge = new IperEdge()
+    edge.should.be.instanceOf IperElement
 
   describe 'constructor', ->
     it 'has signature (data)', ->

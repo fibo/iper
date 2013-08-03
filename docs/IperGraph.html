@@ -19,6 +19,11 @@
           <div id="jump_page">
             
               
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
               <a class="source" href="IperEdge.html">
                 IperEdge.js
               </a>
@@ -78,15 +83,16 @@
 <span class="keyword">var</span> _    = require(<span class="string">'underscore'</span>)
   , util = require(<span class="string">'util'</span>)
 
-<span class="keyword">var</span> IperEdge = require(<span class="string">'./IperEdge'</span>)
-  , IperNode = require(<span class="string">'./IperNode'</span>)
+<span class="keyword">var</span> IperEdge    = require(<span class="string">'./IperEdge'</span>)
+  , IperElement = require(<span class="string">'./IperElement'</span>)
+  , IperNode    = require(<span class="string">'./IperNode'</span>)
 
 <span class="function"><span class="keyword">function</span> <span class="title">IperGraph</span><span class="params">(data)</span> {</span>
 
+  IperElement.call(<span class="keyword">this</span>)
+
   <span class="keyword">if</span> (_.isUndefined(data))
     data = {nodes:{}, edges:{}}
-
-  IperNode.call(<span class="keyword">this</span>, data, check)
 
   <span class="keyword">this</span>.__defineGetter__(<span class="string">'edges'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="keyword">this</span>.data.edges })
   <span class="keyword">this</span>.__defineGetter__(<span class="string">'nodes'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="keyword">this</span>.data.nodes })

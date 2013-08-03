@@ -10,5 +10,6 @@ describe 'IperElement', ->
       element = new IperElement()
       element.should.be.instanceOf IperElement
 
-  descrbe 'attributes', ->
+  describe 'attributes', ->
     describe 'id', ->
+
