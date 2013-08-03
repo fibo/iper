@@ -72,10 +72,10 @@
         <li id="section-2">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h1">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>IperNode</p>
+              <h1>IperNode</h1>
 
             </div>
             
@@ -83,12 +83,7 @@
 <span class="keyword">var</span> _    = require(<span class="string">'underscore'</span>)
   , util = require(<span class="string">'util'</span>)
 
-<span class="keyword">var</span> IperElement = require(<span class="string">'./IperElement'</span>)
-  , IperGraph   = require(<span class="string">'./IperGraph'</span>)
-
-<span class="function"><span class="keyword">function</span> <span class="title">IperNode</span><span class="params">(graph, data, check)</span> {</span>
-  <span class="keyword">if</span> (_.isUndefined(graph))
-    <span class="keyword">throw</span> <span class="keyword">new</span> Error()</pre></div></div>
+<span class="keyword">var</span> IperElement = require(<span class="string">'./IperElement'</span>)</pre></div></div>
             
         </li>
         
@@ -99,22 +94,14 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>if (! (graph instanceof IperGraph))
- throw new Error()</p>
+              <p>Constructor</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="keyword">if</span> (_.isUndefined(check))
-    check = <span class="function"><span class="keyword">function</span> <span class="title">dummy</span> <span class="params">()</span> {</span>}
+<span class="function"><span class="keyword">function</span> <span class="title">IperNode</span><span class="params">(graph, data)</span> {</span>
 
-  <span class="keyword">if</span> (_.isFunction(check))
-    <span class="keyword">try</span> { check(data) }
-    <span class="keyword">catch</span> (er) { <span class="keyword">throw</span> er }
-  <span class="keyword">else</span>
-    <span class="keyword">throw</span> <span class="keyword">new</span> Error()
-
-  IperElement.call(<span class="keyword">this</span>)
+  IperElement.call(<span class="keyword">this</span>, graph)
 
   <span class="keyword">this</span>.__defineGetter__(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> data })
 }

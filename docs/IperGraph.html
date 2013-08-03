@@ -94,8 +94,10 @@
   <span class="keyword">if</span> (_.isUndefined(data))
     data = {nodes:{}, edges:{}}
 
-  <span class="keyword">this</span>.__defineGetter__(<span class="string">'edges'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="keyword">this</span>.data.edges })
-  <span class="keyword">this</span>.__defineGetter__(<span class="string">'nodes'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> <span class="keyword">this</span>.data.nodes })
+  <span class="keyword">this</span>.__defineGetter__(<span class="string">'edges'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> data.edges })
+  <span class="keyword">this</span>.__defineGetter__(<span class="string">'nodes'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> data.nodes })
+
+  <span class="keyword">this</span>.__defineGetter__(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> {nodes:<span class="keyword">this</span>.nodes,edges:<span class="keyword">this</span>.edges} })
 }
 
 util.inherits(IperGraph, IperNode)
@@ -124,9 +126,76 @@ util.inherits(IperGraph, IperNode)
     }
   }
 }
+IperGraph.prototype.check = check
 
-<span class="function"><span class="keyword">function</span> <span class="title">createEdge</span><span class="params">()</span> {</span>
-  <span class="keyword">return</span> <span class="keyword">new</span> IperEdge(arguments[<span class="number">0</span>])
+<span class="function"><span class="keyword">function</span> <span class="title">load</span><span class="params">(data)</span> {</span>
+  <span class="keyword">try</span> {
+    check(data)
+  }
+  <span class="keyword">catch</span> (er) { <span class="keyword">throw</span> er }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>store a lookup of new &lt;--&gt; old ids</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> nu = {}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>create new nodes</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> data.nodes) {
+    <span class="keyword">var</span> node = data.nodes[i]
+    nu[node.id] = <span class="keyword">this</span>.createNode(node.data)
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>create new edges</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> data.edges) {
+    <span class="keyword">var</span> edge = <span class="keyword">new</span> data.edges[i]
+    <span class="keyword">var</span> nodeIds = []
+
+    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> edge.nodeIds) {
+      nodeId = edge.nodeIds[i]
+      nodeIds.push(nu[nodeId])
+    }
+
+    <span class="keyword">this</span>.createEdge(nodeIds)
+  }
+}
+IperGraph.prototype.load = load
+
+<span class="function"><span class="keyword">function</span> <span class="title">createEdge</span><span class="params">(nodeIds)</span> {</span>
+  <span class="keyword">return</span> <span class="keyword">new</span> IperEdge(nodeIds)
 }
 IperGraph.prototype.createEdge = createEdge
 
@@ -151,12 +220,10 @@ IperGraph.prototype.deleteEdge = deleteEdge
 }
 IperGraph.prototype.createNode = createNode
 
-<span class="function"><span class="keyword">function</span> <span class="title">readNode</span><span class="params">(id)</span> {</span>
-  <span class="keyword">var</span> node = <span class="keyword">this</span>.nodes[id]
-  <span class="keyword">if</span> (node <span class="keyword">instanceof</span> IperNode)
-    <span class="keyword">return</span> node.data
+<span class="function"><span class="keyword">function</span> <span class="title">getNode</span><span class="params">(id)</span> {</span>
+  <span class="keyword">return</span> <span class="keyword">this</span>.nodes[id]
 }
-IperGraph.prototype.readNode = readNode
+IperGraph.prototype.getNode = getNode
 
 <span class="function"><span class="keyword">function</span> <span class="title">updateNode</span><span class="params">(id, nodeData)</span> {</span>
   <span class="keyword">this</span>.nodes[id] = nodeData

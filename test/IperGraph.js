@@ -16,12 +16,53 @@ describe('IperGraph', function() {
     graph = new IperGraph();
     return graph.should.be.instanceOf(IperElement);
   });
-  return describe('constructor', function() {
+  describe('constructor', function() {
     return it('has signature ()', function() {
       var graph;
       graph = new IperGraph();
       return graph.should.be.instanceOf(IperGraph);
     });
+  });
+  return describe('methods', function() {
+    var data, graph;
+    graph = new IperGraph();
+    data = 'foo';
+    describe('#createNode()', function() {
+      return it('has signature (data), returns nodeId', function() {
+        var id;
+        id = graph.createNode(data);
+        return id.should.be.defined;
+      });
+    });
+    describe('#getNode()', function() {
+      return it('has signature (id), returns node', function() {
+        var id, node;
+        id = graph.createNode(data);
+        node = graph.getNode(id);
+        return node.should.be.instanceOf(IperNode);
+      });
+    });
+    describe('#check(data)', function() {
+      return it('checks data is valid', function() {
+        data = {
+          nodes: {
+            1: 'foo',
+            2: 'bar'
+          },
+          edges: {
+            3: [5, 6]
+          }
+        };
+        return (function() {
+          return graph.check(data);
+        }).should.throwError();
+      });
+    });
+    describe('#load(data)', function() {});
+    describe('#deleteNode()', function() {});
+    describe('#createEdge()', function() {});
+    describe('#getEdge()', function() {});
+    return describe('#deleteEdge()', function() {});
   });
 });
 
@@ -66,51 +107,11 @@ describe('IperGraph', function() {
     #  graph.should.be.instanceOf IperGraph
 
     #it 'checks data is valid', ->
-    #  # invalid edge
-    #  data =
-    #    nodes:
-    #      1: 'foo'
-    #      2: 'bar'
-    #    edges:
-    #      3: [5, 6]
-
-    #  (() ->
-    #    graph = new IperGraph(data)
-    #  ).should.throwError()
 
       # edges without nodes does not make sense
       data =
         edges:
           1: [5, 6]
           2: [3, 4]
-
-  describe 'methods', ->
-    graph = new IperGraph()
-
-    id1 = null
-    data1 = 'foo'
-
-    describe '#createNode()', ->
-      it 'has signature (data), returns nodeId', ->
-        id1 = graph.createNode data1
-        id1.should.be.defined
-
-    describe '#readNode()', ->
-      it 'has signature (id), returns nodeData', ->
-        data = graph.readNode id1
-        data.should.be.eql data1
-
-    describe '#updateNode()', ->
-      it 'has signature (id, data)', ->
-
-    describe '#deleteNode()', ->
-
-    describe '#createEdge()', ->
-
-    describe '#readEdge()', ->
-
-    describe '#updateEdge()', ->
-
-    describe '#deleteEdge()', ->
 */
 

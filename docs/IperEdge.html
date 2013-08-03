@@ -99,12 +99,23 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="function"><span class="keyword">function</span> <span class="title">IperEdge</span><span class="params">(data)</span> {</span>
-  IperElement.call(<span class="keyword">this</span>)
-}
+<span class="function"><span class="keyword">function</span> <span class="title">IperEdge</span><span class="params">(graph, nodeIds)</span> {</span>
 
-<span class="function"><span class="keyword">function</span> <span class="title">check</span><span class="params">(data)</span> {</span>
-  <span class="keyword">return</span> <span class="literal">true</span>
+  <span class="keyword">if</span> (_.isUndefined(graph))
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error()
+
+  <span class="keyword">if</span> (! _.isObject(graph.nodes))
+    <span class="keyword">throw</span> <span class="keyword">new</span> Error()
+
+  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> nodeIds) {
+    <span class="keyword">var</span> id = nodeIds[i]
+    <span class="keyword">if</span> (_.isUndefined(graph.nodes[id]))
+      <span class="keyword">throw</span> <span class="keyword">new</span> Error()
+  }
+
+  <span class="keyword">this</span>.__defineGetter__(<span class="string">'nodeIds'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> nodeIds })
+
+  IperElement.call(<span class="keyword">this</span>, graph)
 }
 
 util.inherits(IperEdge, IperElement)

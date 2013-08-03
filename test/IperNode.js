@@ -1,6 +1,4 @@
-var IperEdge, IperElement, IperGraph, IperNode, check, data, graph, iper, _;
-
-_ = require('underscore');
+var IperEdge, IperElement, IperGraph, IperNode, data, graph, iper;
 
 iper = require('../index');
 
@@ -12,8 +10,6 @@ IperGraph = iper.IperGraph;
 
 IperNode = iper.IperNode;
 
-check = _.isArray;
-
 data = [1, 2, 3];
 
 graph = new IperGraph();
@@ -21,17 +17,19 @@ graph = new IperGraph();
 describe('IperNode', function() {
   it('is an IperElement', function() {
     var node;
-    node = new IperNode(graph);
+    node = new IperNode();
     return node.should.be.instanceOf(IperElement);
   });
   return describe('constructor', function() {
-    it('has signature (graph, data, check)', function() {});
-    it('requires `graph` to be an IperGraph', function() {
-      return (function() {
-        var node;
-        return node = new IperNode('not a graph', check, data);
-      }).should.throwError();
+    it('has signature ()', function() {
+      var node;
+      node = new IperNode();
+      return node.should.be.instanceOf(IperNode);
     });
-    return it('requires `check` to be a function', function() {});
+    return it('has signature (graph, data)', function() {
+      var node;
+      node = new IperNode(graph, data);
+      return node.should.be.instanceOf(IperNode);
+    });
   });
 });

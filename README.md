@@ -3,6 +3,8 @@ iper
 
 Hypergraphs for Node.js
 
+[![Build Status](https://travis-ci.org/fibo/iper.png)](https://travis-ci.org/fibo/iper)
+
 # Quick start
 
     var iper = require('iper');
