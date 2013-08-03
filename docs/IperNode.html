@@ -24,6 +24,11 @@
               </a>
             
               
+              <a class="source" href="IperElement.html">
+                IperElement.js
+              </a>
+            
+              
               <a class="source" href="IperGraph.html">
                 IperGraph.js
               </a>
@@ -70,7 +75,10 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="keyword">var</span> _ = require(<span class="string">'underscore'</span>)
+<span class="keyword">var</span> _    = require(<span class="string">'underscore'</span>)
+  , util = require(<span class="string">'util'</span>)
+
+<span class="keyword">var</span> IperElement = require(<span class="string">'./IperElement'</span>)
 
 <span class="function"><span class="keyword">function</span> <span class="title">IperNode</span><span class="params">(data, check)</span> {</span>
 
@@ -93,6 +101,8 @@
 
   <span class="keyword">this</span>.__defineGetter__(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> data })
 }
+
+util.inherits(IperNode, IperElement)
 
 module.exports = IperNode</pre></div></div>
             

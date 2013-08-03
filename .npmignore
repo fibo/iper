@@ -1,7 +1,6 @@
 .git/
 node_modules/
 spec/
-subtree/
-test/
+docs/
 .gitignore
 Gruntfile.coffee
