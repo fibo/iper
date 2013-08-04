@@ -15,15 +15,17 @@ data = [1, 2, 3];
 graph = new IperGraph();
 
 describe('IperNode', function() {
-  it('is an IperElement', function() {
-    var node;
-    node = new IperNode();
-    return node.should.be.instanceOf(IperElement);
-  });
-  return describe('constructor', function() {
-    it('has signature ()', function() {
+  describe('inheritance', function() {
+    return it('is an IperElement', function() {
       var node;
       node = new IperNode();
+      return node.should.be.instanceOf(IperElement);
+    });
+  });
+  return describe('constructor', function() {
+    it('has signature (graph)', function() {
+      var node;
+      node = new IperNode(graph);
       return node.should.be.instanceOf(IperNode);
     });
     return it('has signature (graph, data)', function() {

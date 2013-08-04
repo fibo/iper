@@ -1,6 +1,8 @@
-var IperEdge, IperElement, IperGraph, IperNode, iper;
+var IperEdge, IperElement, IperGraph, IperNode, iper, should;
 
 iper = require('../index');
+
+should = require('should');
 
 IperEdge = iper.IperEdge;
 
@@ -11,16 +13,50 @@ IperGraph = iper.IperGraph;
 IperNode = iper.IperNode;
 
 describe('IperGraph', function() {
-  it('is an IperElement', function() {
-    var graph;
-    graph = new IperGraph();
-    return graph.should.be.instanceOf(IperElement);
-  });
   describe('constructor', function() {
-    return it('has signature ()', function() {
+    it('has signature ()', function() {
       var graph;
       graph = new IperGraph();
       return graph.should.be.instanceOf(IperGraph);
+    });
+    return it('has signature (data)', function() {
+      var data, graph;
+      data = {
+        nodes: {
+          1: 'foo',
+          2: 'bar'
+        },
+        edges: {
+          3: [1, 2]
+        }
+      };
+      graph = new IperGraph(data);
+      return graph.should.be.instanceOf(IperGraph);
+    });
+  });
+  describe('inheritance', function() {
+    return it('is an IperElement', function() {
+      var graph;
+      graph = new IperGraph();
+      return graph.should.be.instanceOf(IperElement);
+    });
+  });
+  describe('accessors', function() {
+    return describe('#data', function() {
+      return it('returns graph data', function() {
+        var data, edgeId1, graph, nodeId1, nodeId2;
+        graph = new IperGraph();
+        nodeId1 = graph.createNode('foo');
+        nodeId2 = graph.createNode([1, 2]);
+        edgeId1 = graph.createEdge([nodeId1, nodeId2]);
+        data = {};
+        data.nodes = {};
+        data.edges = {};
+        data.nodes[nodeId1] = 'foo';
+        data.nodes[nodeId2] = [1, 2];
+        data.edges[edgeId1] = [nodeId1, nodeId2];
+        return graph.data.should.eql(data);
+      });
     });
   });
   return describe('methods', function() {
@@ -44,7 +80,7 @@ describe('IperGraph', function() {
       });
     });
     describe('#check(data)', function() {
-      return it('checks data is valid', function() {
+      it('checks data is valid', function() {
         data = {
           nodes: {
             1: 'foo',
@@ -54,9 +90,40 @@ describe('IperGraph', function() {
             3: [5, 6]
           }
         };
-        (function() {
+        return (function() {
           return graph.check(data);
         }).should.throwError();
+      });
+      return it('returns trus on success', function() {
+        graph = new IperGraph();
+        data = {
+          nodes: {
+            1: 'foo',
+            2: 'bar',
+            3: 'quz'
+          },
+          edges: {
+            4: [1, 2, 3]
+          }
+        };
+        return graph.check(data).should.be["true"];
+      });
+    });
+    describe('#load(data)', function() {
+      it('loads data', function() {
+        graph = new IperGraph();
+        data = {
+          nodes: {
+            1: 'foo'
+          },
+          edges: {
+            2: [1, 1]
+          }
+        };
+        graph.load(data);
+        return graph.check(graph.data).should.be["true"];
+      });
+      return it('checks data is valid', function() {
         data = {
           edges: {
             1: [5, 6],
@@ -64,12 +131,24 @@ describe('IperGraph', function() {
           }
         };
         return (function() {
-          return graph.check(data);
+          return graph.load(data);
         }).should.throwError();
       });
     });
-    describe('#load(data)', function() {});
-    describe('#deleteNode()', function() {});
+    describe('#removeNode()', function() {
+      it('has signature (id), returns node after removing it from its graph', function() {
+        var node, nodeId;
+        graph = new IperGraph();
+        nodeId = graph.createNode();
+        node = graph.getNode(nodeId);
+        graph.removeNode(nodeId);
+        should.not.exist(graph.getNode(nodeId));
+        return should.exist(node);
+      });
+      return it('removes edges left without nodes', function() {
+        return graph = new IperGraph();
+      });
+    });
     describe('#getEdge()', function() {
       return it('has signature (id), returns edge', function() {
         var edge, id, nodeId1, nodeId2, nodeIds;
@@ -94,48 +173,12 @@ describe('IperGraph', function() {
         return edge.id.should.be.eql(id);
       });
     });
-    return describe('#deleteEdge()', function() {});
+    return describe('#removeEdge()', function() {
+      return it('has signature (id), returns edge after removing it from its graph', function() {
+        var nodeId1;
+        graph = new IperGraph();
+        return nodeId1 = graph.createNode();
+      });
+    });
   });
 });
-
-/*
-
-
-    # it 'has signature (data)', ->
-    #   # This is a simple directed graph
-    #   # foo -> bar
-    #   data =
-    #     nodes:
-    #       1: 'foo'
-    #       2: 'bar'
-    #     edges:
-    #       3: [1, 2]
-
-    #   graph = new IperGraph(data)
-    #  graph.should.be.instanceOf IperGraph
-
-    #  # This is a loop graph
-    #  # foo -> foo
-    #  data =
-    #    nodes:
-    #      1: 'foo'
-    #    edges:
-    #      2: [1, 1]
-
-    #  graph = new IperGraph(data)
-    #  graph.should.be.instanceOf IperGraph
-
-    #  # This is a simple hypergraph
-    #  # foo -> bar -> quz
-    #  data =
-    #    nodes:
-    #      1: 'foo'
-    #      2: 'bar'
-    #      3: 'quz'
-    #    edges:
-    #      4: [1, 2, 3]
-
-    #  graph = new IperGraph(data)
-    #  graph.should.be.instanceOf IperGraph
-*/
-

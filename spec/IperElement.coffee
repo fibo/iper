@@ -20,6 +20,7 @@ describe 'IperElement', ->
     describe 'id', ->
       it 'is a number', ->
         element = new IperElement()
+        element.id.should.be.a.number
 
       it 'should be unique', ->
         element1 = new IperElement()
@@ -31,5 +32,6 @@ describe 'IperElement', ->
       it 'returns the graph passed to constructor', ->
         graph = new IperGraph()
         element = new IperElement(graph)
+
         element.graph.should.be.eql graph
 

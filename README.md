@@ -29,12 +29,10 @@ See [annotated sources](http://fibo.github.io/iper).
     var edgeId = graph.createEdge([fooNodeId, barNodeId]);
 
     var edge = graph.getEdge(edgeId);
-    edge.should.be.instanceOf(IperEdge)
 
     var tripleEdgeId = graph.createEdge([fooNodeId, barNodeId, quzNodeId]);
 
     var tripleEdge = graph.getEdge(tripleEdgeId);
-    tripleEdge.should.be.instanceOf(IperEdge)
 
     graph.data.should.eql({
       nodes:{

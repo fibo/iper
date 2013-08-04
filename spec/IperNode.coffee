@@ -10,13 +10,14 @@ data = [1, 2, 3]
 graph = new IperGraph()
 
 describe 'IperNode', ->
-  it 'is an IperElement', ->
-    node = new IperNode()
-    node.should.be.instanceOf IperElement
+  describe 'inheritance', ->
+    it 'is an IperElement', ->
+      node = new IperNode()
+      node.should.be.instanceOf IperElement
 
   describe 'constructor', ->
-    it 'has signature ()', ->
-      node = new IperNode()
+    it 'has signature (graph)', ->
+      node = new IperNode(graph)
       node.should.be.instanceOf IperNode
 
     it 'has signature (graph, data)', ->

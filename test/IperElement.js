@@ -24,7 +24,8 @@ describe('IperElement', function() {
     describe('id', function() {
       it('is a number', function() {
         var element;
-        return element = new IperElement();
+        element = new IperElement();
+        return element.id.should.be.a.number;
       });
       return it('should be unique', function() {
         var element1, element2;
