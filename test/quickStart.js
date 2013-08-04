@@ -19,24 +19,20 @@ describe("README's Quick start section", function () {
     var edge = graph.getEdge(edgeId);
     edge.should.be.instanceOf(IperEdge)
 
-/*
     var tripleEdgeId = graph.createEdge([fooNodeId, barNodeId, quzNodeId]);
 
     var tripleEdge = graph.getEdge(tripleEdgeId);
     tripleEdge.should.be.instanceOf(IperEdge)
 
-    graph.data.should.eql({
-      nodes:{
-        fooNodeId: 'foo',
-        barNodeId: ['bar'],
-        quzNodeId: {quz:'quuz'}
-      },
-      edges: {
-        edgeId: [fooNodeId, barNodeId],
-        tripleEdgeId: [fooNodeId, barNodeId, quzNodeId]
-      }
-    })
-*/
+    var data = {nodes:{},edges:{}}
+    data.nodes[fooNodeId] = 'foo',
+    data.nodes[barNodeId] = ['bar']
+    data.nodes[quzNodeId] = {quz:'quuz'}
+
+    data.edges[edgeId]       = [fooNodeId, barNodeId]
+    data.edges[tripleEdgeId] = [fooNodeId, barNodeId, quzNodeId]
+
+    graph.data.should.eql(data)
   })
 })
 
