@@ -195,18 +195,16 @@ IperGraph.prototype.check = check
 IperGraph.prototype.load = load
 
 <span class="function"><span class="keyword">function</span> <span class="title">createEdge</span><span class="params">(nodeIds)</span> {</span>
-  <span class="keyword">return</span> <span class="keyword">new</span> IperEdge(nodeIds)
+  <span class="keyword">var</span> edge = <span class="keyword">new</span> IperEdge(<span class="keyword">this</span>, nodeIds)
+  <span class="keyword">this</span>.edges[edge.id] = edge
+  <span class="keyword">return</span> edge.id;
 }
 IperGraph.prototype.createEdge = createEdge
 
-<span class="function"><span class="keyword">function</span> <span class="title">readEdge</span><span class="params">(id)</span> {</span>
+<span class="function"><span class="keyword">function</span> <span class="title">getEdge</span><span class="params">(id)</span> {</span>
   <span class="keyword">return</span> <span class="keyword">this</span>.edges[id]
 }
-IperGraph.prototype.readEdge = readEdge
-
-<span class="function"><span class="keyword">function</span> <span class="title">updateEdge</span><span class="params">(id, nodeData)</span> {</span>
-}
-IperGraph.prototype.updateEdge = updateEdge
+IperGraph.prototype.getEdge = getEdge
 
 <span class="function"><span class="keyword">function</span> <span class="title">deleteEdge</span><span class="params">(id)</span> {</span>
   <span class="keyword">delete</span> <span class="keyword">this</span>.edges[id]
