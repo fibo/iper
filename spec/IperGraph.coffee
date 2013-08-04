@@ -19,7 +19,6 @@ describe 'IperGraph', ->
   describe 'methods', ->
 
     graph = new IperGraph()
-
     data = 'foo'
 
     describe '#createNode()', ->
@@ -32,8 +31,10 @@ describe 'IperGraph', ->
         id = graph.createNode data
         node = graph.getNode id
         node.should.be.instanceOf IperNode
+        node.id.should.be.eql id
 
     describe '#check(data)', ->
+
       it 'checks data is valid', ->
         # invalid edge
         data =
@@ -47,13 +48,41 @@ describe 'IperGraph', ->
           graph.check(data)
         ).should.throwError()
 
+        # edges without nodes does not make sense
+        data =
+          edges:
+            1: [5, 6]
+            2: [3, 4]
+
+        (() ->
+          graph.check(data)
+        ).should.throwError()
+
     describe '#load(data)', ->
 
     describe '#deleteNode()', ->
 
-    describe '#createEdge()', ->
-
     describe '#getEdge()', ->
+      it 'has signature (id), returns edge', ->
+        nodeId1 = graph.createNode(1)
+        nodeId2 = graph.createNode(2)
+        nodeIds = [nodeId1, nodeId2]
+
+        id = graph.createEdge nodeIds
+        edge = graph.getEdge id
+        edge.should.be.instanceOf IperEdge
+        edge.id.should.be.eql id
+
+    describe '#createEdge()', ->
+      it 'has signature ([id1, id2, ...]), returns edge', ->
+        nodeId1 = graph.createNode(1)
+        nodeId2 = graph.createNode(2)
+        nodeIds = [nodeId1, nodeId2]
+
+        id = graph.createEdge nodeIds
+        edge = graph.getEdge id
+        edge.should.be.instanceOf IperEdge
+        edge.id.should.be.eql id
 
     describe '#deleteEdge()', ->
 
@@ -96,14 +125,5 @@ describe 'IperGraph', ->
 
     #  graph = new IperGraph(data)
     #  graph.should.be.instanceOf IperGraph
-
-    #it 'checks data is valid', ->
-
-      # edges without nodes does not make sense
-      data =
-        edges:
-          1: [5, 6]
-          2: [3, 4]
-
 
 ###

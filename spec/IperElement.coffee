@@ -21,6 +21,12 @@ describe 'IperElement', ->
       it 'is a number', ->
         element = new IperElement()
 
+      it 'should be unique', ->
+        element1 = new IperElement()
+        element2 = new IperElement()
+
+        element1.id.should.not.be.eql element2.id
+
     describe 'graph', ->
       it 'returns the graph passed to constructor', ->
         graph = new IperGraph()

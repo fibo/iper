@@ -22,9 +22,15 @@ describe('IperElement', function() {
   });
   return describe('attributes', function() {
     describe('id', function() {
-      return it('is a number', function() {
+      it('is a number', function() {
         var element;
         return element = new IperElement();
+      });
+      return it('should be unique', function() {
+        var element1, element2;
+        element1 = new IperElement();
+        element2 = new IperElement();
+        return element1.id.should.not.be.eql(element2.id);
       });
     });
     return describe('graph', function() {

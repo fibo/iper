@@ -39,7 +39,8 @@ describe('IperGraph', function() {
         var id, node;
         id = graph.createNode(data);
         node = graph.getNode(id);
-        return node.should.be.instanceOf(IperNode);
+        node.should.be.instanceOf(IperNode);
+        return node.id.should.be.eql(id);
       });
     });
     describe('#check(data)', function() {
@@ -53,6 +54,15 @@ describe('IperGraph', function() {
             3: [5, 6]
           }
         };
+        (function() {
+          return graph.check(data);
+        }).should.throwError();
+        data = {
+          edges: {
+            1: [5, 6],
+            2: [3, 4]
+          }
+        };
         return (function() {
           return graph.check(data);
         }).should.throwError();
@@ -60,8 +70,30 @@ describe('IperGraph', function() {
     });
     describe('#load(data)', function() {});
     describe('#deleteNode()', function() {});
-    describe('#createEdge()', function() {});
-    describe('#getEdge()', function() {});
+    describe('#getEdge()', function() {
+      return it('has signature (id), returns edge', function() {
+        var edge, id, nodeId1, nodeId2, nodeIds;
+        nodeId1 = graph.createNode(1);
+        nodeId2 = graph.createNode(2);
+        nodeIds = [nodeId1, nodeId2];
+        id = graph.createEdge(nodeIds);
+        edge = graph.getEdge(id);
+        edge.should.be.instanceOf(IperEdge);
+        return edge.id.should.be.eql(id);
+      });
+    });
+    describe('#createEdge()', function() {
+      return it('has signature ([id1, id2, ...]), returns edge', function() {
+        var edge, id, nodeId1, nodeId2, nodeIds;
+        nodeId1 = graph.createNode(1);
+        nodeId2 = graph.createNode(2);
+        nodeIds = [nodeId1, nodeId2];
+        id = graph.createEdge(nodeIds);
+        edge = graph.getEdge(id);
+        edge.should.be.instanceOf(IperEdge);
+        return edge.id.should.be.eql(id);
+      });
+    });
     return describe('#deleteEdge()', function() {});
   });
 });
@@ -105,13 +137,5 @@ describe('IperGraph', function() {
 
     #  graph = new IperGraph(data)
     #  graph.should.be.instanceOf IperGraph
-
-    #it 'checks data is valid', ->
-
-      # edges without nodes does not make sense
-      data =
-        edges:
-          1: [5, 6]
-          2: [3, 4]
 */
 

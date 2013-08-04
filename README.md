@@ -5,6 +5,14 @@ Hypergraphs for Node.js
 
 [![Build Status](https://travis-ci.org/fibo/iper.png)](https://travis-ci.org/fibo/iper)
 
+# Installation
+
+    npm install iper
+
+# Documentation
+
+See [annotated sources](http://fibo.github.io/iper).
+
 # Quick start
 
     var iper = require('iper');
