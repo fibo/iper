@@ -21,7 +21,7 @@ describe('IperElement', function() {
     });
   });
   return describe('attributes', function() {
-    describe('id', function() {
+    describe('#id', function() {
       it('is a number', function() {
         var element;
         element = new IperElement();
@@ -34,7 +34,7 @@ describe('IperElement', function() {
         return element1.id.should.not.be.eql(element2.id);
       });
     });
-    return describe('graph', function() {
+    return describe('#graph', function() {
       return it('returns the graph passed to constructor', function() {
         var element, graph;
         graph = new IperGraph();

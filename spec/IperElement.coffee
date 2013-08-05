@@ -17,7 +17,7 @@ describe 'IperElement', ->
       element.should.be.instanceOf IperElement
 
   describe 'attributes', ->
-    describe 'id', ->
+    describe '#id', ->
       it 'is a number', ->
         element = new IperElement()
         element.id.should.be.a.number
@@ -28,7 +28,7 @@ describe 'IperElement', ->
 
         element1.id.should.not.be.eql element2.id
 
-    describe 'graph', ->
+    describe '#graph', ->
       it 'returns the graph passed to constructor', ->
         graph = new IperGraph()
         element = new IperElement(graph)

@@ -8,6 +8,11 @@ IperGraph   = iper.IperGraph
 IperNode    = iper.IperNode
 
 describe 'IperGraph', ->
+  describe 'inheritance', ->
+    it 'is an IperElement', ->
+      graph = new IperGraph()
+      graph.should.be.instanceOf IperElement
+
   describe 'constructor', ->
     it 'has signature ()', ->
       graph = new IperGraph()
@@ -25,11 +30,6 @@ describe 'IperGraph', ->
 
       graph = new IperGraph(data)
       graph.should.be.instanceOf IperGraph
-
-  describe 'inheritance', ->
-    it 'is an IperElement', ->
-      graph = new IperGraph()
-      graph.should.be.instanceOf IperElement
 
   describe 'accessors', ->
     describe '#data', ->
@@ -65,6 +65,11 @@ describe 'IperGraph', ->
         node = graph.getNode id
         node.should.be.instanceOf IperNode
         node.id.should.be.eql id
+
+      it 'throws error if edge does not exists', ->
+        ( (),
+          graph.getNode(-1)
+        ).shuold.throwError()
 
     describe '#check(data)', ->
       it 'checks data is valid', ->
@@ -110,7 +115,7 @@ describe 'IperGraph', ->
         graph.load(data)
 
         # Since ids will change I can't use
-        # graph.data.should.be.eql data        
+        # graph.data.should.be.eql data
 
         graph.check(graph.data).should.be.true
 
@@ -138,7 +143,6 @@ describe 'IperGraph', ->
 
       it 'removes edges left without nodes', ->
         graph = new IperGraph()
-        
 
     describe '#getEdge()', ->
       it 'has signature (id), returns edge', ->
@@ -150,6 +154,11 @@ describe 'IperGraph', ->
         edge = graph.getEdge id
         edge.should.be.instanceOf IperEdge
         edge.id.should.be.eql id
+
+      it 'throws error if edge does not exists', ->
+        ( (),
+          graph.getEdge(-1)
+        ).shuold.throwError()
 
     describe '#createEdge()', ->
       it 'has signature ([id1, id2, ...]), returns edge', ->
@@ -167,8 +176,13 @@ describe 'IperGraph', ->
         graph = new IperGraph()
 
         nodeId1 = graph.createNode()
+        nodeId2 = graph.createNode()
 
-        # graph.removeNode(edgeId)
-        # should.not.exist graph.getEdge(edgeId)
-        # should.exist edge
+        edgeId = graph.createEdge([nodeId1, nodeId2])
+
+        edge = graph.getEdge(edgeId)
+
+        graph.removeNode(edgeId)
+        should.not.exist edge
+        should.exist edge
 

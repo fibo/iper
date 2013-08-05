@@ -13,6 +13,13 @@ IperGraph = iper.IperGraph;
 IperNode = iper.IperNode;
 
 describe('IperGraph', function() {
+  describe('inheritance', function() {
+    return it('is an IperElement', function() {
+      var graph;
+      graph = new IperGraph();
+      return graph.should.be.instanceOf(IperElement);
+    });
+  });
   describe('constructor', function() {
     it('has signature ()', function() {
       var graph;
@@ -32,13 +39,6 @@ describe('IperGraph', function() {
       };
       graph = new IperGraph(data);
       return graph.should.be.instanceOf(IperGraph);
-    });
-  });
-  describe('inheritance', function() {
-    return it('is an IperElement', function() {
-      var graph;
-      graph = new IperGraph();
-      return graph.should.be.instanceOf(IperElement);
     });
   });
   describe('accessors', function() {
@@ -175,9 +175,15 @@ describe('IperGraph', function() {
     });
     return describe('#removeEdge()', function() {
       return it('has signature (id), returns edge after removing it from its graph', function() {
-        var nodeId1;
+        var edge, edgeId, nodeId1, nodeId2;
         graph = new IperGraph();
-        return nodeId1 = graph.createNode();
+        nodeId1 = graph.createNode();
+        nodeId2 = graph.createNode();
+        edgeId = graph.createEdge([nodeId1, nodeId2]);
+        edge = graph.getEdge(edgeId);
+        graph.removeNode(edgeId);
+        should.not.exist(graph.getEdge(edgeId));
+        return should.exist(edge);
       });
     });
   });

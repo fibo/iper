@@ -24,3 +24,14 @@ describe 'IperNode', ->
       node = new IperNode(graph, data)
       node.should.be.instanceOf IperNode
 
+  describe 'methods', ->
+    describe '#remove()', ->
+      it 'removes the node from its graph', ->
+        node = new IperNode(graph)
+        nodeId = node.id
+
+        node.remove()
+        should.not.exist graph.getNode(nodeId)
+        node.should.exist
+
+

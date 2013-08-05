@@ -44,13 +44,6 @@ describe('IperEdge', function() {
     });
   });
   describe('accessors', function() {
-    describe('#id', function() {
-      return it('returns the edge #id', function() {
-        var edge;
-        edge = new IperEdge(graph, nodeIds);
-        return edge.id.should.be.a.number;
-      });
-    });
     return describe('#nodeIds', function() {
       return it('returns the #nodeIds', function() {
         var edge;
@@ -66,7 +59,8 @@ describe('IperEdge', function() {
         edge = new IperEdge(graph, nodeIds);
         edgeId = edge.id;
         edge.remove();
-        return should.not.exist(graph.getEdge(edgeId));
+        should.not.exist(graph.getEdge(edgeId));
+        return edge.should.exists;
       });
     });
   });

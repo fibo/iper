@@ -30,11 +30,6 @@ describe 'IperEdge', ->
       ).should.throwError()
 
   describe 'accessors', ->
-    describe '#id', ->
-      it 'returns the edge #id', ->
-        edge = new IperEdge(graph, nodeIds)
-        edge.id.should.be.a.number 
-
     describe '#nodeIds', ->
       it 'returns the #nodeIds', ->
         edge = new IperEdge(graph, nodeIds)
@@ -48,4 +43,5 @@ describe 'IperEdge', ->
 
         edge.remove()
         should.not.exist graph.getEdge(edgeId)
+        edge.should.exists
 
