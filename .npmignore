@@ -3,4 +3,5 @@ node_modules/
 spec/
 docs/
 .gitignore
+.travis.yml
 Gruntfile.coffee
