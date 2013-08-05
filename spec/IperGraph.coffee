@@ -67,9 +67,9 @@ describe 'IperGraph', ->
         node.id.should.be.eql id
 
       it 'throws error if edge does not exists', ->
-        ( (),
+        (() ->
           graph.getNode(-1)
-        ).shuold.throwError()
+        ).should.throwError()
 
     describe '#check(data)', ->
       it 'checks data is valid', ->
@@ -131,18 +131,30 @@ describe 'IperGraph', ->
         ).should.throwError()
 
     describe '#removeNode()', ->
-      it 'has signature (id), returns node after removing it from its graph', ->
+      it 'has signature (id), removes node from its graph', ->
         graph = new IperGraph()
 
         nodeId = graph.createNode()
-        node = graph.getNode(nodeId)
 
         graph.removeNode(nodeId)
-        should.not.exist graph.getNode(nodeId)
-        should.exist node
+
+        (() ->
+          graph.getNode(nodeid)
+        ).should.throwError()
 
       it 'removes edges left without nodes', ->
-        graph = new IperGraph()
+
+      # nodeId1 = graph.createNode(1)
+      # nodeId2 = graph.createNode(2)
+      # nodeIds = [nodeId1, nodeId2]
+
+      # edgeId = graph.createEdge nodeIds
+
+      # graph.removeNode(nodeId1)
+
+      # (() ->
+      #   graph.getEdge(edgeId)
+      # ).should.throwError()
 
     describe '#getEdge()', ->
       it 'has signature (id), returns edge', ->
@@ -156,9 +168,9 @@ describe 'IperGraph', ->
         edge.id.should.be.eql id
 
       it 'throws error if edge does not exists', ->
-        ( (),
+        (() ->
           graph.getEdge(-1)
-        ).shuold.throwError()
+        ).should.throwError()
 
     describe '#createEdge()', ->
       it 'has signature ([id1, id2, ...]), returns edge', ->
@@ -172,7 +184,7 @@ describe 'IperGraph', ->
         edge.id.should.be.eql id
 
     describe '#removeEdge()', ->
-      it 'has signature (id), returns edge after removing it from its graph', ->
+      it 'has signature (id), removes edge from its graph', ->
         graph = new IperGraph()
 
         nodeId1 = graph.createNode()
@@ -180,9 +192,9 @@ describe 'IperGraph', ->
 
         edgeId = graph.createEdge([nodeId1, nodeId2])
 
-        edge = graph.getEdge(edgeId)
+        graph.removeEdge(edgeId)
 
-        graph.removeNode(edgeId)
-        should.not.exist edge
-        should.exist edge
+        (() ->
+          graph.getEdge(edgeId)
+        ).should.throwError()
 

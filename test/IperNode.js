@@ -22,7 +22,7 @@ describe('IperNode', function() {
       return node.should.be.instanceOf(IperElement);
     });
   });
-  return describe('constructor', function() {
+  describe('constructor', function() {
     it('has signature (graph)', function() {
       var node;
       node = new IperNode(graph);
@@ -32,6 +32,20 @@ describe('IperNode', function() {
       var node;
       node = new IperNode(graph, data);
       return node.should.be.instanceOf(IperNode);
+    });
+  });
+  return describe('methods', function() {
+    return describe('#remove()', function() {
+      return it('removes the node from its graph', function() {
+        var node, nodeId;
+        node = new IperNode(graph);
+        nodeId = node.id;
+        node.remove();
+        (function() {
+          return graph.getEdge(nodeId);
+        }).should.throwError();
+        return node.should.exists;
+      });
     });
   });
 });

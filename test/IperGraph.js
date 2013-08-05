@@ -71,12 +71,17 @@ describe('IperGraph', function() {
       });
     });
     describe('#getNode()', function() {
-      return it('has signature (id), returns node', function() {
+      it('has signature (id), returns node', function() {
         var id, node;
         id = graph.createNode(data);
         node = graph.getNode(id);
         node.should.be.instanceOf(IperNode);
         return node.id.should.be.eql(id);
+      });
+      return it('throws error if edge does not exists', function() {
+        return (function() {
+          return graph.getNode(-1);
+        }).should.throwError();
       });
     });
     describe('#check(data)', function() {
@@ -136,21 +141,19 @@ describe('IperGraph', function() {
       });
     });
     describe('#removeNode()', function() {
-      it('has signature (id), returns node after removing it from its graph', function() {
-        var node, nodeId;
+      it('has signature (id), removes node from its graph', function() {
+        var nodeId;
         graph = new IperGraph();
         nodeId = graph.createNode();
-        node = graph.getNode(nodeId);
         graph.removeNode(nodeId);
-        should.not.exist(graph.getNode(nodeId));
-        return should.exist(node);
+        return (function() {
+          return graph.getNode(nodeid);
+        }).should.throwError();
       });
-      return it('removes edges left without nodes', function() {
-        return graph = new IperGraph();
-      });
+      return it('removes edges left without nodes', function() {});
     });
     describe('#getEdge()', function() {
-      return it('has signature (id), returns edge', function() {
+      it('has signature (id), returns edge', function() {
         var edge, id, nodeId1, nodeId2, nodeIds;
         nodeId1 = graph.createNode(1);
         nodeId2 = graph.createNode(2);
@@ -159,6 +162,11 @@ describe('IperGraph', function() {
         edge = graph.getEdge(id);
         edge.should.be.instanceOf(IperEdge);
         return edge.id.should.be.eql(id);
+      });
+      return it('throws error if edge does not exists', function() {
+        return (function() {
+          return graph.getEdge(-1);
+        }).should.throwError();
       });
     });
     describe('#createEdge()', function() {
@@ -174,16 +182,16 @@ describe('IperGraph', function() {
       });
     });
     return describe('#removeEdge()', function() {
-      return it('has signature (id), returns edge after removing it from its graph', function() {
-        var edge, edgeId, nodeId1, nodeId2;
+      return it('has signature (id), removes edge from its graph', function() {
+        var edgeId, nodeId1, nodeId2;
         graph = new IperGraph();
         nodeId1 = graph.createNode();
         nodeId2 = graph.createNode();
         edgeId = graph.createEdge([nodeId1, nodeId2]);
-        edge = graph.getEdge(edgeId);
-        graph.removeNode(edgeId);
-        should.not.exist(graph.getEdge(edgeId));
-        return should.exist(edge);
+        graph.removeEdge(edgeId);
+        return (function() {
+          return graph.getEdge(edgeId);
+        }).should.throwError();
       });
     });
   });

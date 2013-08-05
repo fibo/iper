@@ -42,6 +42,10 @@ describe 'IperEdge', ->
         edgeId = edge.id
 
         edge.remove()
-        should.not.exist graph.getEdge(edgeId)
+
+        (() ->
+            graph.getEdge(edgeId)
+        ).should.throwError()
+
         edge.should.exists
 

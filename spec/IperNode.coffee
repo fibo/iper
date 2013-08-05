@@ -31,7 +31,10 @@ describe 'IperNode', ->
         nodeId = node.id
 
         node.remove()
-        should.not.exist graph.getNode(nodeId)
-        node.should.exist
 
+        (() ->
+           graph.getEdge(nodeId)
+        ).should.throwError()
+
+        node.should.exists
 

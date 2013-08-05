@@ -121,7 +121,25 @@
   Object.defineProperty(<span class="keyword">this</span>, <span class="string">'data'</span>, {get: getData})
 }
 
-util.inherits(IperNode, IperElement)
+util.inherits(IperNode, IperElement)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>remove</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="function"><span class="keyword">function</span> <span class="title">remove</span> <span class="params">()</span> {</span>
+  <span class="keyword">this</span>.graph.removeNode(<span class="keyword">this</span>.id)
+}
+IperNode.prototype.remove = remove
 
 module.exports = IperNode</pre></div></div>
             

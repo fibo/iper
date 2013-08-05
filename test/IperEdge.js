@@ -59,7 +59,9 @@ describe('IperEdge', function() {
         edge = new IperEdge(graph, nodeIds);
         edgeId = edge.id;
         edge.remove();
-        should.not.exist(graph.getEdge(edgeId));
+        (function() {
+          return graph.getEdge(edgeId);
+        }).should.throwError();
         return edge.should.exists;
       });
     });
