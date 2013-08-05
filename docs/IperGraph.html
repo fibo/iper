@@ -72,10 +72,10 @@
         <li id="section-2">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h1">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>IperGraph</p>
+              <h1>IperGraph</h1>
 
             </div>
             
@@ -84,32 +84,7 @@
 
 <span class="keyword">var</span> IperEdge    = require(<span class="string">'./IperEdge'</span>)
   , IperElement = require(<span class="string">'./IperElement'</span>)
-  , IperNode    = require(<span class="string">'./IperNode'</span>)
-
-<span class="function"><span class="keyword">function</span> <span class="title">IperGraph</span><span class="params">(data)</span> {</span>
-
-  IperElement.call(<span class="keyword">this</span>)
-
-  <span class="keyword">this</span>.edges = {}
-  <span class="keyword">this</span>.nodes = {}
-
-  <span class="keyword">this</span>.__defineGetter__(<span class="string">'data'</span>,
-    <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
-      <span class="keyword">var</span> data = {nodes:{}, edges:{}}
-
-      <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> <span class="keyword">this</span>.nodes) {
-        <span class="keyword">var</span> node = <span class="keyword">this</span>.nodes[i]
-        data.nodes[node.id] = node.data
-      }
-
-      <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> <span class="keyword">this</span>.edges) {
-        <span class="keyword">var</span> edge = <span class="keyword">this</span>.edges[i]
-        data.edges[edge.id] = edge.nodeIds
-      }
-
-      <span class="keyword">return</span> data
-    }
-  )</pre></div></div>
+  , IperNode    = require(<span class="string">'./IperNode'</span>)</pre></div></div>
             
         </li>
         
@@ -120,7 +95,60 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
+              <p>Constructor</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="function"><span class="keyword">function</span> <span class="title">IperGraph</span><span class="params">(data)</span> {</span>
+
+  IperElement.call(<span class="keyword">this</span>)
+
+  <span class="keyword">this</span>.edges = {}
+  <span class="keyword">this</span>.nodes = {}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
               
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>data</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">getData</span><span class="params">()</span> {</span>
+    <span class="keyword">var</span> data = {nodes:{}, edges:{}}
+
+    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> <span class="keyword">this</span>.nodes) {
+      <span class="keyword">var</span> node = <span class="keyword">this</span>.nodes[i]
+      data.nodes[node.id] = node.data
+    }
+
+    <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> <span class="keyword">this</span>.edges) {
+      <span class="keyword">var</span> edge = <span class="keyword">this</span>.edges[i]
+      data.edges[edge.id] = edge.nodeIds
+    }
+
+    <span class="keyword">return</span> data
+  }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'data'</span>, {get: getData})</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>try to load data passed to constructor</p>
+
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="keyword">try</span> {
@@ -136,11 +164,11 @@ util.inherits(IperGraph, IperNode)
         </li>
         
         
-        <li id="section-4">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>data.edges has existing nodeIds</p>
 
@@ -163,11 +191,11 @@ IperGraph.prototype.check = check
         </li>
         
         
-        <li id="section-5">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>check if data is valid</p>
 
@@ -181,11 +209,11 @@ IperGraph.prototype.check = check
         </li>
         
         
-        <li id="section-6">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>store a lookup of new &lt;--&gt; old ids</p>
 
@@ -196,11 +224,11 @@ IperGraph.prototype.check = check
         </li>
         
         
-        <li id="section-7">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>create new nodes</p>
 
@@ -213,11 +241,11 @@ IperGraph.prototype.check = check
         </li>
         
         
-        <li id="section-8">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>create new edges</p>
 

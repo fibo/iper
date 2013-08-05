@@ -72,22 +72,67 @@
         <li id="section-2">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h1">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>IperElement</p>
+              <h1>IperElement</h1>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="keyword">var</span> _ = require(<span class="string">'underscore'</span>)
+<span class="keyword">var</span> _ = require(<span class="string">'underscore'</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Constructor</p>
 
-<span class="function"><span class="keyword">function</span> <span class="title">IperElement</span><span class="params">(graph)</span> {</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="function"><span class="keyword">function</span> <span class="title">IperElement</span><span class="params">(graph)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>graph</p>
 
-  <span class="keyword">this</span>.__defineGetter__(<span class="string">'graph'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> graph })
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">getGraph</span><span class="params">()</span> {</span> <span class="keyword">return</span> graph }
 
-  <span class="keyword">var</span> id = _.uniqueId()
-  <span class="keyword">this</span>.__defineGetter__(<span class="string">'id'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> id })
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'graph'</span>, {get: getGraph})</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>id</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> id = _.uniqueId()
+
+  <span class="function"><span class="keyword">function</span> <span class="title">getId</span><span class="params">()</span> {</span> <span class="keyword">return</span> id }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'id'</span>, {get: getId})
 }
 
 module.exports = IperElement</pre></div></div>

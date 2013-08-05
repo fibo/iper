@@ -72,10 +72,10 @@
         <li id="section-2">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h1">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>IperEdge</p>
+              <h1>IperEdge</h1>
 
             </div>
             
@@ -113,14 +113,42 @@
       <span class="keyword">throw</span> <span class="keyword">new</span> Error()
   }
 
-  <span class="keyword">this</span>.__defineGetter__(<span class="string">'nodeIds'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> nodeIds })
+  IperElement.call(<span class="keyword">this</span>, graph)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>nodeIds</p>
 
-  IperElement.call(<span class="keyword">this</span>, graph)
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">getNodeIds</span><span class="params">()</span> {</span> <span class="keyword">return</span> nodeIds }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'nodeIds'</span>, {get: getNodeIds})
 }
 
-util.inherits(IperEdge, IperElement)
+util.inherits(IperEdge, IperElement)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>remove</p>
 
-<span class="function"><span class="keyword">function</span> <span class="title">remove</span> <span class="params">()</span> {</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="function"><span class="keyword">function</span> <span class="title">remove</span> <span class="params">()</span> {</span>
   <span class="keyword">this</span>.graph.removeEdge(<span class="keyword">this</span>.id)
 }
 IperEdge.prototype.remove = remove

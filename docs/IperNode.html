@@ -101,9 +101,24 @@
             <div class="content"><div class='highlight'><pre>
 <span class="function"><span class="keyword">function</span> <span class="title">IperNode</span><span class="params">(graph, data)</span> {</span>
 
-  IperElement.call(<span class="keyword">this</span>, graph)
+  IperElement.call(<span class="keyword">this</span>, graph)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>data</p>
 
-  <span class="keyword">this</span>.__defineGetter__(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> <span class="keyword">return</span> data })
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">getData</span><span class="params">()</span> {</span> <span class="keyword">return</span> data }
+
+  Object.defineProperty(<span class="keyword">this</span>, <span class="string">'data'</span>, {get: getData})
 }
 
 util.inherits(IperNode, IperElement)
