@@ -20,7 +20,7 @@ Check the following Wikipedia pages:
 
 # Documentation
 
-See [annotated sources](http://fibo.github.io/iper).
+See [examples with annotated sources](http://fibo.github.io/iper).
 
 # Quick start
 
@@ -43,7 +43,7 @@ See [annotated sources](http://fibo.github.io/iper).
 
     var tripleEdge = graph.getEdge(tripleEdgeId);
 
-    console.log(graph.data)
+    console.log(graph.data);
 
     // graph data should be something like
     //
@@ -57,4 +57,15 @@ See [annotated sources](http://fibo.github.io/iper).
     //   tripleEdgeId: [fooNodeId, barNodeId, quzNodeId]
     // }
     //
+    // that is, depending on id assignment, something similar to
+    //
+    // nodes:{
+    //   1: 'foo',
+    //   2: ['bar'],
+    //   3: {quz:'quuz'}
+    // },
+    // edges: {
+    //   4: [1, 2],
+    //   5: [1, 2, 3]
+    // }
 
