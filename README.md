@@ -3,7 +3,7 @@ iper
 
 Hypergraphs for Node.js
 
-[![Build Status](https://travis-ci.org/fibo/iper.png)](https://travis-ci.org/fibo/iper.png?branch=master)
+[![Build Status](https://travis-ci.org/fibo/iper.png?branch=master)](https://travis-ci.org/fibo/iper.png?branch=master)
 
 What is an hypergraph?
 
