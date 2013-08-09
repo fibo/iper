@@ -121,15 +121,15 @@ module.exports = <span class="function"><span class="keyword">function</span> <s
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>graph.createNode(<span class="number">0</span>);
-graph.createNode(<span class="string">'foo'</span>);
-graph.createNode([<span class="string">'bar'</span>]);
-graph.createNode({quz:<span class="string">'quuz'</span>});
-graph.createNode(
-  <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span> {</span>
-    console.log(<span class="string">'Hello iper!'</span>);
-  }
-);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  graph.createNode(<span class="number">0</span>);
+  graph.createNode(<span class="string">'foo'</span>);
+  graph.createNode([<span class="string">'bar'</span>]);
+  graph.createNode({quz:<span class="string">'quuz'</span>});
+  graph.createNode(
+    <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span> {</span>
+      console.log(<span class="string">'Hello iper!'</span>);
+    }
+  );</pre></div></div>
             
         </li>
         
@@ -146,8 +146,8 @@ and lets store ids to use them later.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> id1 = graph.createNode([]);
-<span class="keyword">var</span> id2 = graph.createNode([]);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> id1 = graph.createNode([]);
+  <span class="keyword">var</span> id2 = graph.createNode([]);</pre></div></div>
             
         </li>
         
@@ -163,8 +163,37 @@ for example we can create an edge joining the nodes.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>graph.createEdge([id1, id2]);
+            <div class="content"><div class='highlight'><pre>  graph.createEdge([id1, id2]);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>We can also get a reference to the node that is an object wrapping data</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> node1 = graph.getNode(id1);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>node1.data is an array, so we can push something in it</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  node1.data.push(<span class="string">'foo'</span>);
 };</pre></div></div>
             
         </li>
