@@ -29,6 +29,8 @@ describe 'IperEdge', ->
           edge = new IperEdge(graph, [-1, -2])
       ).should.throwError()
 
+    it 'checks node #degree does not excede its #maxDegree', ->
+
   describe 'accessors', ->
     describe '#nodeIds', ->
       it 'returns the #nodeIds', ->

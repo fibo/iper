@@ -59,6 +59,17 @@ describe 'IperGraph', ->
         id = graph.createNode data
         id.should.be.defined
 
+      it 'has signature (data, meta), returns nodeId', ->
+        maxDegree = 4
+        meta =
+          maxDegree: maxDegree
+
+        id = graph.createNode data, meta
+        id.should.be.defined
+
+        node = graph.getNode id
+        node.maxDegree.should.eql maxDegree
+
     describe '#getNode()', ->
       it 'has signature (id), returns node', ->
         id = graph.createNode data

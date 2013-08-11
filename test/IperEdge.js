@@ -36,12 +36,13 @@ describe('IperEdge', function() {
       edge = new IperEdge(graph, nodeIds);
       return edge.should.be.instanceOf(IperEdge);
     });
-    return it('checks #nodeIds is an array of valid node ids', function() {
+    it('checks #nodeIds is an array of valid node ids', function() {
       return (function() {
         var edge;
         return edge = new IperEdge(graph, [-1, -2]);
       }).should.throwError();
     });
+    return it('checks node #degree does not excede its #maxDegree', function() {});
   });
   describe('accessors', function() {
     return describe('#nodeIds', function() {

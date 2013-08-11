@@ -64,10 +64,21 @@ describe('IperGraph', function() {
     graph = new IperGraph();
     data = 'foo';
     describe('#createNode()', function() {
-      return it('has signature (data), returns nodeId', function() {
+      it('has signature (data), returns nodeId', function() {
         var id;
         id = graph.createNode(data);
         return id.should.be.defined;
+      });
+      return it('has signature (data, meta), returns nodeId', function() {
+        var id, maxDegree, meta, node;
+        maxDegree = 4;
+        meta = {
+          maxDegree: maxDegree
+        };
+        id = graph.createNode(data, meta);
+        id.should.be.defined;
+        node = graph.getNode(id);
+        return node.maxDegree.should.eql(maxDegree);
       });
     });
     describe('#getNode()', function() {
