@@ -1,12 +1,15 @@
 
 // Iper
 // ====
-//
+
 // Learn to use `iper` by example.
 
-// * graph
-exports.graph = require('./graph')
+// * common graph
+exports.graph = require('./commonGraph')
 
-// * createNodes
+// * generic graph
+exports.graph = require('./genericGraph')
+
+// * graph #createNodes() method
 exports.createNodes = require('./createNodes')
 

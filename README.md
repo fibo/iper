@@ -27,7 +27,6 @@ See [examples with annotated sources](http://fibo.github.io/iper).
     var iper = require('iper');
 
     var IperGraph = iper.IperGraph;
-    var IperEdge  = iper.IperEdge;
 
     var graph = new IperGraph();
 

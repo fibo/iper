@@ -6,7 +6,6 @@ describe("README's Quick start section", function () {
   it('has a working example', function () {
 
     var IperGraph = iper.IperGraph;
-    var IperEdge  = iper.IperEdge;
 
     var graph = new IperGraph();
 
