@@ -12,7 +12,7 @@ graph = new IperGraph()
 describe 'IperNode', ->
   describe 'inheritance', ->
     it 'is an IperElement', ->
-      node = new IperNode()
+      node = new IperNode(graph)
       node.should.be.instanceOf IperElement
 
   describe 'constructor', ->
@@ -34,6 +34,11 @@ describe 'IperNode', ->
 
       node.data.should.be.eql data
       node.maxDegree.should.be.eql maxDegree
+
+    it 'requires graph is defined', ->
+      ( () ->
+          node = new IperNode()
+      ).should.throwError()
 
   describe 'accessors', ->
     describe '#maxDegree', ->

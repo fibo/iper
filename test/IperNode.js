@@ -18,7 +18,7 @@ describe('IperNode', function() {
   describe('inheritance', function() {
     return it('is an IperElement', function() {
       var node;
-      node = new IperNode();
+      node = new IperNode(graph);
       return node.should.be.instanceOf(IperElement);
     });
   });
@@ -33,7 +33,7 @@ describe('IperNode', function() {
       node = new IperNode(graph, data);
       return node.should.be.instanceOf(IperNode);
     });
-    return it('has signature (graph, data, meta)', function() {
+    it('has signature (graph, data, meta)', function() {
       var maxDegree, meta, node;
       maxDegree = 2;
       meta = {
@@ -43,6 +43,12 @@ describe('IperNode', function() {
       node.should.be.instanceOf(IperNode);
       node.data.should.be.eql(data);
       return node.maxDegree.should.be.eql(maxDegree);
+    });
+    return it('requires graph is defined', function() {
+      return (function() {
+        var node;
+        return node = new IperNode();
+      }).should.throwError();
     });
   });
   describe('accessors', function() {

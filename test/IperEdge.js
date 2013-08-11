@@ -36,13 +36,34 @@ describe('IperEdge', function() {
       edge = new IperEdge(graph, nodeIds);
       return edge.should.be.instanceOf(IperEdge);
     });
+    it('requires graph is defined and nodeIds is an array', function() {
+      (function() {
+        var edge;
+        return edge = new IperEdge();
+      }).should.throwError();
+      return (function() {
+        var edge;
+        return edge = new IperEdge(graph);
+      }).should.throwError();
+    });
     it('checks #nodeIds is an array of valid node ids', function() {
       return (function() {
         var edge;
         return edge = new IperEdge(graph, [-1, -2]);
       }).should.throwError();
     });
-    return it('checks node #degree does not excede its #maxDegree', function() {});
+    return it('checks node #degree does not excede its #maxDegree', function() {
+      var edge, id, meta;
+      meta = {
+        maxDegree: 2
+      };
+      id = graph.createNode('example', meta);
+      edge = new IperEdge(graph, [id1, id]);
+      edge = new IperEdge(graph, [id2, id]);
+      return (function() {
+        return edge = new IperEdge(graph, [id2, id]);
+      }).should.throwError();
+    });
   });
   describe('accessors', function() {
     return describe('#nodeIds', function() {
