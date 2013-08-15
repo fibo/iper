@@ -78,6 +78,53 @@ describe 'IperNode', ->
         node3.degree.should.be.eql 2
 
   describe 'methods', ->
+    describe '#getAdjacentNodeIds()', ->
+      it 'returns ids of nodes in hyperedges connected to the node', ->
+        adjcentNodes = []
+
+        id1 = graph.createNode()
+        id2 = graph.createNode()
+        id3 = graph.createNode()
+        id4 = graph.createNode()
+
+        node = graph.getNode(id1)
+
+        adjcentNodes = node.getAdjacentNodeIds()
+        adjcentNodes.should.be.instanceOf Array
+        adjcentNodes.should.be.empty
+
+        # loop edges does not imply node is adjacent to itself
+        graph.createEdge([id1, id1])
+        adjcentNodes = node.getAdjacentNodeIds()
+        adjcentNodes.should.be.empty
+
+        graph.createEdge([id1, id2])
+        adjcentNodes = node.getAdjacentNodeIds()
+        adjcentNodes.should.be.eql [id2]
+
+        # this edge should not affect adjacentNodeIds
+        graph.createEdge([id2, id3])
+        adjcentNodes = node.getAdjacentNodeIds()
+        adjcentNodes.should.be.eql [id2]
+
+        # adjacentNodeIds are uniq
+        graph.createEdge([id1, id2])
+        adjcentNodes = node.getAdjacentNodeIds()
+        adjcentNodes.should.be.eql [id2]
+
+        graph.createEdge([id1, id2, id3])
+        adjcentNodes = node.getAdjacentNodeIds()
+        adjcentNodes.should.be.eql [id2, id3]
+
+        graph.createEdge([id1, id4])
+        adjcentNodes = node.getAdjacentNodeIds()
+        adjcentNodes.should.be.eql [id2, id3, id4]
+
+        # remove a node
+        graph.removeNode(id2)
+        adjcentNodes = node.getAdjacentNodeIds()
+        adjcentNodes.should.be.eql [id3, id4]
+
     describe '#remove()', ->
       it 'removes the node from its graph', ->
         node = new IperNode(graph)

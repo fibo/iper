@@ -89,6 +89,41 @@ describe('IperNode', function() {
     });
   });
   return describe('methods', function() {
+    describe('#getAdjacentNodeIds()', function() {
+      return it('returns ids of nodes in hyperedges connected to the node', function() {
+        var adjcentNodes, id1, id2, id3, id4, node;
+        adjcentNodes = [];
+        id1 = graph.createNode();
+        id2 = graph.createNode();
+        id3 = graph.createNode();
+        id4 = graph.createNode();
+        node = graph.getNode(id1);
+        adjcentNodes = node.getAdjacentNodeIds();
+        adjcentNodes.should.be.instanceOf(Array);
+        adjcentNodes.should.be.empty;
+        graph.createEdge([id1, id1]);
+        adjcentNodes = node.getAdjacentNodeIds();
+        adjcentNodes.should.be.empty;
+        graph.createEdge([id1, id2]);
+        adjcentNodes = node.getAdjacentNodeIds();
+        adjcentNodes.should.be.eql([id2]);
+        graph.createEdge([id2, id3]);
+        adjcentNodes = node.getAdjacentNodeIds();
+        adjcentNodes.should.be.eql([id2]);
+        graph.createEdge([id1, id2]);
+        adjcentNodes = node.getAdjacentNodeIds();
+        adjcentNodes.should.be.eql([id2]);
+        graph.createEdge([id1, id2, id3]);
+        adjcentNodes = node.getAdjacentNodeIds();
+        adjcentNodes.should.be.eql([id2, id3]);
+        graph.createEdge([id1, id4]);
+        adjcentNodes = node.getAdjacentNodeIds();
+        adjcentNodes.should.be.eql([id2, id3, id4]);
+        graph.removeNode(id2);
+        adjcentNodes = node.getAdjacentNodeIds();
+        return adjcentNodes.should.be.eql([id3, id4]);
+      });
+    });
     return describe('#remove()', function() {
       return it('removes the node from its graph', function() {
         var node, nodeId;

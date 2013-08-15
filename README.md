@@ -35,12 +35,7 @@ See [examples with annotated sources](http://fibo.github.io/iper).
     var quzNodeId = graph.createNode({quz:'quuz'});
 
     var edgeId = graph.createEdge([fooNodeId, barNodeId]);
-
-    var edge = graph.getEdge(edgeId);
-
     var tripleEdgeId = graph.createEdge([fooNodeId, barNodeId, quzNodeId]);
-
-    var tripleEdge = graph.getEdge(tripleEdgeId);
 
     console.log(graph.data);
 

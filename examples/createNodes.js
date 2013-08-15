@@ -1,19 +1,19 @@
 
 module.exports = function () {
 
-// example dependencies
+  // example dependencies
 
-var iper = require('iper');
+  var iper = require('iper');
 
-var IperGraph = iper.IperGraph;
+  var IperGraph = iper.IperGraph;
 
-// Create an empty graph
-var graph = new IperGraph();
+  // Create an empty graph
+  var graph = new IperGraph();
 
-// Use #createNode() to add nodes to the graph.
-//
-// For example, this will create an empty node.
-graph.createNode();
+  // Use #createNode() to add nodes to the graph.
+  //
+  // For example, this will create an empty node.
+  graph.createNode();
 
   // You can pass any kind of data
   graph.createNode(0);

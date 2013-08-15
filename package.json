@@ -1,6 +1,6 @@
 {
   "name": "iper",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Hypergraphs for breakfast",
   "main": "index.js",
   "scripts": {

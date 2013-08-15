@@ -13,3 +13,6 @@ exports.graph = require('./genericGraph')
 // * graph #createNodes() method
 exports.createNodes = require('./createNodes')
 
+// * node #getAdjacentNodeIds() method
+exports.adjacentNodes = require('./adjacentNodes')
+
