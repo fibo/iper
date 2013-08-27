@@ -27,9 +27,11 @@
     "grunt": "~0.4.1",
     "grunt-mocha-cli": "~1.0.6",
     "grunt-contrib-watch": "~0.5.1",
-    "grunt-docco-multi": "0.0.2"
+    "grunt-docco-multi": "0.0.2",
+    "grunt-contrib-jshint": "~0.6.3"
   },
   "dependencies": {
-    "underscore": "~1.5.1"
+    "underscore": "~1.5.1",
+    "inherits": "~2.0.1"
   }
 }
