@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>iper</title>
+  <title>genericGraph.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -32,8 +32,8 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="./">Home</a></li>
-            <li><a href="./classes">Classes</a></li>
-            <li><a href="./examples">Examples</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <!-- li class="dropdown">
@@ -49,7 +49,6 @@
               </ul>
             </li -->
             <li><a href="http://g14n.info">Site</a></li>
-            <!-- li class="active"><a href="./">Static top</a></li -->
           </ul>
         </div>
       </div> <!-- div class="container" -->
@@ -58,62 +57,143 @@
 
 
   <div class="container">
-    <div class="jumbotron">
-      <h1 id="iper">iper</h1>
-<p>Hypergraphs for Node.js</p>
-<p><a href="https://travis-ci.org/fibo/iper.png?branch=master"><img src="https://travis-ci.org/fibo/iper.png?branch=master" alt="Build Status"></a></p>
-<p>What is an hypergraph?</p>
-<p>An hypergraph is a graph which rank can be greater than two.</p>
-<p>Check the following Wikipedia pages:</p>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Hypergraph">Hypergraph</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Graph_theory">Graph theory</a></li>
-</ul>
-<h1 id="installation">Installation</h1>
-<pre><code>npm install iper</code></pre>
-<h1 id="documentation">Documentation</h1>
-<p>See <a href="http://fibo.github.io/iper">examples with annotated sources</a>.</p>
-<h1 id="quick-start">Quick start</h1>
-<pre><code>var iper = require(&#39;iper&#39;);
-
-var IperGraph = iper.IperGraph;
-
-var graph = new IperGraph();
-
-var fooNodeId = graph.createNode(&#39;foo&#39;);
-var barNodeId = graph.createNode([&#39;bar&#39;]);
-var quzNodeId = graph.createNode({quz:&#39;quuz&#39;});
-
-var edgeId = graph.createEdge([fooNodeId, barNodeId]);
-var tripleEdgeId = graph.createEdge([fooNodeId, barNodeId, quzNodeId]);
-
-console.log(graph.data);
-
-// graph data should be something like
-//
-// nodes:{
-//   fooNodeId: &#39;foo&#39;,
-//   barNodeId: [&#39;bar&#39;],
-//   quzNodeId: {quz:&#39;quuz&#39;}
-// },
-// edges: {
-//   edgeId: [fooNodeId, barNodeId],
-//   tripleEdgeId: [fooNodeId, barNodeId, quzNodeId]
-// }
-//
-// that is, depending on id assignment, something similar to
-//
-// nodes:{
-//   1: &#39;foo&#39;,
-//   2: [&#39;bar&#39;],
-//   3: {quz:&#39;quuz&#39;}
-// },
-// edges: {
-//   4: [1, 2],
-//   5: [1, 2, 3]
-// }</code></pre>
-
+  <div class="row">
+    <!-- div class="header">
+      
+ 
+      <h1>genericGraph.js</h1>
+ 
+      
+ 
+    </div -->
+ 
+    <div class="col-md-3">
+      <h2>All Classes</h2>
+      <ul class="list-group">
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="adjacentNodes.html">
+ 
+            adjacentNodes
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="commonGraph.html">
+ 
+            commonGraph
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="createNodes.html">
+ 
+            createNodes
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="genericGraph.html">
+ 
+            genericGraph
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+      </ul>
     </div>
+ 
+    <div class="col-md-9">
+      <h2>Class</h2>
+
+      
+        
+        
+        
+          <div class='highlight'><pre>
+module.exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div>
+        
+      
+        
+        <p>example dependencies</p>
+
+        
+          <div class='highlight'><pre>
+  <span class="keyword">var</span> iper = require(<span class="string">'iper'</span>);
+
+  <span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
+        
+      
+        
+        <p>create an empty graph</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">var</span> graph1 = <span class="keyword">new</span> IperGraph();</pre></div>
+        
+      
+        
+        <p>we can add nodes and edges later, by default we have an hypergraph with no restriction</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">var</span> id1 = graph1.createNode(<span class="string">'foo'</span>);
+  <span class="keyword">var</span> id2 = graph1.createNode(<span class="string">'bar'</span>);
+  <span class="keyword">var</span> id3 = graph1.createNode(<span class="string">'quz'</span>);</pre></div>
+        
+      
+        
+        <p>create some 2-edges</p>
+
+        
+          <div class='highlight'><pre>  graph1.createEdge([id1, id2]);
+  graph1.createEdge([id2, id3]);
+  graph1.createEdge([id3, id1]);</pre></div>
+        
+      
+        
+        <p>we have three nodes so we can create also an hyperedge</p>
+
+        
+          <div class='highlight'><pre>  graph1.createEdge([id1, id2, id3]);
+
+};</pre></div>
+        
+      
+ 
+    </div>
+  </div>
   </div>
 
 

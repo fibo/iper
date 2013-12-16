@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>createNodes.js</title>
+
+  <!-- Bootstrap -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+</head>
+<body style>
+
+
+
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">algebra</span>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="./">Home</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li -->
+            <li><a href="http://g14n.info">Site</a></li>
+          </ul>
+        </div>
+      </div> <!-- div class="container" -->
+    </div> <!-- div class="navbar" -->
+
+
+
+  <div class="container">
+  <div class="row">
+    <!-- div class="header">
+      
+ 
+      <h1>createNodes.js</h1>
+ 
+      
+ 
+    </div -->
+ 
+    <div class="col-md-3">
+      <h2>All Classes</h2>
+      <ul class="list-group">
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="adjacentNodes.html">
+ 
+            adjacentNodes
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="commonGraph.html">
+ 
+            commonGraph
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="createNodes.html">
+ 
+            createNodes
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="genericGraph.html">
+ 
+            genericGraph
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+      </ul>
+    </div>
+ 
+    <div class="col-md-9">
+      <h2>Class</h2>
+
+      
+        
+        
+        
+          <div class='highlight'><pre>
+module.exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div>
+        
+      
+        
+        <p>example dependencies</p>
+
+        
+          <div class='highlight'><pre>
+  <span class="keyword">var</span> iper = require(<span class="string">'iper'</span>);
+
+  <span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
+        
+      
+        
+        <p>Create an empty graph</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">var</span> graph = <span class="keyword">new</span> IperGraph();</pre></div>
+        
+      
+        
+        <p>Use #createNode() to add nodes to the graph.</p>
+<p>For example, this will create an empty node.</p>
+
+        
+          <div class='highlight'><pre>  graph.createNode();</pre></div>
+        
+      
+        
+        <p>You can pass any kind of data</p>
+
+        
+          <div class='highlight'><pre>  graph.createNode(<span class="number">0</span>);
+  graph.createNode(<span class="string">'foo'</span>);
+  graph.createNode([<span class="string">'bar'</span>]);
+  graph.createNode({quz:<span class="string">'quuz'</span>});
+  graph.createNode(
+    <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span> {</span>
+      console.log(<span class="string">'Hello iper!'</span>);
+    }
+  );</pre></div>
+        
+      
+        
+        <p>Every node will be given a unique identifier, that is returned by #createNode() as a convenience.
+Lets create two nodes with an empty array as data, 
+and lets store ids to use them later.</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">var</span> id1 = graph.createNode([]);
+  <span class="keyword">var</span> id2 = graph.createNode([]);</pre></div>
+        
+      
+        
+        <p>Now we can use id1 and id2 to refer to the nodes,
+for example we can create an edge joining the nodes.</p>
+
+        
+          <div class='highlight'><pre>  graph.createEdge([id1, id2]);</pre></div>
+        
+      
+        
+        <p>We can also get a reference to the node</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">var</span> node1 = graph.getNode(id1);</pre></div>
+        
+      
+        
+        <p>node1.data is an array, so we can push something in it</p>
+
+        
+          <div class='highlight'><pre>  node1.data.push(<span class="string">'foo'</span>);</pre></div>
+        
+      
+        
+        <p>we can ask the degree of the node, that is the number of edges it has</p>
+
+        
+          <div class='highlight'><pre>  node1.degree.should.be.eql(<span class="number">1</span>);</pre></div>
+        
+      
+        
+        <p>It is possible to set a #maxDegree when creating a node</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">var</span> id3 = graph.createNode(<span class="string">'example'</span>, {maxDegree:<span class="number">2</span>});</pre></div>
+        
+      
+        
+        <p>node3 will have at most 2 edges</p>
+
+        
+          <div class='highlight'><pre>  <span class="keyword">var</span> node3 = graph.getNode(id3);</pre></div>
+        
+      
+        
+        <p>by the way, since we are working with hypergraphs,
+edges can join more than 2 nodes</p>
+
+        
+          <div class='highlight'><pre>  graph.createEdge([id1, id2, id3]);
+  node3.degree.should.be.eql(<span class="number">1</span>);</pre></div>
+        
+      
+        
+        <p>Let&#39; s add another edge to node3, it should be the last</p>
+
+        
+          <div class='highlight'><pre>  graph.createEdge([id1, id3]);
+  node3.degree.should.be.eql(<span class="number">2</span>);</pre></div>
+        
+      
+        
+        <p>adding another edge should not be possible</p>
+
+        
+          <div class='highlight'><pre>  (<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+    graph.createEdge([id2, id3]);
+  }).should.throwError();</pre></div>
+        
+      
+        
+        <p>node3 degree is unchanged</p>
+
+        
+          <div class='highlight'><pre>  node3.degree.should.be.eql(<span class="number">2</span>);
+};</pre></div>
+        
+      
+ 
+    </div>
+  </div>
+  </div>
+
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <!-- Start of Google Analytics tracking code -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12635045-12']);
+    _gaq.push(['_trackPageview']);
+
+   (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
+
+  </script>
+  <!-- End of Google Analytics tracking code -->
+
+</body>
+</html>

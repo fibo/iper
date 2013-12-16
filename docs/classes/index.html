@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>iper</title>
+  <title>index.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -32,8 +32,8 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="./">Home</a></li>
-            <li><a href="./classes">Classes</a></li>
-            <li><a href="./examples">Examples</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <!-- li class="dropdown">
@@ -49,7 +49,6 @@
               </ul>
             </li -->
             <li><a href="http://g14n.info">Site</a></li>
-            <!-- li class="active"><a href="./">Static top</a></li -->
           </ul>
         </div>
       </div> <!-- div class="container" -->
@@ -58,62 +57,128 @@
 
 
   <div class="container">
-    <div class="jumbotron">
-      <h1 id="iper">iper</h1>
-<p>Hypergraphs for Node.js</p>
-<p><a href="https://travis-ci.org/fibo/iper.png?branch=master"><img src="https://travis-ci.org/fibo/iper.png?branch=master" alt="Build Status"></a></p>
-<p>What is an hypergraph?</p>
-<p>An hypergraph is a graph which rank can be greater than two.</p>
-<p>Check the following Wikipedia pages:</p>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Hypergraph">Hypergraph</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Graph_theory">Graph theory</a></li>
-</ul>
-<h1 id="installation">Installation</h1>
-<pre><code>npm install iper</code></pre>
-<h1 id="documentation">Documentation</h1>
-<p>See <a href="http://fibo.github.io/iper">examples with annotated sources</a>.</p>
-<h1 id="quick-start">Quick start</h1>
-<pre><code>var iper = require(&#39;iper&#39;);
-
-var IperGraph = iper.IperGraph;
-
-var graph = new IperGraph();
-
-var fooNodeId = graph.createNode(&#39;foo&#39;);
-var barNodeId = graph.createNode([&#39;bar&#39;]);
-var quzNodeId = graph.createNode({quz:&#39;quuz&#39;});
-
-var edgeId = graph.createEdge([fooNodeId, barNodeId]);
-var tripleEdgeId = graph.createEdge([fooNodeId, barNodeId, quzNodeId]);
-
-console.log(graph.data);
-
-// graph data should be something like
-//
-// nodes:{
-//   fooNodeId: &#39;foo&#39;,
-//   barNodeId: [&#39;bar&#39;],
-//   quzNodeId: {quz:&#39;quuz&#39;}
-// },
-// edges: {
-//   edgeId: [fooNodeId, barNodeId],
-//   tripleEdgeId: [fooNodeId, barNodeId, quzNodeId]
-// }
-//
-// that is, depending on id assignment, something similar to
-//
-// nodes:{
-//   1: &#39;foo&#39;,
-//   2: [&#39;bar&#39;],
-//   3: {quz:&#39;quuz&#39;}
-// },
-// edges: {
-//   4: [1, 2],
-//   5: [1, 2, 3]
-// }</code></pre>
-
+  <div class="row">
+    <!-- div class="header">
+      
+ 
+      <h1>index.js</h1>
+ 
+      
+ 
+    </div -->
+ 
+    <div class="col-md-3">
+      <h2>All Classes</h2>
+      <ul class="list-group">
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="IperEdge.html">
+ 
+            IperEdge
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="IperElement.html">
+ 
+            IperElement
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="IperGraph.html">
+ 
+            IperGraph
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="IperNode.html">
+ 
+            IperNode
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+      </ul>
     </div>
+ 
+    <div class="col-md-9">
+      <h2>Class</h2>
+
+      
+        
+        
+      
+        
+        <h1>Iper</h1>
+<p>Hypergraphs for breakfast</p>
+
+      
+        
+        <h2>Classes</h2>
+
+      
+        
+        <ul>
+<li>IperElement</li>
+</ul>
+
+      
+        
+        <ul>
+<li>IperEdge</li>
+</ul>
+
+      
+        
+        <ul>
+<li>IperGraph</li>
+</ul>
+
+      
+        
+        <ul>
+<li>IperNode</li>
+</ul>
+
+      
+ 
+    </div>
+  </div>
   </div>
 
 
