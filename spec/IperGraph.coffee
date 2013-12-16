@@ -31,7 +31,9 @@ describe 'IperGraph', ->
       graph = new IperGraph(data)
       graph.should.be.instanceOf IperGraph
 
-  describe 'accessors', ->
+    it 'has signature (data, meta)'
+
+  describe 'Attributes', ->
     describe '#data', ->
       it 'returns graph data', ->
         graph = new IperGraph()
@@ -50,7 +52,7 @@ describe 'IperGraph', ->
 
         graph.data.should.eql data
 
-  describe 'methods', ->
+  describe 'Methods', ->
     graph = new IperGraph()
     data = 'foo'
 

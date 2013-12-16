@@ -27,7 +27,7 @@
         graph = new IperGraph();
         return graph.should.be.instanceOf(IperGraph);
       });
-      return it('has signature (data)', function() {
+      it('has signature (data)', function() {
         var data, graph;
         data = {
           nodes: {
@@ -41,8 +41,9 @@
         graph = new IperGraph(data);
         return graph.should.be.instanceOf(IperGraph);
       });
+      return it('has signature (data, meta)');
     });
-    describe('accessors', function() {
+    describe('Attributes', function() {
       return describe('#data', function() {
         return it('returns graph data', function() {
           var data, edgeId1, graph, nodeId1, nodeId2;
@@ -60,7 +61,7 @@
         });
       });
     });
-    return describe('methods', function() {
+    return describe('Methods', function() {
       var data, graph;
       graph = new IperGraph();
       data = 'foo';

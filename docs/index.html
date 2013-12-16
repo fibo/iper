@@ -61,7 +61,7 @@
     <div class="jumbotron">
       <h1 id="iper">iper</h1>
 <p>Hypergraphs for Node.js</p>
-<p><a href="https://travis-ci.org/fibo/iper.png?branch=master"><img src="https://travis-ci.org/fibo/iper.png?branch=master" alt="Build Status"></a></p>
+<p><a href="https://travis-ci.org/fibo/iper.png?branch=master"><img src="https://travis-ci.org/fibo/iper.png?branch=master" alt="Build Status"></a> <a href="http://badge.fury.io/js/iper"><img src="https://badge.fury.io/js/iper.png" alt="NPM version"></a></p>
 <p>What is an hypergraph?</p>
 <p>An hypergraph is a graph which rank can be greater than two.</p>
 <p>Check the following Wikipedia pages:</p>
@@ -87,31 +87,27 @@ var quzNodeId = graph.createNode({quz:&#39;quuz&#39;});
 var edgeId = graph.createEdge([fooNodeId, barNodeId]);
 var tripleEdgeId = graph.createEdge([fooNodeId, barNodeId, quzNodeId]);
 
-console.log(graph.data);
-
-// graph data should be something like
-//
-// nodes:{
-//   fooNodeId: &#39;foo&#39;,
-//   barNodeId: [&#39;bar&#39;],
-//   quzNodeId: {quz:&#39;quuz&#39;}
-// },
-// edges: {
-//   edgeId: [fooNodeId, barNodeId],
-//   tripleEdgeId: [fooNodeId, barNodeId, quzNodeId]
-// }
-//
-// that is, depending on id assignment, something similar to
-//
-// nodes:{
-//   1: &#39;foo&#39;,
-//   2: [&#39;bar&#39;],
-//   3: {quz:&#39;quuz&#39;}
-// },
-// edges: {
-//   4: [1, 2],
-//   5: [1, 2, 3]
-// }</code></pre>
+console.log(graph.data);</code></pre>
+<p>Graph data should be something like</p>
+<pre><code> nodes:{
+   fooNodeId: &#39;foo&#39;,
+   barNodeId: [&#39;bar&#39;],
+   quzNodeId: {quz:&#39;quuz&#39;}
+ },
+ edges: {
+   edgeId: [fooNodeId, barNodeId],
+   tripleEdgeId: [fooNodeId, barNodeId, quzNodeId]
+ }</code></pre>
+<p>That is, depending on id assignment, something similar to</p>
+<pre><code>nodes:{
+  1: &#39;foo&#39;,
+  2: [&#39;bar&#39;],
+  3: {quz:&#39;quuz&#39;}
+},
+edges: {
+  4: [1, 2],
+  5: [1, 2, 3]
+}</code></pre>
 
     </div>
   </div>

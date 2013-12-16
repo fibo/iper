@@ -143,52 +143,47 @@
         
         
         
-          <div class='highlight'><pre>
-module.exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div>
-        
       
         
-        <p>example dependencies</p>
+        <h1>Generic graph</h1>
 
         
           <div class='highlight'><pre>
-  <span class="keyword">var</span> iper = require(<span class="string">'iper'</span>);
+<span class="keyword">var</span> iper = require(<span class="string">'iper'</span>);
 
-  <span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
+<span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
         
       
         
         <p>create an empty graph</p>
 
         
-          <div class='highlight'><pre>  <span class="keyword">var</span> graph1 = <span class="keyword">new</span> IperGraph();</pre></div>
+          <div class='highlight'><pre><span class="keyword">var</span> graph1 = <span class="keyword">new</span> IperGraph();</pre></div>
         
       
         
         <p>we can add nodes and edges later, by default we have an hypergraph with no restriction</p>
 
         
-          <div class='highlight'><pre>  <span class="keyword">var</span> id1 = graph1.createNode(<span class="string">'foo'</span>);
-  <span class="keyword">var</span> id2 = graph1.createNode(<span class="string">'bar'</span>);
-  <span class="keyword">var</span> id3 = graph1.createNode(<span class="string">'quz'</span>);</pre></div>
+          <div class='highlight'><pre><span class="keyword">var</span> id1 = graph1.createNode(<span class="string">'foo'</span>);
+<span class="keyword">var</span> id2 = graph1.createNode(<span class="string">'bar'</span>);
+<span class="keyword">var</span> id3 = graph1.createNode(<span class="string">'quz'</span>);</pre></div>
         
       
         
         <p>create some 2-edges</p>
 
         
-          <div class='highlight'><pre>  graph1.createEdge([id1, id2]);
-  graph1.createEdge([id2, id3]);
-  graph1.createEdge([id3, id1]);</pre></div>
+          <div class='highlight'><pre>graph1.createEdge([id1, id2]);
+graph1.createEdge([id2, id3]);
+graph1.createEdge([id3, id1]);</pre></div>
         
       
         
         <p>we have three nodes so we can create also an hyperedge</p>
 
         
-          <div class='highlight'><pre>  graph1.createEdge([id1, id2, id3]);
-
-};</pre></div>
+          <div class='highlight'><pre>graph1.createEdge([id1, id2, id3]);</pre></div>
         
       
  

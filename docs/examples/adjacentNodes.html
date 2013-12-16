@@ -143,41 +143,38 @@
         
         
         
-          <div class='highlight'><pre>
-module.exports = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span></pre></div>
-        
       
         
-        <p>example dependencies</p>
+        <h1>Adjacent nodes</h1>
 
         
           <div class='highlight'><pre>
-  <span class="keyword">var</span> iper = require(<span class="string">'iper'</span>);
+<span class="keyword">var</span> iper = require(<span class="string">'iper'</span>);
 
-  <span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
+<span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
         
       
         
         <p>Let&#39;s create an empty graph and add some nodes</p>
 
         
-          <div class='highlight'><pre>  <span class="keyword">var</span> graph = <span class="keyword">new</span> IperGraph();
+          <div class='highlight'><pre><span class="keyword">var</span> graph = <span class="keyword">new</span> IperGraph();
 
-  <span class="keyword">var</span> id1, id2, id3, id4, id5
-    , adjacentNodeIds;
+<span class="keyword">var</span> id1, id2, id3, id4, id5
+  , adjacentNodeIds;
 
-  id1 = graph.createNode();
-  id2 = graph.createNode();
-  id3 = graph.createNode();
-  id4 = graph.createNode();
-  id5 = graph.createNode();</pre></div>
+id1 = graph.createNode();
+id2 = graph.createNode();
+id3 = graph.createNode();
+id4 = graph.createNode();
+id5 = graph.createNode();</pre></div>
         
       
         
         <p>retrieve a reference to the first node</p>
 
         
-          <div class='highlight'><pre>  node1 = graph.getNode(id1);</pre></div>
+          <div class='highlight'><pre>node1 = graph.getNode(id1);</pre></div>
         
       
         
@@ -186,7 +183,7 @@ these nodes, so by now there is no adjacent node</p>
 
         
           <div class='highlight'><pre>
-  adjacentNodeIds = node1.getAdjacentNodeIds();</pre></div>
+adjacentNodeIds = node1.getAdjacentNodeIds();</pre></div>
         
       
         
@@ -198,9 +195,9 @@ these nodes, so by now there is no adjacent node</p>
         <p>Now we can add some edges and check adjacentNodeIds</p>
 
         
-          <div class='highlight'><pre>  graph.createEdge([id1, id2]);
-  adjacentNodeIds = node1.getAdjacentNodeIds();
-  adjacentNodeIds.should.be.eql([id2]);</pre></div>
+          <div class='highlight'><pre>graph.createEdge([id1, id2]);
+adjacentNodeIds = node1.getAdjacentNodeIds();
+adjacentNodeIds.should.be.eql([id2]);</pre></div>
         
       
         
@@ -209,37 +206,36 @@ creating an edge with same endpoints than above should not
 change adjacentNodeIds list</p>
 
         
-          <div class='highlight'><pre>  graph.createEdge([id1, id2]);
-  adjacentNodeIds = node1.getAdjacentNodeIds();
-  adjacentNodeIds.should.be.eql([id2]);</pre></div>
+          <div class='highlight'><pre>graph.createEdge([id1, id2]);
+adjacentNodeIds = node1.getAdjacentNodeIds();
+adjacentNodeIds.should.be.eql([id2]);</pre></div>
         
       
         
         <p>let&#39;s try with a 3-edge</p>
 
         
-          <div class='highlight'><pre>  graph.createEdge([id1, id3, id4]);
-  adjacentNodeIds = node1.getAdjacentNodeIds();
-  adjacentNodeIds.should.be.eql([id2, id3, id4]);</pre></div>
+          <div class='highlight'><pre>graph.createEdge([id1, id3, id4]);
+adjacentNodeIds = node1.getAdjacentNodeIds();
+adjacentNodeIds.should.be.eql([id2, id3, id4]);</pre></div>
         
       
         
         <p>this edge should not change adjacentNodeIds list, since id1 is not involved</p>
 
         
-          <div class='highlight'><pre>  graph.createEdge([id3, id4, id5]);
-  adjacentNodeIds = node1.getAdjacentNodeIds();
-  adjacentNodeIds.should.be.eql([id2, id3, id4]);</pre></div>
+          <div class='highlight'><pre>graph.createEdge([id3, id4, id5]);
+adjacentNodeIds = node1.getAdjacentNodeIds();
+adjacentNodeIds.should.be.eql([id2, id3, id4]);</pre></div>
         
       
         
         <p>let&#39;s try removing a node</p>
 
         
-          <div class='highlight'><pre>  graph.removeNode(id3);
-  adjacentNodeIds = node1.getAdjacentNodeIds();
-  adjacentNodeIds.should.be.eql([id2, id4]);
-};</pre></div>
+          <div class='highlight'><pre>graph.removeNode(id3);
+adjacentNodeIds = node1.getAdjacentNodeIds();
+adjacentNodeIds.should.be.eql([id2, id4]);</pre></div>
         
       
  

@@ -1,7 +1,6 @@
 
 //
-// IperGraph
-// =========
+// # IperGraph
 //
 
 var _        = require('underscore')
@@ -13,15 +12,33 @@ var IperEdge    = require('./IperEdge')
 
 // Constructor
 
-function IperGraph(data) {
+function IperGraph(data, meta) {
+
+  /* TODO in meta ci metto rank e tutte le options che però rimangono fisse */
 
   IperElement.call(this)
 
+  //
+  // ## Attributes
+  //
+
+  //
+  // ### edges
+  //
+
   this.edges = {}
+
+  //
+  // ### nodes
+  //
+
   this.nodes = {}
 
-  // data
-  function getData() {
+  //
+  // ### data
+  //
+
+  function getData () {
     var data = {nodes:{}, edges:{}}
 
     for (var n in this.nodes) {
@@ -49,7 +66,7 @@ function IperGraph(data) {
 inherits(IperGraph, IperNode)
 
 function check(data) {
-  // data.edges has existing nodeIds
+  /* data.edges has existing nodeIds */
   for (var edgeId in data.edges) {
     var edgeData = data.edges[edgeId]
     for (var i in edgeData) {
@@ -65,30 +82,30 @@ IperGraph.prototype.check = check
 function load(data) {
   var self = this
 
-  // check if data is valid
+  /* check if data is valid */
   try {
     check(data)
   }
   catch (er) { throw er }
 
-  // store a lookup of new <--> old ids
+  /* store a lookup of new <--> old ids */
   var nu = {}
 
-  // create new nodes first
+  /* create new nodes first */
   for (var id in data.nodes)
-    // remember association between old and new id
+    /* remember association between old and new id */
     nu[id] = self.createNode(data.nodes[id])
 
-  // create new edges
+  /* create new edges */
   _.each(data.edges, function (oldNodeIds) {
     var newNodeIds = []
 
-    // loop over old node ids and get the corresponding new ids
+    /* loop over old node ids and get the corresponding new ids */
     _.each(oldNodeIds, function (id) {
       newNodeIds.push(nu[id])
     })
 
-    // use new ids to create a new edge
+    /* use new ids to create a new edge */
     self.createEdge(newNodeIds)
   })
 }

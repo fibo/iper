@@ -1,5 +1,6 @@
 
 classes = require('./classes')
+examples = require('./examples')
 
 templates =
   index: '../fibo.github.io/templates/index.jst'
@@ -9,6 +10,28 @@ templates =
 livereloadPort = 35729
 
 coffeeConfig = {}
+
+concatConfig =
+  examples:
+    options:
+      banner: 'module.exports = function () {'
+      footer: '}'
+    files: {}
+
+mochacliConfig =
+  options:
+    require: ['should']
+    reporter: 'spec'
+    bail: true
+  all: ['test/*.js']
+  examples: ['test/examples.js']
+
+for example of examples
+  do (example) ->
+    testPath = 'test/examples/' + example + '.js'
+    examplePath = 'examples/' + example + '.js'
+
+    concatConfig.examples.files[testPath] = examplePath
 
 for klass of classes
   do (klass) ->
@@ -22,7 +45,10 @@ for klass of classes
       files:
         testFromSpec
 
+    mochacliConfig[klass] = [testPath]
+
 module.exports = (grunt) ->
+
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
 
@@ -37,10 +63,7 @@ module.exports = (grunt) ->
       mochacli:
         files: ['test/*.js', 'classes/*.js']
         tasks: 'mochacli'
-      docco:
-        files: ['examples/*.js']
-        tasks: 'docco'
-      example:
+      examples:
         files: ['examples/*.js']
         tasks: ['mochacli:examples', 'docco']
       jshint:
@@ -48,6 +71,8 @@ module.exports = (grunt) ->
         tasks: 'jshint'
 
     coffee: coffeeConfig
+
+    concat: concatConfig
 
     connect:
       server:
@@ -92,27 +117,15 @@ module.exports = (grunt) ->
           templateContext:
             title: '<%= pkg.name %>'
 
-    mochacli:
-      options:
-        require: ['should']
-        reporter: 'spec'
-        bail: true
-      all: ['test/*.js']
-      examples: ['test/examples.js']
+    mochacli: mochacliConfig
 
     open:
       index:
         path: 'http://localhost:3000'
         app: 'chrome'
 
-  grunt.loadNpmTasks 'grunt-contrib-coffee'
-  grunt.loadNpmTasks 'grunt-contrib-connect'
-  grunt.loadNpmTasks 'grunt-contrib-jshint'
-  grunt.loadNpmTasks 'grunt-contrib-watch'
-  grunt.loadNpmTasks 'grunt-docco-multi'
-  grunt.loadNpmTasks 'grunt-markdown'
-  grunt.loadNpmTasks 'grunt-mocha-cli'
-  grunt.loadNpmTasks 'grunt-open'
+  # autoload grunt npmTasks
+  grunt.loadNpmTasks npmTask for npmTask in require('matchdep').filterDev('grunt-*')
 
   grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli', 'docs']
   grunt.registerTask 'docs', ['docco', 'markdown', 'connect', 'open', 'watch']
