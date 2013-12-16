@@ -14,14 +14,14 @@
   IperNode = iper.IperNode;
 
   describe('IperGraph', function() {
-    describe('inheritance', function() {
+    describe('Inheritance', function() {
       return it('is an IperElement', function() {
         var graph;
         graph = new IperGraph();
         return graph.should.be.instanceOf(IperElement);
       });
     });
-    describe('constructor', function() {
+    describe('Constructor', function() {
       it('has signature ()', function() {
         var graph;
         graph = new IperGraph();
@@ -41,7 +41,8 @@
         graph = new IperGraph(data);
         return graph.should.be.instanceOf(IperGraph);
       });
-      return it('has signature (data, meta)');
+      it('has signature (graph)');
+      return it('has signature (graph, meta)');
     });
     describe('Attributes', function() {
       return describe('#data', function() {
@@ -91,7 +92,7 @@
           node.should.be.instanceOf(IperNode);
           return node.id.should.be.eql(id);
         });
-        return it('throws error if edge does not exists', function() {
+        return it('throws error if nodeId does not exists', function() {
           return (function() {
             return graph.getNode(-1);
           }).should.throwError();
@@ -141,7 +142,7 @@
           graph.load(data);
           return graph.check(graph.data).should.be["true"];
         });
-        return it('checks data is valid', function() {
+        it('checks data is valid', function() {
           data = {
             edges: {
               1: [5, 6],
@@ -152,18 +153,7 @@
             return graph.load(data);
           }).should.throwError();
         });
-      });
-      describe('#removeNode()', function() {
-        it('has signature (id), removes node from its graph', function() {
-          var nodeId;
-          graph = new IperGraph();
-          nodeId = graph.createNode();
-          graph.removeNode(nodeId);
-          return (function() {
-            return graph.getNode(nodeid);
-          }).should.throwError();
-        });
-        return it('removes edges left without nodes', function() {});
+        return it('removes edges left without nodes');
       });
       describe('#getEdge()', function() {
         it('has signature (id), returns edge', function() {
@@ -194,7 +184,7 @@
           return edge.id.should.be.eql(id);
         });
       });
-      return describe('#removeEdge()', function() {
+      describe('#removeEdge()', function() {
         return it('has signature (id), removes edge from its graph', function() {
           var edgeId, nodeId1, nodeId2;
           graph = new IperGraph();
@@ -204,6 +194,17 @@
           graph.removeEdge(edgeId);
           return (function() {
             return graph.getEdge(edgeId);
+          }).should.throwError();
+        });
+      });
+      return describe('#removeNode()', function() {
+        return it('has signature (id), removes node from its graph', function() {
+          var nodeId;
+          graph = new IperGraph();
+          nodeId = graph.createNode();
+          graph.removeNode(nodeId);
+          return (function() {
+            return graph.getNode(nodeid);
           }).should.throwError();
         });
       });

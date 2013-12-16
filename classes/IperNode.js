@@ -2,13 +2,13 @@
 //
 // # IperNode
 //
+// A node in an hypergraph.
+//
 
 var _        = require('underscore')
   , inherits = require('inherits')
 
 var IperElement = require('./IperElement')
-
-// Constructor
 
 function IperNode(graph, data, meta) {
   var self = this
@@ -30,6 +30,9 @@ function IperNode(graph, data, meta) {
   //
   // ### data
   //
+  // A node can hold any kind of data.
+  //
+
 
   function getData () { return data }
 
@@ -38,13 +41,22 @@ function IperNode(graph, data, meta) {
   //
   // ### degree
   //
+  // It is the number of edges incident to the vertex.
+  //
+  // See also [degree on wikipedia](http://en.wikipedia.org/wiki/Degree_(graph_theory)).
+  //
 
   function getDegree () {
     var degree = 0
 
+    /* Count occurrences of node id in edge.nodeIds
+     * for every edge in the graph.
+     */
     _.each(graph.edges, function (edge) {
-      if (_.contains(edge.nodeIds, self.id))
-        degree++
+      _.each(edge.nodeIds, function (nodeId) {
+        if (nodeId === self.id)
+          degree++
+      })
     })
 
     return degree
@@ -63,36 +75,35 @@ function IperNode(graph, data, meta) {
   Object.defineProperty(this, 'maxDegree', {get: getMaxDegree})
 
   /* register in graph */
-  graph.pushNode(self)
+  graph.nodes[this.id] = this
 }
 
 inherits(IperNode, IperElement)
 
-// getAdjacentNodeIds
+//
+// ### getAdjacentNodeIds
+//
+
 function getAdjacentNodeIds() {
   var self = this
 
   var adjacentNodeIds = []
 
-  // loop over all edges
+  /* loop over all edges */
   _.each(self.graph.edges, function (edge) {
-    // if edge contains node
+    /* if edge contains node */
     if (_.contains(edge.nodeIds, self.id))
-      // take all nodeIds except node self id
+      /* take all nodeIds except node self id */
       adjacentNodeIds.push(_.without(edge.nodeIds, self.id))
   })
 
-  // since _.without() return an array and nodeIds can be repeated
-  // use _.uniq() and _.flatten() to return a flat array with no repetition
+  /* since _.without() return an array and nodeIds can be repeated,
+   * use _.uniq() and _.flatten() to return a flat array with no repetition
+   */
   return _.uniq(_.flatten(adjacentNodeIds))
 }
-IperNode.prototype.getAdjacentNodeIds = getAdjacentNodeIds
 
-// remove
-function remove () {
-  this.graph.removeNode(this.id)
-}
-IperNode.prototype.remove = remove
+IperNode.prototype.getAdjacentNodeIds = getAdjacentNodeIds
 
 module.exports = IperNode
 

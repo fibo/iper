@@ -10,12 +10,12 @@ data = [1, 2, 3]
 graph = new IperGraph()
 
 describe 'IperNode', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an IperElement', ->
       node = new IperNode(graph)
       node.should.be.instanceOf IperElement
 
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'has signature (graph)', ->
       node = new IperNode(graph)
       node.should.be.instanceOf IperNode
@@ -77,7 +77,20 @@ describe 'IperNode', ->
         node2.degree.should.be.eql 2
         node3.degree.should.be.eql 2
 
-  describe 'methods', ->
+      it 'counts loops', ->
+        # Create a double loop
+        id1 = graph.createNode()
+        graph.createEdge([id1, id1])
+        node1 = graph.getNode(id1)
+        node1.degree.should.be.eql 2
+
+        # Create a triple loop
+        id2 = graph.createNode()
+        graph.createEdge([id2, id2, id2])
+        node2 = graph.getNode(id2)
+        node2.degree.should.be.eql 3
+
+  describe 'Methods', ->
     describe '#getAdjacentNodeIds()', ->
       it 'returns ids of nodes in hyperedges connected to the node', ->
         adjcentNodes = []
@@ -124,17 +137,4 @@ describe 'IperNode', ->
         graph.removeNode(id2)
         adjcentNodes = node.getAdjacentNodeIds()
         adjcentNodes.should.be.eql [id3, id4]
-
-    describe '#remove()', ->
-      it 'removes the node from its graph', ->
-        node = new IperNode(graph)
-        nodeId = node.id
-
-        node.remove()
-
-        (() ->
-           graph.getEdge(nodeId)
-        ).should.throwError()
-
-        node.should.exists
 

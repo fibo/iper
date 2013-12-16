@@ -16,14 +16,14 @@
   graph = new IperGraph();
 
   describe('IperNode', function() {
-    describe('inheritance', function() {
+    describe('Inheritance', function() {
       return it('is an IperElement', function() {
         var node;
         node = new IperNode(graph);
         return node.should.be.instanceOf(IperElement);
       });
     });
-    describe('constructor', function() {
+    describe('Constructor', function() {
       it('has signature (graph)', function() {
         var node;
         node = new IperNode(graph);
@@ -66,7 +66,7 @@
         });
       });
       return describe('#degree', function() {
-        return it('returns number of edges linked', function() {
+        it('returns number of edges linked', function() {
           var id1, id2, id3, node1, node2, node3;
           id1 = graph.createNode();
           id2 = graph.createNode();
@@ -87,10 +87,21 @@
           node2.degree.should.be.eql(2);
           return node3.degree.should.be.eql(2);
         });
+        return it('counts loops', function() {
+          var id1, id2, node1, node2;
+          id1 = graph.createNode();
+          graph.createEdge([id1, id1]);
+          node1 = graph.getNode(id1);
+          node1.degree.should.be.eql(2);
+          id2 = graph.createNode();
+          graph.createEdge([id2, id2, id2]);
+          node2 = graph.getNode(id2);
+          return node2.degree.should.be.eql(3);
+        });
       });
     });
-    return describe('methods', function() {
-      describe('#getAdjacentNodeIds()', function() {
+    return describe('Methods', function() {
+      return describe('#getAdjacentNodeIds()', function() {
         return it('returns ids of nodes in hyperedges connected to the node', function() {
           var adjcentNodes, id1, id2, id3, id4, node;
           adjcentNodes = [];
@@ -123,18 +134,6 @@
           graph.removeNode(id2);
           adjcentNodes = node.getAdjacentNodeIds();
           return adjcentNodes.should.be.eql([id3, id4]);
-        });
-      });
-      return describe('#remove()', function() {
-        return it('removes the node from its graph', function() {
-          var node, nodeId;
-          node = new IperNode(graph);
-          nodeId = node.id;
-          node.remove();
-          (function() {
-            return graph.getEdge(nodeId);
-          }).should.throwError();
-          return node.should.exists;
         });
       });
     });

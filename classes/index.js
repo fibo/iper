@@ -1,22 +1,20 @@
 
-// Iper
-// ====
+// # Iper
 //
 // Hypergraphs for breakfast
 //
 
-// Classes
-// -------
+// ## Classes
 
 // * IperElement
 exports.IperElement = require('./IperElement.js')
 
-// * IperEdge
+//   * IperEdge
 exports.IperEdge = require('./IperEdge.js')
 
-// * IperGraph
+//   * IperGraph
 exports.IperGraph = require('./IperGraph.js')
 
-// * IperNode
+//   * IperNode
 exports.IperNode = require('./IperNode.js')
 

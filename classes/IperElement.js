@@ -2,11 +2,10 @@
 //
 // # IperElement
 //
-// Base class for *iper*.
+// Base class for every graph element.
 //
 
 var _ = require('underscore')
-
 
 function IperElement (graph) {
 
@@ -17,6 +16,10 @@ function IperElement (graph) {
   //
   // ### graph
   //
+  // References the graph containing the element.
+  //
+  // It is a <span class="label label-info">read only</span> attribute.
+  //
 
   Object.defineProperty(this, 'graph', {value: graph, writable: false})
 
@@ -24,6 +27,8 @@ function IperElement (graph) {
   // ### id
   //
   // Every IperElement has a unique id.
+  //
+  // It is a <span class="label label-info">read only</span> attribute.
   //
 
   Object.defineProperty(this, 'id', {value: _.uniqueId(), writable: false})

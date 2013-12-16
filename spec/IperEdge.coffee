@@ -14,12 +14,12 @@ id3 = graph.createNode(3)
 nodeIds = [id1, id2, id3]
 
 describe 'IperEdge', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an IperElement', ->
       edge = new IperEdge(graph, nodeIds)
       edge.should.be.instanceOf IperElement
 
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'has signature (graph, nodeIds)', ->
       edge = new IperEdge(graph, nodeIds)
       edge.should.be.instanceOf IperEdge
@@ -50,13 +50,14 @@ describe 'IperEdge', ->
           edge = new IperEdge(graph, [id2, id])
       ).should.throwError()
 
-  describe 'accessors', ->
+  describe 'Attributes', ->
     describe '#nodeIds', ->
       it 'returns the #nodeIds', ->
         edge = new IperEdge(graph, nodeIds)
         edge.nodeIds.should.eql nodeIds 
 
-  describe 'methods', ->
+###
+  describe 'Methods', ->
     describe '#remove()', ->
       it 'removes the edge from its graph', ->
         edge = new IperEdge(graph, nodeIds)
@@ -69,4 +70,5 @@ describe 'IperEdge', ->
         ).should.throwError()
 
         edge.should.exists
+###
 

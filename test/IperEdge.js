@@ -24,14 +24,14 @@
   nodeIds = [id1, id2, id3];
 
   describe('IperEdge', function() {
-    describe('inheritance', function() {
+    describe('Inheritance', function() {
       return it('is an IperElement', function() {
         var edge;
         edge = new IperEdge(graph, nodeIds);
         return edge.should.be.instanceOf(IperElement);
       });
     });
-    describe('constructor', function() {
+    describe('Constructor', function() {
       it('has signature (graph, nodeIds)', function() {
         var edge;
         edge = new IperEdge(graph, nodeIds);
@@ -66,7 +66,7 @@
         }).should.throwError();
       });
     });
-    describe('accessors', function() {
+    return describe('Attributes', function() {
       return describe('#nodeIds', function() {
         return it('returns the #nodeIds', function() {
           var edge;
@@ -75,20 +75,23 @@
         });
       });
     });
-    return describe('methods', function() {
-      return describe('#remove()', function() {
-        return it('removes the edge from its graph', function() {
-          var edge, edgeId;
-          edge = new IperEdge(graph, nodeIds);
-          edgeId = edge.id;
-          edge.remove();
-          (function() {
-            return graph.getEdge(edgeId);
-          }).should.throwError();
-          return edge.should.exists;
-        });
-      });
-    });
   });
+
+  /*
+    describe 'Methods', ->
+      describe '#remove()', ->
+        it 'removes the edge from its graph', ->
+          edge = new IperEdge(graph, nodeIds)
+          edgeId = edge.id
+  
+          edge.remove()
+  
+          (() ->
+              graph.getEdge(edgeId)
+          ).should.throwError()
+  
+          edge.should.exists
+  */
+
 
 }).call(this);

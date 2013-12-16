@@ -1,7 +1,6 @@
 
 //
-// IperEdge
-// ========
+// # IperEdge
 //
 
 var _        = require('underscore')
@@ -9,56 +8,71 @@ var _        = require('underscore')
 
 var IperElement = require('./IperElement')
 
-// Constructor
+//
+// ## Constructor
+//
 
 function IperEdge(graph, nodeIds) {
-  var self = this
 
-  // check graph
+  //
+  // ### signature (graph, nodeIds)
+  //
+
+  // *graph* must be defined
   if (_.isUndefined(graph))
     throw new Error()
 
+  // *graph.nodes* must be an object
   if (! (_.isObject(graph.nodes)))
     throw new Error()
 
-  // check nodeIds
+  // *nodeIds* must be an array
   if (! (_.isArray(nodeIds)))
     throw new Error()
 
   _.each(nodeIds, function (id) {
     var node = graph.getNode(id)
 
-    // check that nodeIds refers to existing nodes
+    /* check that nodeIds refers to existing nodes */
     if (_.isUndefined(node))
       throw new Error()
 
-    // if maxDegree is not defined there is no trouble ...
+    /* if maxDegree is not defined there is no trouble ... */
     if (_.isUndefined(node.maxDegree))
       return
 
-    // otherwise check that node degree is not going to exceed its maxDegree
+    /* otherwise check that node degree is not going to exceed its maxDegree */
     if (node.degree === node.maxDegree)
       throw new Error()
   })
 
   IperElement.call(this, graph)
 
-  // nodeIds
+  //
+  // ## Attributes
+  //
+
+  //
+  // ### nodeIds
+  //
+  // It is an array of node ids.
+  //
+
   function getNodeIds() { return nodeIds }
 
   Object.defineProperty(this, 'nodeIds', {get: getNodeIds})
 
-  // register in graph
-  graph.pushEdge(self)
+  /* register in graph */
+  graph.edges[this.id] = this
 }
 
 inherits(IperEdge, IperElement)
 
-// remove
-function remove () {
-  this.graph.removeEdge(this.id)
-}
-IperEdge.prototype.remove = remove
+//
+// ## Methods
+//
+// This class has no method.
+//
 
 module.exports = IperEdge
 

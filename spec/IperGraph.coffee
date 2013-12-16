@@ -8,12 +8,12 @@ IperGraph   = iper.IperGraph
 IperNode    = iper.IperNode
 
 describe 'IperGraph', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an IperElement', ->
       graph = new IperGraph()
       graph.should.be.instanceOf IperElement
 
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'has signature ()', ->
       graph = new IperGraph()
       graph.should.be.instanceOf IperGraph
@@ -31,7 +31,9 @@ describe 'IperGraph', ->
       graph = new IperGraph(data)
       graph.should.be.instanceOf IperGraph
 
-    it 'has signature (data, meta)'
+    it 'has signature (graph)'
+
+    it 'has signature (graph, meta)'
 
   describe 'Attributes', ->
     describe '#data', ->
@@ -79,7 +81,7 @@ describe 'IperGraph', ->
         node.should.be.instanceOf IperNode
         node.id.should.be.eql id
 
-      it 'throws error if edge does not exists', ->
+      it 'throws error if nodeId does not exists', ->
         (() ->
           graph.getNode(-1)
         ).should.throwError()
@@ -143,19 +145,7 @@ describe 'IperGraph', ->
           graph.load(data)
         ).should.throwError()
 
-    describe '#removeNode()', ->
-      it 'has signature (id), removes node from its graph', ->
-        graph = new IperGraph()
-
-        nodeId = graph.createNode()
-
-        graph.removeNode(nodeId)
-
-        (() ->
-          graph.getNode(nodeid)
-        ).should.throwError()
-
-      it 'removes edges left without nodes', ->
+      it 'removes edges left without nodes' # , ->
 
       # nodeId1 = graph.createNode(1)
       # nodeId2 = graph.createNode(2)
@@ -209,5 +199,17 @@ describe 'IperGraph', ->
 
         (() ->
           graph.getEdge(edgeId)
+        ).should.throwError()
+
+    describe '#removeNode()', ->
+      it 'has signature (id), removes node from its graph', ->
+        graph = new IperGraph()
+
+        nodeId = graph.createNode()
+
+        graph.removeNode(nodeId)
+
+        (() ->
+          graph.getNode(nodeid)
         ).should.throwError()
 

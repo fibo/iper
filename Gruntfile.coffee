@@ -25,6 +25,7 @@ mochacliConfig =
     bail: true
   all: ['test/*.js']
   examples: ['test/examples.js']
+  classes: []
 
 for example of examples
   do (example) ->
@@ -45,7 +46,11 @@ for klass of classes
       files:
         testFromSpec
 
+    # One test for every class
     mochacliConfig[klass] = [testPath]
+
+    # All classes tests
+    mochacliConfig.classes.push testPath
 
 module.exports = (grunt) ->
 
@@ -57,15 +62,28 @@ module.exports = (grunt) ->
         files: ['Gruntfile.coffee']
         tasks: 'watch'
 
+      classes:
+        files: ['classes/*.js']
+        tasks: ['mochacli:classes', 'docco']
+
       coffee:
         files: ['spec/*.coffee']
         tasks: 'coffee'
+
+      docs:
+        files: ['docs/*', 'docs/*/*']
+        tasks: []
+        options:
+          livereload: livereloadPort
+
       mochacli:
         files: ['test/*.js', 'classes/*.js']
         tasks: 'mochacli'
+
       examples:
         files: ['examples/*.js']
         tasks: ['mochacli:examples', 'docco']
+
       jshint:
         files: ['index.js', 'classes/*js']
         tasks: 'jshint'

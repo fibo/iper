@@ -26,13 +26,17 @@ function IperGraph(data, meta) {
   // ### edges
   //
 
-  this.edges = {}
+  var edges = {}
+
+  Object.defineProperty(this, 'edges', {value: edges})
 
   //
   // ### nodes
   //
 
-  this.nodes = {}
+  var nodes = {}
+
+  Object.defineProperty(this, 'nodes', {value: nodes})
 
   //
   // ### data
@@ -79,6 +83,10 @@ function check(data) {
 }
 IperGraph.prototype.check = check
 
+//
+// ### load()
+//
+
 function load(data) {
   var self = this
 
@@ -109,20 +117,34 @@ function load(data) {
     self.createEdge(newNodeIds)
   })
 }
+
 IperGraph.prototype.load = load
+
+//
+// ### createEdge()
+//
 
 function createEdge(nodeIds) {
   var edge = new IperEdge(this, nodeIds)
-  this.edges[edge.id] = edge
   return edge.id
 }
+
 IperGraph.prototype.createEdge = createEdge
 
-function pushEdge(edge) {
-  this.edges[edge.id] = edge
+//
+// ### createNode()
+//
+
+function createNode(data, meta) {
+  var node = new IperNode(this, data, meta)
+  return node.id
 }
 
-IperGraph.prototype.pushEdge = pushEdge
+IperGraph.prototype.createNode = createNode
+
+//
+// ### getEdge()
+//
 
 function getEdge(id) {
   var edge = this.edges[id]
@@ -132,42 +154,12 @@ function getEdge(id) {
 
   return edge
 }
+
 IperGraph.prototype.getEdge = getEdge
 
-function removeEdge(id) {
-  delete this.edges[id]
-}
-IperGraph.prototype.removeEdge = removeEdge
-
-function removeNode(id) {
-  // loop over all edges
-  _.each(this.edges, function (edge) {
-
-    // loop over edge nodeIds
-    _.each(edge.nodeIds, function (nodeId, j) {
-
-      // remove nodeId from edges linked to removed node
-      if (id === nodeId) edge.nodeIds.splice(j, 1)
-    })
-
-    // remove orphan edges
-    if (edge.nodeIds.lenght < 2) edge.remove()
-  })
-
-  delete this.nodes[id]
-}
-IperGraph.prototype.removeNode = removeNode
-
-function createNode(data, meta) {
-  var node = new IperNode(this, data, meta)
-  return node.id
-}
-IperGraph.prototype.createNode = createNode
-
-function pushNode(node) {
-  this.nodes[node.id] = node
-}
-IperGraph.prototype.pushNode = pushNode
+//
+// ### getNode()
+//
 
 function getNode(id) {
   var node = this.nodes[id]
@@ -177,7 +169,43 @@ function getNode(id) {
 
   return node
 }
+
 IperGraph.prototype.getNode = getNode
+
+//
+// ### removeEdge()
+//
+
+function removeEdge(id) {
+  delete this.edges[id]
+}
+IperGraph.prototype.removeEdge = removeEdge
+
+//
+// ### removeNode()
+//
+
+function removeNode(id) {
+  /* loop over all edges */
+  _.each(this.edges, function (edge) {
+
+    /* loop over edge nodeIds */
+    _.each(edge.nodeIds, function (nodeId, j) {
+
+      /* drop nodeId from edges linked to removed node */
+      if (id === nodeId)
+        edge.nodeIds.splice(j, 1)
+    })
+
+    /* remove orphan edges */
+    if (edge.nodeIds.lenght < 2)
+      this.removeEdge(edge.id)
+  })
+
+  delete this.nodes[id]
+}
+
+IperGraph.prototype.removeNode = removeNode
 
 module.exports = IperGraph
 
