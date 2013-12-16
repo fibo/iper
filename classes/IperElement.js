@@ -8,7 +8,7 @@
 var _ = require('underscore')
 
 
-function IperElement(graph) {
+function IperElement (graph) {
 
   //
   // ## Attributes
@@ -18,14 +18,7 @@ function IperElement(graph) {
   // ### graph
   //
 
-  /* TODO più che graph dovrei mettere parent, anche perchè qua non posso controllare che sia un IperGraph
-   * inoltre posso fare che se parent è null, è una root 
-   *
-   * L' unica cosa + che parent mi sa che è riservato 
-   * */
-  function getGraph() { return graph }
-
-  Object.defineProperty(this, 'graph', {get: getGraph})
+  Object.defineProperty(this, 'graph', {value: graph, writable: false})
 
   //
   // ### id
@@ -33,11 +26,7 @@ function IperElement(graph) {
   // Every IperElement has a unique id.
   //
 
-  var id = _.uniqueId()
-
-  function getId() { return id }
-
-  Object.defineProperty(this, 'id', {get: getId})
+  Object.defineProperty(this, 'id', {value: _.uniqueId(), writable: false})
 }
 
 module.exports = IperElement

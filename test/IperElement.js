@@ -1,4 +1,5 @@
 (function() {
+  'use strict';
   var IperElement, IperGraph, iper;
 
   iper = require('../index');
@@ -21,18 +22,25 @@
         return element.should.be.instanceOf(IperElement);
       });
     });
-    return describe('attributes', function() {
+    return describe('Attributes', function() {
       describe('#id', function() {
         it('is a number', function() {
           var element;
           element = new IperElement();
           return element.id.should.be.a.number;
         });
-        return it('should be unique', function() {
+        it('should be unique', function() {
           var element1, element2;
           element1 = new IperElement();
           element2 = new IperElement();
           return element1.id.should.not.be.eql(element2.id);
+        });
+        return it('is readonly', function() {
+          var element;
+          element = new IperElement();
+          return (function() {
+            return element.id = 4;
+          }).should.throwError();
         });
       });
       return describe('#graph', function() {

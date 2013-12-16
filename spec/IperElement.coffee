@@ -1,4 +1,6 @@
 
+'use strict'
+
 iper = require '../index'
 
 IperElement = iper.IperElement
@@ -16,7 +18,7 @@ describe 'IperElement', ->
       element = new IperElement(graph)
       element.should.be.instanceOf IperElement
 
-  describe 'attributes', ->
+  describe 'Attributes', ->
     describe '#id', ->
       it 'is a number', ->
         element = new IperElement()
@@ -27,6 +29,12 @@ describe 'IperElement', ->
         element2 = new IperElement()
 
         element1.id.should.not.be.eql element2.id
+
+      it 'is readonly', ->
+        element = new IperElement()
+        ( () ->
+            element.id = 4
+        ).should.throwError()
 
     describe '#graph', ->
       it 'returns the graph passed to constructor', ->
