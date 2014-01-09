@@ -11,6 +11,7 @@ var IperGraph = iper.IperGraph;
 // Let's create an empty graph and add some nodes
 var graph = new IperGraph();
 
+/*
 var id1, id2, id3, id4, id5
   , adjacentNodeIds;
 
@@ -56,4 +57,5 @@ graph.removeNode(id3);
 adjacentNodeIds = node1.getAdjacentNodeIds();
 adjacentNodeIds.should.be.eql([id2, id4]);
 
+*/
 

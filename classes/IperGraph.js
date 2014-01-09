@@ -10,13 +10,18 @@ var IperEdge    = require('./IperEdge')
   , IperElement = require('./IperElement')
   , IperNode    = require('./IperNode')
 
+//
 // Constructor
+//
 
-function IperGraph(data, meta) {
+function IperGraph() {
 
-  /* TODO in meta ci metto rank e tutte le options che però rimangono fisse */
+  var args = arguments[0] || {}
 
-  IperElement.call(this)
+  var graph = args.graph || this
+
+  IperElement.call(this, graph)
+
 
   //
   // ## Attributes
@@ -38,31 +43,9 @@ function IperGraph(data, meta) {
 
   Object.defineProperty(this, 'nodes', {value: nodes})
 
-  //
-  // ### data
-  //
-
-  function getData () {
-    var data = {nodes:{}, edges:{}}
-
-    for (var n in this.nodes) {
-      var node = this.nodes[n]
-      data.nodes[node.id] = node.data
-    }
-
-    for (var e in this.edges) {
-      var edge = this.edges[e]
-      data.edges[edge.id] = edge.nodeIds
-    }
-
-    return data
-  }
-
-  Object.defineProperty(this, 'data', {get: getData})
-
-  // try to load data passed to constructor
+  /* try to load data passed to constructor */
   try {
-    load(data)
+    load({nodes: args.nodes, edges: args.edges})
   }
   catch (ignore) {}
 }
@@ -135,13 +118,23 @@ IperGraph.prototype.createEdge = createEdge
 // ### createNode()
 //
 
-function createNode(data, meta) {
-  var node = new IperNode(this, data, meta)
+function createNode() {
+  var node = new IperNode(this)
   return node.id
 }
 
 IperGraph.prototype.createNode = createNode
 
+//
+// ### createSubgraph()
+//
+
+function createSubGraph() {
+  var subgraph = new IperGraph({graph: this})
+  return subgraph.id
+}
+
+IperGraph.prototype.createNode = createNode
 //
 // ### getEdge()
 //

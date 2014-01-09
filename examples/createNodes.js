@@ -8,6 +8,7 @@ var iper = require('iper')
 
 var IperGraph = iper.IperGraph;
 
+/*
 // Create an empty graph
 var graph = new IperGraph();
 
@@ -69,4 +70,5 @@ node3.degree.should.be.eql(2);
 // node3 degree is unchanged
 node3.degree.should.be.eql(2);
 
+*/
 

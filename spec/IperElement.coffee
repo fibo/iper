@@ -8,7 +8,7 @@ IperGraph   = iper.IperGraph
 
 describe 'IperElement', ->
 
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'has signature ()', ->
       element = new IperElement()
       element.should.be.instanceOf IperElement

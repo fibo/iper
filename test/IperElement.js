@@ -9,7 +9,7 @@
   IperGraph = iper.IperGraph;
 
   describe('IperElement', function() {
-    describe('constructor', function() {
+    describe('Constructor', function() {
       it('has signature ()', function() {
         var element;
         element = new IperElement();

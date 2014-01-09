@@ -15,11 +15,11 @@
 
   graph = new IperGraph();
 
-  id1 = graph.createNode(1);
+  id1 = graph.createNode();
 
-  id2 = graph.createNode(2);
+  id2 = graph.createNode();
 
-  id3 = graph.createNode(3);
+  id3 = graph.createNode();
 
   nodeIds = [id1, id2, id3];
 
@@ -53,20 +53,9 @@
           return edge = new IperEdge(graph, [-1, -2]);
         }).should.throwError();
       });
-      return it('checks node #degree does not excede its #maxDegree', function() {
-        var edge, id, meta;
-        meta = {
-          maxDegree: 2
-        };
-        id = graph.createNode('example', meta);
-        edge = new IperEdge(graph, [id1, id]);
-        edge = new IperEdge(graph, [id2, id]);
-        return (function() {
-          return edge = new IperEdge(graph, [id2, id]);
-        }).should.throwError();
-      });
+      return it('checks node *degree* does not excede its #maxDegree');
     });
-    return describe('Attributes', function() {
+    describe('Attributes', function() {
       return describe('#nodeIds', function() {
         return it('returns the #nodeIds', function() {
           var edge;
@@ -75,23 +64,11 @@
         });
       });
     });
+    return describe('Methods', function() {
+      return describe('#remove()', function() {
+        return it('removes the edge from its graph');
+      });
+    });
   });
-
-  /*
-    describe 'Methods', ->
-      describe '#remove()', ->
-        it 'removes the edge from its graph', ->
-          edge = new IperEdge(graph, nodeIds)
-          edgeId = edge.id
-  
-          edge.remove()
-  
-          (() ->
-              graph.getEdge(edgeId)
-          ).should.throwError()
-  
-          edge.should.exists
-  */
-
 
 }).call(this);

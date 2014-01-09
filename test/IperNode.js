@@ -1,5 +1,5 @@
 (function() {
-  var IperEdge, IperElement, IperGraph, IperNode, data, graph, iper;
+  var IperEdge, IperElement, IperGraph, IperNode, graph, iper;
 
   iper = require('../index');
 
@@ -10,8 +10,6 @@
   IperGraph = iper.IperGraph;
 
   IperNode = iper.IperNode;
-
-  data = [1, 2, 3];
 
   graph = new IperGraph();
 
@@ -29,20 +27,14 @@
         node = new IperNode(graph);
         return node.should.be.instanceOf(IperNode);
       });
-      it('has signature (graph, data)', function() {
-        var node;
-        node = new IperNode(graph, data);
-        return node.should.be.instanceOf(IperNode);
-      });
-      it('has signature (graph, data, meta)', function() {
-        var maxDegree, meta, node;
+      it('has signature (graph, opts)', function() {
+        var maxDegree, node, opts;
         maxDegree = 2;
-        meta = {
+        opts = {
           maxDegree: maxDegree
         };
-        node = new IperNode(graph, data, meta);
+        node = new IperNode(graph, opts);
         node.should.be.instanceOf(IperNode);
-        node.data.should.be.eql(data);
         return node.maxDegree.should.be.eql(maxDegree);
       });
       return it('requires graph is defined', function() {
@@ -52,16 +44,15 @@
         }).should.throwError();
       });
     });
-    describe('accessors', function() {
+    describe('Attributes', function() {
       describe('#maxDegree', function() {
         return it('returns max number of edges allowed', function() {
-          var maxDegree, meta, node;
+          var maxDegree, node, opts;
           maxDegree = 4;
-          meta = {
+          opts = {
             maxDegree: maxDegree
           };
-          node = new IperNode(graph, data, meta);
-          node.should.be.instanceOf(IperNode);
+          node = new IperNode(graph, opts);
           return node.maxDegree.should.be.eql(maxDegree);
         });
       });

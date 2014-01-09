@@ -31,7 +31,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="./">Home</a></li>
+            <li class="active"><a href="../">Home</a></li>
             <li><a href="../classes">Classes</a></li>
             <li><a href="../examples">Examples</a></li>
           </ul>
@@ -145,13 +145,16 @@
         
       
         
-        <h1>Generic graph</h1>
+        <h1 id="generic-graph">Generic graph</h1>
 
         
           <div class='highlight'><pre>
 <span class="keyword">var</span> iper = require(<span class="string">'iper'</span>);
 
-<span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
+<span class="keyword">var</span> IperGraph = iper.IperGraph;
+
+<span class="comment">/*
+</span></pre></div>
         
       
         
@@ -183,7 +186,9 @@ graph1.createEdge([id3, id1]);</pre></div>
         <p>we have three nodes so we can create also an hyperedge</p>
 
         
-          <div class='highlight'><pre>graph1.createEdge([id1, id2, id3]);</pre></div>
+          <div class='highlight'><pre>graph1.createEdge([id1, id2, id3]);
+
+*/</pre></div>
         
       
  

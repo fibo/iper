@@ -31,7 +31,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="./">Home</a></li>
+            <li class="active"><a href="../">Home</a></li>
             <li><a href="../classes">Classes</a></li>
             <li><a href="../examples">Examples</a></li>
           </ul>
@@ -145,14 +145,17 @@
         
       
         
-        <h1>Create nodes</h1>
+        <h1 id="create-nodes">Create nodes</h1>
 
         
           <div class='highlight'><pre>
 <span class="keyword">var</span> iper = require(<span class="string">'iper'</span>)
   , should = require(<span class="string">'should'</span>);
 
-<span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
+<span class="keyword">var</span> IperGraph = iper.IperGraph;
+
+<span class="comment">/*
+</span></pre></div>
         
       
         
@@ -268,7 +271,9 @@ node3.degree.should.be.eql(<span class="number">2</span>);</pre></div>
         <p>node3 degree is unchanged</p>
 
         
-          <div class='highlight'><pre>node3.degree.should.be.eql(<span class="number">2</span>);</pre></div>
+          <div class='highlight'><pre>node3.degree.should.be.eql(2);
+
+*/</pre></div>
         
       
  

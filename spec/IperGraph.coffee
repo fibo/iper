@@ -18,22 +18,18 @@ describe 'IperGraph', ->
       graph = new IperGraph()
       graph.should.be.instanceOf IperGraph
 
-    it 'has signature (data)', ->
+    it 'has signature ({nodes, edges})', ->
       # This is a simple directed graph
-      # foo -> bar
-      data =
-        nodes:
-          1: 'foo'
-          2: 'bar'
+      # 1 -> 2
+      args =
+        nodes: [1, 2]
         edges:
           3: [1, 2]
 
-      graph = new IperGraph(data)
+      graph = new IperGraph(args)
       graph.should.be.instanceOf IperGraph
 
-    it 'has signature (graph)'
-
-    it 'has signature (graph, meta)'
+###
 
   describe 'Attributes', ->
     describe '#data', ->
@@ -73,6 +69,9 @@ describe 'IperGraph', ->
 
         node = graph.getNode id
         node.maxDegree.should.eql maxDegree
+
+    describe '#createSubgraph()', ->
+      it 'returns subgraphId'
 
     describe '#getNode()', ->
       it 'has signature (id), returns node', ->
@@ -212,4 +211,6 @@ describe 'IperGraph', ->
         (() ->
           graph.getNode(nodeid)
         ).should.throwError()
+
+###
 

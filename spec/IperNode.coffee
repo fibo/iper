@@ -6,7 +6,6 @@ IperElement = iper.IperElement
 IperGraph   = iper.IperGraph
 IperNode    = iper.IperNode
 
-data = [1, 2, 3]
 graph = new IperGraph()
 
 describe 'IperNode', ->
@@ -20,19 +19,14 @@ describe 'IperNode', ->
       node = new IperNode(graph)
       node.should.be.instanceOf IperNode
 
-    it 'has signature (graph, data)', ->
-      node = new IperNode(graph, data)
-      node.should.be.instanceOf IperNode
-
-    it 'has signature (graph, data, meta)', ->
+    it 'has signature (graph, opts)', ->
       maxDegree = 2
-      meta =
+      opts =
         maxDegree: maxDegree
 
-      node = new IperNode(graph, data, meta)
+      node = new IperNode(graph, opts)
       node.should.be.instanceOf IperNode
 
-      node.data.should.be.eql data
       node.maxDegree.should.be.eql maxDegree
 
     it 'requires graph is defined', ->
@@ -40,15 +34,14 @@ describe 'IperNode', ->
           node = new IperNode()
       ).should.throwError()
 
-  describe 'accessors', ->
+  describe 'Attributes', ->
     describe '#maxDegree', ->
       it 'returns max number of edges allowed', ->
         maxDegree = 4
-        meta =
+        opts =
           maxDegree: maxDegree
 
-        node = new IperNode(graph, data, meta)
-        node.should.be.instanceOf IperNode
+        node = new IperNode(graph, opts)
 
         node.maxDegree.should.be.eql maxDegree
 

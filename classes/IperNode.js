@@ -10,7 +10,7 @@ var _        = require('underscore')
 
 var IperElement = require('./IperElement')
 
-function IperNode(graph, data, meta) {
+function IperNode(graph, opts) {
   var self = this
 
   /* check graph */
@@ -20,23 +20,12 @@ function IperNode(graph, data, meta) {
 
   IperElement.call(this, graph)
 
-  if (!_.isObject(meta))
-    meta = {}
+  if (!_.isObject(opts))
+    opts = {}
 
   //
   // ## Attributes
   //
-
-  //
-  // ### data
-  //
-  // A node can hold any kind of data.
-  //
-
-
-  function getData () { return data }
-
-  Object.defineProperty(this, 'data', {get: getData})
 
   //
   // ### degree
@@ -69,7 +58,7 @@ function IperNode(graph, data, meta) {
   //
 
   function getMaxDegree () {
-    return meta.maxDegree
+    return opts.maxDegree
   }
 
   Object.defineProperty(this, 'maxDegree', {get: getMaxDegree})

@@ -31,7 +31,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="./">Home</a></li>
+            <li class="active"><a href="../">Home</a></li>
             <li><a href="../classes">Classes</a></li>
             <li><a href="../examples">Examples</a></li>
           </ul>
@@ -145,7 +145,7 @@
         
       
         
-        <h1>Adjacent nodes</h1>
+        <h1 id="adjacent-nodes">Adjacent nodes</h1>
 
         
           <div class='highlight'><pre>
@@ -160,14 +160,17 @@
         
           <div class='highlight'><pre><span class="keyword">var</span> graph = <span class="keyword">new</span> IperGraph();
 
-<span class="keyword">var</span> id1, id2, id3, id4, id5
+<span class="comment">/*
+var id1, id2, id3, id4, id5
   , adjacentNodeIds;
 
 id1 = graph.createNode();
 id2 = graph.createNode();
 id3 = graph.createNode();
 id4 = graph.createNode();
-id5 = graph.createNode();</pre></div>
+id5 = graph.createNode();
+
+</span></pre></div>
         
       
         
@@ -235,7 +238,9 @@ adjacentNodeIds.should.be.eql([id2, id3, id4]);</pre></div>
         
           <div class='highlight'><pre>graph.removeNode(id3);
 adjacentNodeIds = node1.getAdjacentNodeIds();
-adjacentNodeIds.should.be.eql([id2, id4]);</pre></div>
+adjacentNodeIds.should.be.eql([id2, id4]);
+
+*/</pre></div>
         
       
  

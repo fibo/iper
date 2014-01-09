@@ -2,9 +2,10 @@
   "name": "iper",
   "version": "0.0.5",
   "description": "Hypergraphs for breakfast",
+  "author": "fibo",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require should"
+    "test": "mocha --bail --require should --reporter nyan"
   },
   "repository": {
     "type": "git",
@@ -14,8 +15,10 @@
     "math",
     "graph"
   ],
-  "author": "fibo",
-  "license": "MIT",
+  "license": [ {
+    "type": "MIT",
+    "url": "http://fibo.mit-license.org/"
+  } ],
   "bugs": {
     "url": "https://github.com/fibo/iper/issues"
   },
