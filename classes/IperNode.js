@@ -13,11 +13,6 @@ var IperElement = require('./IperElement')
 function IperNode(graph, opts) {
   var self = this
 
-  /* check graph */
-
-  if (_.isUndefined(graph))
-    throw new Error()
-
   IperElement.call(this, graph)
 
   if (!_.isObject(opts))
@@ -70,7 +65,11 @@ function IperNode(graph, opts) {
 inherits(IperNode, IperElement)
 
 //
-// ### getAdjacentNodeIds
+// ## Methods
+//
+
+//
+// ### getAdjacentNodeIds()
 //
 
 function getAdjacentNodeIds() {

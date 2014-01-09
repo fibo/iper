@@ -31,7 +31,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="../">Home</a></li>
+            <li class="active"><a href="./">Home</a></li>
             <li><a href="../classes">Classes</a></li>
             <li><a href="../examples">Examples</a></li>
           </ul>
@@ -149,12 +149,12 @@
 
         
           <div class='highlight'><pre>
-<span class="keyword">var</span> iper = require(<span class="string">'iper'</span>)
-  , should = require(<span class="string">'should'</span>);
+<span class="hljs-keyword">var</span> iper = <span class="hljs-built_in">require</span>(<span class="hljs-string">'iper'</span>)
+  , should = <span class="hljs-built_in">require</span>(<span class="hljs-string">'should'</span>);
 
-<span class="keyword">var</span> IperGraph = iper.IperGraph;
+<span class="hljs-keyword">var</span> IperGraph = iper.IperGraph;
 
-<span class="comment">/*
+<span class="hljs-comment">/*
 </span></pre></div>
         
       
@@ -162,7 +162,7 @@
         <p>Create an empty graph</p>
 
         
-          <div class='highlight'><pre><span class="keyword">var</span> graph = <span class="keyword">new</span> IperGraph();</pre></div>
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> graph = <span class="hljs-keyword">new</span> IperGraph();</pre></div>
         
       
         
@@ -177,13 +177,13 @@
         <p>You can pass any kind of data</p>
 
         
-          <div class='highlight'><pre>graph.createNode(<span class="number">0</span>);
-graph.createNode(<span class="string">'foo'</span>);
-graph.createNode([<span class="string">'bar'</span>]);
-graph.createNode({quz:<span class="string">'quuz'</span>});
+          <div class='highlight'><pre>graph.createNode(<span class="hljs-number">0</span>);
+graph.createNode(<span class="hljs-string">'foo'</span>);
+graph.createNode([<span class="hljs-string">'bar'</span>]);
+graph.createNode({quz:<span class="hljs-string">'quuz'</span>});
 graph.createNode(
-  <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span> {</span>
-    console.log(<span class="string">'Hello iper!'</span>);
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hello</span><span class="hljs-params">()</span> {</span>
+    console.log(<span class="hljs-string">'Hello iper!'</span>);
   }
 );</pre></div>
         
@@ -194,8 +194,8 @@ Lets create two nodes with an empty array as data,
 and lets store ids to use them later.</p>
 
         
-          <div class='highlight'><pre><span class="keyword">var</span> id1 = graph.createNode([]);
-<span class="keyword">var</span> id2 = graph.createNode([]);</pre></div>
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> id1 = graph.createNode([]);
+<span class="hljs-keyword">var</span> id2 = graph.createNode([]);</pre></div>
         
       
         
@@ -210,35 +210,35 @@ for example we can create an edge joining the nodes.</p>
         <p>We can also get a reference to the node</p>
 
         
-          <div class='highlight'><pre><span class="keyword">var</span> node1 = graph.getNode(id1);</pre></div>
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> node1 = graph.getNode(id1);</pre></div>
         
       
         
         <p>node1.data is an array, so we can push something in it</p>
 
         
-          <div class='highlight'><pre>node1.data.push(<span class="string">'foo'</span>);</pre></div>
+          <div class='highlight'><pre>node1.data.push(<span class="hljs-string">'foo'</span>);</pre></div>
         
       
         
         <p>we can ask the degree of the node, that is the number of edges it has</p>
 
         
-          <div class='highlight'><pre>node1.degree.should.be.eql(<span class="number">1</span>);</pre></div>
+          <div class='highlight'><pre>node1.degree.should.be.eql(<span class="hljs-number">1</span>);</pre></div>
         
       
         
         <p>It is possible to set a #maxDegree when creating a node</p>
 
         
-          <div class='highlight'><pre><span class="keyword">var</span> id3 = graph.createNode(<span class="string">'example'</span>, {maxDegree:<span class="number">2</span>});</pre></div>
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> id3 = graph.createNode(<span class="hljs-string">'example'</span>, {maxDegree:<span class="hljs-number">2</span>});</pre></div>
         
       
         
         <p>node3 will have at most 2 edges</p>
 
         
-          <div class='highlight'><pre><span class="keyword">var</span> node3 = graph.getNode(id3);</pre></div>
+          <div class='highlight'><pre><span class="hljs-keyword">var</span> node3 = graph.getNode(id3);</pre></div>
         
       
         
@@ -247,7 +247,7 @@ edges can join more than 2 nodes</p>
 
         
           <div class='highlight'><pre>graph.createEdge([id1, id2, id3]);
-node3.degree.should.be.eql(<span class="number">1</span>);</pre></div>
+node3.degree.should.be.eql(<span class="hljs-number">1</span>);</pre></div>
         
       
         
@@ -255,14 +255,14 @@ node3.degree.should.be.eql(<span class="number">1</span>);</pre></div>
 
         
           <div class='highlight'><pre>graph.createEdge([id1, id3]);
-node3.degree.should.be.eql(<span class="number">2</span>);</pre></div>
+node3.degree.should.be.eql(<span class="hljs-number">2</span>);</pre></div>
         
       
         
         <p>adding another edge should not be possible</p>
 
         
-          <div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+          <div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
   graph.createEdge([id2, id3]);
 }).should.throwError();</pre></div>
         

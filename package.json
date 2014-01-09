@@ -41,7 +41,7 @@
     "grunt-contrib-concat": "~0.3.0"
   },
   "dependencies": {
-    "underscore": "~1.5.1",
+    "underscore": "~1.5.2",
     "inherits": "~2.0.1",
     "strict-mode": "0.0.1"
   }

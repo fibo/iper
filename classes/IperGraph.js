@@ -50,20 +50,35 @@ function IperGraph() {
   catch (ignore) {}
 }
 
-inherits(IperGraph, IperNode)
+inherits(IperGraph, IperElement)
+
+//
+// ## Methods
+//
+
+//
+// ### check(data)
+//
 
 function check(data) {
-  /* data.edges has existing nodeIds */
-  for (var edgeId in data.edges) {
-    var edgeData = data.edges[edgeId]
+  var edges = data.edges
+    , nodes = data.nodes
+
+  /* edges refers to existing nodeIds */
+  for (var edgeId in edges) {
+    var edgeData = edges[edgeId]
+
     for (var i in edgeData) {
       var nodeId = edgeData[i]
-      if (typeof data.nodes[nodeId] === 'undefined')
+
+      if (_.indexOf(nodes, nodeId) < 0)
         throw new Error()
     }
   }
+
   return true
 }
+
 IperGraph.prototype.check = check
 
 //
@@ -120,6 +135,7 @@ IperGraph.prototype.createEdge = createEdge
 
 function createNode() {
   var node = new IperNode(this)
+
   return node.id
 }
 
@@ -158,7 +174,7 @@ function getNode(id) {
   var node = this.nodes[id]
 
   if (_.isUndefined(node))
-    throw new Error()
+    throw new Error('node is not defined')
 
   return node
 }
@@ -172,6 +188,7 @@ IperGraph.prototype.getNode = getNode
 function removeEdge(id) {
   delete this.edges[id]
 }
+
 IperGraph.prototype.removeEdge = removeEdge
 
 //

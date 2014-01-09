@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var IperElement, IperGraph, iper;
+  var IperElement, IperGraph, graph, iper;
 
   iper = require('../index');
 
@@ -8,16 +8,12 @@
 
   IperGraph = iper.IperGraph;
 
+  graph = new IperGraph();
+
   describe('IperElement', function() {
     describe('Constructor', function() {
-      it('has signature ()', function() {
-        var element;
-        element = new IperElement();
-        return element.should.be.instanceOf(IperElement);
-      });
       return it('has signature (graph)', function() {
-        var element, graph;
-        graph = new IperGraph();
+        var element;
         element = new IperElement(graph);
         return element.should.be.instanceOf(IperElement);
       });
@@ -26,18 +22,18 @@
       describe('#id', function() {
         it('is a number', function() {
           var element;
-          element = new IperElement();
+          element = new IperElement(graph);
           return element.id.should.be.a.number;
         });
         it('should be unique', function() {
           var element1, element2;
-          element1 = new IperElement();
-          element2 = new IperElement();
+          element1 = new IperElement(graph);
+          element2 = new IperElement(graph);
           return element1.id.should.not.be.eql(element2.id);
         });
         return it('is readonly', function() {
           var element;
-          element = new IperElement();
+          element = new IperElement(graph);
           return (function() {
             return element.id = 4;
           }).should.throwError();
@@ -45,8 +41,7 @@
       });
       return describe('#graph', function() {
         return it('returns the graph passed to constructor', function() {
-          var element, graph;
-          graph = new IperGraph();
+          var element;
           element = new IperElement(graph);
           return element.graph.should.be.eql(graph);
         });
