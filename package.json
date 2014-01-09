@@ -15,10 +15,12 @@
     "math",
     "graph"
   ],
-  "license": [ {
-    "type": "MIT",
-    "url": "http://fibo.mit-license.org/"
-  } ],
+  "license": [
+    {
+      "type": "MIT",
+      "url": "http://fibo.mit-license.org/"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/fibo/iper/issues"
   },
@@ -40,6 +42,7 @@
   },
   "dependencies": {
     "underscore": "~1.5.1",
-    "inherits": "~2.0.1"
+    "inherits": "~2.0.1",
+    "strict-mode": "0.0.1"
   }
 }
