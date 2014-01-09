@@ -29,37 +29,24 @@ describe 'IperGraph', ->
       graph = new IperGraph(args)
       graph.should.be.instanceOf IperGraph
 
-###
-
   describe 'Attributes', ->
-    describe '#data', ->
-      it 'returns graph data', ->
-        graph = new IperGraph()
+    describe '#rank', ->
+      it 'returns graph rank'
 
-        nodeId1 = graph.createNode('foo')
-        nodeId2 = graph.createNode([1, 2])
-        edgeId1 = graph.createEdge([nodeId1, nodeId2])
-
-        data = {}
-        data.nodes = {}
-        data.edges = {}
-
-        data.nodes[nodeId1] = 'foo'
-        data.nodes[nodeId2] = [1, 2]
-        data.edges[edgeId1] = [nodeId1, nodeId2]
-
-        graph.data.should.eql data
 
   describe 'Methods', ->
     graph = new IperGraph()
-    data = 'foo'
 
     describe '#createNode()', ->
-      it 'has signature (data), returns nodeId', ->
-        id = graph.createNode data
+      it 'returns nodeId', ->
+        id = graph.createNode
         id.should.be.defined
 
-      it 'has signature (data, meta), returns nodeId', ->
+###
+
+# TODO maxdegree dovrebbe essere una proprietà del grafo, non del nodo
+
+      it 'has signature (data, opts), returns nodeId', ->
         maxDegree = 4
         meta =
           maxDegree: maxDegree
@@ -72,6 +59,7 @@ describe 'IperGraph', ->
 
     describe '#createSubgraph()', ->
       it 'returns subgraphId'
+
 
     describe '#getNode()', ->
       it 'has signature (id), returns node', ->

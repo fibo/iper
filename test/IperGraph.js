@@ -21,7 +21,7 @@
         return graph.should.be.instanceOf(IperElement);
       });
     });
-    return describe('Constructor', function() {
+    describe('Constructor', function() {
       it('has signature ()', function() {
         var graph;
         graph = new IperGraph();
@@ -39,39 +39,29 @@
         return graph.should.be.instanceOf(IperGraph);
       });
     });
+    describe('Attributes', function() {
+      return describe('#rank', function() {
+        return it('returns graph rank');
+      });
+    });
+    return describe('Methods', function() {
+      var graph;
+      graph = new IperGraph();
+      return describe('#createNode()', function() {
+        return it('returns nodeId', function() {
+          var id;
+          id = graph.createNode;
+          return id.should.be.defined;
+        });
+      });
+    });
   });
 
   /*
   
-    describe 'Attributes', ->
-      describe '#data', ->
-        it 'returns graph data', ->
-          graph = new IperGraph()
+  # TODO maxdegree dovrebbe essere una proprietà del grafo, non del nodo
   
-          nodeId1 = graph.createNode('foo')
-          nodeId2 = graph.createNode([1, 2])
-          edgeId1 = graph.createEdge([nodeId1, nodeId2])
-  
-          data = {}
-          data.nodes = {}
-          data.edges = {}
-  
-          data.nodes[nodeId1] = 'foo'
-          data.nodes[nodeId2] = [1, 2]
-          data.edges[edgeId1] = [nodeId1, nodeId2]
-  
-          graph.data.should.eql data
-  
-    describe 'Methods', ->
-      graph = new IperGraph()
-      data = 'foo'
-  
-      describe '#createNode()', ->
-        it 'has signature (data), returns nodeId', ->
-          id = graph.createNode data
-          id.should.be.defined
-  
-        it 'has signature (data, meta), returns nodeId', ->
+        it 'has signature (data, opts), returns nodeId', ->
           maxDegree = 4
           meta =
             maxDegree: maxDegree
@@ -84,6 +74,7 @@
   
       describe '#createSubgraph()', ->
         it 'returns subgraphId'
+  
   
       describe '#getNode()', ->
         it 'has signature (id), returns node', ->
