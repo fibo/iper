@@ -38,17 +38,18 @@ describe 'IperEdge', ->
           edge = new IperEdge(graph, [-1, -2])
       ).should.throwError()
 
-    it 'checks node *degree* does not excede its #maxDegree' # , ->
-      #meta =
-      #  maxDegree: 2
+    it 'checks node *degree* does not excede its #maxDegree' , ->
+      opts =
+        maxDegree: 2
 
-      #id = graph.createNode('example', meta)
+      id = graph.createNode(opts)
 
-      #edge = new IperEdge(graph, [id1, id])
-      #edge = new IperEdge(graph, [id2, id])
-      #( () ->
-      #    edge = new IperEdge(graph, [id2, id])
-      #).should.throwError()
+      edge = new IperEdge(graph, [id1, id])
+      edge = new IperEdge(graph, [id2, id])
+
+      ( () ->
+          edge = new IperEdge(graph, [id2, id])
+      ).should.throwError()
 
   describe 'Attributes', ->
     describe '#nodeIds', ->

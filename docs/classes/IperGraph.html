@@ -164,15 +164,61 @@
 
       
         
+        <h3 id="subgraphs">subgraphs</h3>
+
+      
+        
         <h2 id="methods">Methods</h2>
 
       
         
         <h3 id="check-data-">check(data)</h3>
+<p><strong>TODO</strong>: vedi se riesco a referenziare la funzione load qui sotto nella documentazione
+This method is used by load to check data is valid
+ma può essere usata anche esternamente come metodo statico
+dovrebbe essere statico ma ereditabile</p>
 
       
         
-        <h3 id="load-">load()</h3>
+        <p>Given an objec with the following format</p>
+<pre><code>{
+  nodes: [
+    {
+      id: 1
+    },
+    {
+      id: 2
+    }
+    ...
+  ],
+  edges: [
+    {
+      id: 3,
+      nodeIds: [1, 2]
+    }
+    ...
+  ],
+  subgraphs: [
+
+  ],
+}
+</code></pre><p>performs the followings data checks</p>
+
+      
+        
+        <ul>
+<li>ids are unique</li>
+</ul>
+
+      
+        
+        <ul>
+<li>edges refers to existing nodeIds</li>
+</ul>
+
+      
+        
+        <h3 id="load-data-load-">load(data) {#load}</h3>
 
       
         

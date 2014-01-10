@@ -22,6 +22,14 @@ Check the following Wikipedia pages:
 
 See [examples with annotated sources](http://fibo.github.io/iper).
 
+# Features
+
+* Graphs of rank n, a.k.a. hypergraphs
+* Directed graphs
+* Subgraphs
+* Graph theory algorithms:
+  * adjacent nodes
+
 # Quick start
 
     var iper = require('iper');

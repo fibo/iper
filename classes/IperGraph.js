@@ -43,9 +43,21 @@ function IperGraph() {
 
   Object.defineProperty(this, 'nodes', {value: nodes})
 
+  //
+  // ### subgraphs
+  //
+
+  var subgraphs = {}
+
+  Object.defineProperty(this, 'subgraphs', {value: subgraphs})
+
   /* try to load data passed to constructor */
   try {
-    load({nodes: args.nodes, edges: args.edges})
+    load( {
+      edges: args.edges,
+      nodes: args.nodes,
+      subgraphs: args.subgraphs
+    })
   }
   catch (ignore) {}
 }
@@ -59,12 +71,59 @@ inherits(IperGraph, IperElement)
 //
 // ### check(data)
 //
+// **TODO**: vedi se riesco a referenziare la funzione load qui sotto nella documentazione
+// This method is used by load to check data is valid
+// ma può essere usata anche esternamente come metodo statico
+// dovrebbe essere statico ma ereditabile
+//
+
+
+// Given an objec with the following format
+//
+// ```
+// {
+//   nodes: [
+//     {
+//       id: 1
+//     },
+//     {
+//       id: 2
+//     }
+//     ...
+//   ],
+//   edges: [
+//     {
+//       id: 3,
+//       nodeIds: [1, 2]
+//     }
+//     ...
+//   ],
+//   subgraphs: [
+//
+//   ],
+// }
+// ```
+//
+// performs the followings data checks
+//
 
 function check(data) {
-  var edges = data.edges
-    , nodes = data.nodes
+  var edges    = data.edges
+    , nodes    = data.nodes
+    , subgraph = data.subgraph
 
-  /* edges refers to existing nodeIds */
+  // * ids are unique
+  /* TODO usa qualche funzione di underscore, e fai il test
+   * dovrei mettere tutti gli id in un array poi usare
+   *
+   * var ids = []
+   *
+   * if (_.unique(ids).length !== ids.length)
+   *   throw new Error()
+   * */
+
+
+  // * edges refers to existing nodeIds
   for (var edgeId in edges) {
     var edgeData = edges[edgeId]
 
@@ -82,7 +141,7 @@ function check(data) {
 IperGraph.prototype.check = check
 
 //
-// ### load()
+// ### load(data) {#load}
 //
 
 function load(data) {
@@ -133,8 +192,8 @@ IperGraph.prototype.createEdge = createEdge
 // ### createNode()
 //
 
-function createNode() {
-  var node = new IperNode(this)
+function createNode(opts) {
+  var node = new IperNode(this, opts)
 
   return node.id
 }

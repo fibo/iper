@@ -53,7 +53,18 @@
           return edge = new IperEdge(graph, [-1, -2]);
         }).should.throwError();
       });
-      return it('checks node *degree* does not excede its #maxDegree');
+      return it('checks node *degree* does not excede its #maxDegree', function() {
+        var edge, id, opts;
+        opts = {
+          maxDegree: 2
+        };
+        id = graph.createNode(opts);
+        edge = new IperEdge(graph, [id1, id]);
+        edge = new IperEdge(graph, [id2, id]);
+        return (function() {
+          return edge = new IperEdge(graph, [id2, id]);
+        }).should.throwError();
+      });
     });
     describe('Attributes', function() {
       return describe('#nodeIds', function() {
