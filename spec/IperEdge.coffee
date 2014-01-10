@@ -51,6 +51,10 @@ describe 'IperEdge', ->
           edge = new IperEdge(graph, [id2, id])
       ).should.throwError()
 
+    it 'registers edge in graph', ->
+      edge = new IperEdge(graph, [id1, id2])
+      graph.getEdge(edge.id).should.be.eql edge
+
   describe 'Attributes', ->
     describe '#nodeIds', ->
       it 'returns the #nodeIds', ->

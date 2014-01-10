@@ -37,11 +37,10 @@
         node.should.be.instanceOf(IperNode);
         return node.maxDegree.should.be.eql(maxDegree);
       });
-      return it('requires graph is defined', function() {
-        return (function() {
-          var node;
-          return node = new IperNode();
-        }).should.throwError();
+      return it('registers node in graph', function() {
+        var node;
+        node = new IperNode(graph);
+        return graph.getNode(node.id).should.be.eql(node);
       });
     });
     describe('Attributes', function() {

@@ -57,9 +57,29 @@ function IperNode(graph, opts) {
   }
 
   Object.defineProperty(this, 'maxDegree', {get: getMaxDegree})
+
+  /* register in graph */
+  graph.nodes[this.id] = this
 }
 
 inherits(IperNode, IperElement)
+
+//
+// ## Overridden methods
+//
+
+//
+// ### valueOf()
+//
+
+function valueOf () {
+  // TODO come gestisci maxDegree ? se c'è oppure no
+  return {
+    id: this.id
+  }
+}
+
+IperNode.prototype.valueOf = valueOf
 
 //
 // ## Methods

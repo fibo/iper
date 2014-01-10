@@ -34,7 +34,7 @@ function IperElement (graph) {
   /* check graph */
 
   if (_.isUndefined(graph))
-    throw new Error()
+    throw new Error('graph is not defined')
 
   Object.defineProperty(this, 'graph', {value: graph, writable: false})
 

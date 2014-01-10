@@ -29,10 +29,9 @@ describe 'IperNode', ->
 
       node.maxDegree.should.be.eql maxDegree
 
-    it 'requires graph is defined', ->
-      ( () ->
-          node = new IperNode()
-      ).should.throwError()
+    it 'registers node in graph', ->
+      node = new IperNode(graph)
+      graph.getNode(node.id).should.be.eql node
 
   describe 'Attributes', ->
     describe '#maxDegree', ->
@@ -71,6 +70,8 @@ describe 'IperNode', ->
         node3.degree.should.be.eql 2
 
       it 'counts loops', ->
+        # TODO non togliere questo test, ma metti sta cosa nell esempio loops
+
         # Create a double loop
         id1 = graph.createNode()
         graph.createEdge([id1, id1])

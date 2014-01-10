@@ -73,10 +73,10 @@ describe 'IperGraph', ->
         node.should.be.instanceOf IperNode
         node.id.should.be.eql id
 
-      it 'throws error if nodeId does not exists', ->
+      it 'throws *node not found*', ->
         (() ->
           graph.getNode(-1)
-        ).should.throwError('node is not defined')
+        ).should.throwError('node not found')
 
     describe '#check(data)', ->
       it 'throws *invalid edge*', ->
@@ -171,20 +171,6 @@ describe 'IperGraph', ->
           graph.load(data)
         ).should.throwError('invalid edge')
 
-      it 'removes edges left without nodes' # , ->
-
-      # nodeId1 = graph.createNode(1)
-      # nodeId2 = graph.createNode(2)
-      # nodeIds = [nodeId1, nodeId2]
-
-      # edgeId = graph.createEdge nodeIds
-
-      # graph.removeNode(nodeId1)
-
-      # (() ->
-      #   graph.getEdge(edgeId)
-      # ).should.throwError()
-
     describe '#getEdge()', ->
       it 'has signature (id), returns edge', ->
         nodeId1 = graph.createNode(1)
@@ -198,7 +184,7 @@ describe 'IperGraph', ->
 
       it 'throws *edge not found*', ->
         (() ->
-          graph.getEdge(-1)
+          graph.getEdge(100)
         ).should.throwError('edge not found')
 
     describe '#createEdge()', ->
@@ -236,6 +222,20 @@ describe 'IperGraph', ->
         graph.removeNode(nodeId)
 
         (() ->
-          graph.getNode(nodeid)
-        ).should.throwError()
+          graph.getNode(nodeId)
+        ).should.throwError('node not found')
+
+      it 'removes edges left without nodes' # , ->
+
+        # nodeId1 = graph.createNode(1)
+        # nodeId2 = graph.createNode(2)
+        # nodeIds = [nodeId1, nodeId2]
+
+        # edgeId = graph.createEdge nodeIds
+
+        # graph.removeNode(nodeId1)
+
+        # (() ->
+        #   graph.getEdge(edgeId)
+        # ).should.throwError()
 

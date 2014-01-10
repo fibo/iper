@@ -14,7 +14,7 @@ var IperEdge    = require('./IperEdge')
 // Constructor
 //
 
-function IperGraph() {
+function IperGraph () {
 
   var args = arguments[0] || {}
 
@@ -69,6 +69,37 @@ function IperGraph() {
 }
 
 inherits(IperGraph, IperElement)
+
+//
+// ## Overridden methods
+//
+
+//
+// ### valueOf()
+//
+
+function valueOf () {
+  var val = {
+    id: this.id,
+    nodes: [],
+    edges: [],
+    subgraphs: []
+  }
+
+  _.each(this.edges, function (edge) {
+    val.edges.push(edge.valueOf())
+  })
+
+  _.each(this.nodes, function (node) {
+    val.nodes.push(node.valueOf())
+  })
+
+  _.each(this.subgraphs, function (subgraph) {
+    val.subgraphs.push(subgraph.valueOf())
+  })
+
+  return val
+}
 
 //
 // ## Methods
@@ -206,9 +237,6 @@ IperGraph.prototype.createEdge = createEdge
 function createNode(opts) {
   var node = new IperNode(this, opts)
 
-  /* register node */
-  this.nodes[node.id] = node
-
   // * returns node id
   return node.id
 }
@@ -250,7 +278,7 @@ function getNode(id) {
   var node = this.nodes[id]
 
   if (_.isUndefined(node))
-    throw new Error('node is not defined')
+    throw new Error('node not found')
 
   return node
 }
@@ -262,7 +290,13 @@ IperGraph.prototype.getNode = getNode
 //
 
 function removeEdge(id) {
-  delete this.edges[id]
+  var edges = this.edges
+
+  _.each(edges, function (edge) {
+
+    if (id === edge.id)
+      delete edges[id]
+  })
 }
 
 IperGraph.prototype.removeEdge = removeEdge
@@ -272,15 +306,18 @@ IperGraph.prototype.removeEdge = removeEdge
 //
 
 function removeNode(id) {
+  var edges = this.edges
+    , nodes = this.nodes
+
   /* loop over all edges */
-  _.each(this.edges, function (edge) {
+  _.each(edges, function (edge) {
 
     /* loop over edge nodeIds */
-    _.each(edge.nodeIds, function (nodeId, j) {
+    _.each(edge.nodeIds, function (nodeId, index) {
 
       /* drop nodeId from edges linked to removed node */
       if (id === nodeId)
-        edge.nodeIds.splice(j, 1)
+        edge.nodeIds.splice(index, 1)
     })
 
     /* remove orphan edges */
@@ -288,7 +325,10 @@ function removeNode(id) {
       this.removeEdge(edge.id)
   })
 
-  delete this.nodes[id]
+  _.each(nodes, function (node) {
+    if (id === node.id)
+      delete nodes[id]
+  })
 }
 
 IperGraph.prototype.removeNode = removeNode

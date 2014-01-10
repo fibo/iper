@@ -45,7 +45,8 @@
           }
         };
         graph = new IperGraph(args);
-        return graph.should.be.instanceOf(IperGraph);
+        graph.should.be.instanceOf(IperGraph);
+        return console.log(graph);
       });
       it('has signature ({nodes})', function() {
         var args, graph;
@@ -99,10 +100,10 @@
           node.should.be.instanceOf(IperNode);
           return node.id.should.be.eql(id);
         });
-        return it('throws error if nodeId does not exists', function() {
+        return it('throws *node not found*', function() {
           return (function() {
             return graph.getNode(-1);
-          }).should.throwError('node is not defined');
+          }).should.throwError('node not found');
         });
       });
       describe('#check(data)', function() {
@@ -192,7 +193,7 @@
             return edge.should.be.instanceOf(IperEdge);
           });
         });
-        it('checks data is valid', function() {
+        return it('checks data is valid', function() {
           var data;
           data = {
             edges: [
@@ -209,7 +210,6 @@
             return graph.load(data);
           }).should.throwError('invalid edge');
         });
-        return it('removes edges left without nodes');
       });
       describe('#getEdge()', function() {
         it('has signature (id), returns edge', function() {
@@ -224,7 +224,7 @@
         });
         return it('throws *edge not found*', function() {
           return (function() {
-            return graph.getEdge(-1);
+            return graph.getEdge(100);
           }).should.throwError('edge not found');
         });
       });
@@ -254,15 +254,16 @@
         });
       });
       return describe('#removeNode()', function() {
-        return it('has signature (id), removes node from its graph', function() {
+        it('has signature (id), removes node from its graph', function() {
           var nodeId;
           graph = new IperGraph();
           nodeId = graph.createNode();
           graph.removeNode(nodeId);
           return (function() {
-            return graph.getNode(nodeid);
-          }).should.throwError();
+            return graph.getNode(nodeId);
+          }).should.throwError('node not found');
         });
+        return it('removes edges left without nodes');
       });
     });
   });

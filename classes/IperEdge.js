@@ -58,15 +58,28 @@ function IperEdge(graph, nodeIds) {
   // It is an array of node ids.
   //
 
-  function getNodeIds() { return nodeIds }
-
-  Object.defineProperty(this, 'nodeIds', {get: getNodeIds})
+  Object.defineProperty(this, 'nodeIds', {value: nodeIds})
 
   /* register in graph */
   graph.edges[this.id] = this
 }
 
 inherits(IperEdge, IperElement)
+
+//
+// ## Overridden methods
+//
+
+//
+// ### valueOf()
+//
+
+function valueOf () {
+  return {
+    id: this.id,
+    nodeIds: this.nodeIds
+  }
+}
 
 //
 // ## Methods

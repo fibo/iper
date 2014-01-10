@@ -12,10 +12,16 @@
 
   describe('IperElement', function() {
     describe('Constructor', function() {
-      return it('has signature (graph)', function() {
+      it('has signature (graph)', function() {
         var element;
         element = new IperElement(graph);
         return element.should.be.instanceOf(IperElement);
+      });
+      return it('requires graph is defined', function() {
+        return (function() {
+          var element;
+          return element = new IperElement();
+        }).should.throwError('graph is not defined');
       });
     });
     return describe('Attributes', function() {

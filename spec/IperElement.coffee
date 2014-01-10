@@ -15,6 +15,11 @@ describe 'IperElement', ->
       element = new IperElement(graph)
       element.should.be.instanceOf IperElement
 
+    it 'requires graph is defined', ->
+      ( () ->
+          element = new IperElement()
+      ).should.throwError('graph is not defined')
+
   describe 'Attributes', ->
     describe '#id', ->
       it 'is a number', ->
