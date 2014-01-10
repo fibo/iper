@@ -131,9 +131,10 @@ function check(data) {
 
   // * edges refers to existing nodeIds
   _.each(edges, function (edge) {
-    for (var nodeId in edge.nodeIds)
+    _.each(edge.nodeIds, function (nodeId) {
       if (_.indexOf(nodeIds, nodeId) < 0)
         throw new Error('invalid edge')
+    })
   })
 
   return true

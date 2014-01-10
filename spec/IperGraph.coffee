@@ -1,6 +1,7 @@
 
 iper   = require '../index'
 should = require 'should'
+_      = require 'underscore'
 
 IperEdge    = iper.IperEdge
 IperElement = iper.IperElement
@@ -125,8 +126,8 @@ describe 'IperGraph', ->
         graph.check(data).should.be.true
 
     describe '#load(data)', ->
-      it 'loads data' # , ->
-        #graph = new IperGraph()
+      it 'loads data' , ->
+        graph = new IperGraph()
 
         # This is a loop graph
         # TODO da mettere in esempio loops
@@ -137,19 +138,26 @@ describe 'IperGraph', ->
         #  edges:
         #    { id: 2, nodeIds: [1, 1] }
 
-        # data =
-        #   nodes: [
-        #     { id: 1 }
-        #     { id: 2 }
-        #   ]
-        #   edges: [
-        #     { id: 3, nodeIds: [1, 2] }
-        #   ]
+        data =
+          nodes: [
+            { id: 1 }
+            { id: 2 }
+          ]
+          edges: [
+            { id: 3, nodeIds: [1, 2] }
+          ]
 
-        # graph.load(data)
+        graph.load(data)
 
-        # node.should.be.instanceOf IperNode for node of graph.nodes
-        # edge.should.be.instanceOf IperEdge for edge of graph.edges
+        _.each(graph.nodes,
+        (node) ->
+          node.should.be.instanceOf IperNode
+        )
+
+        _.each(graph.edges,
+        (edge) ->
+          edge.should.be.instanceOf IperEdge
+        )
 
       it 'checks data is valid', ->
         # edges without nodes does not make sense

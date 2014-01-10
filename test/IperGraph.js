@@ -1,9 +1,11 @@
 (function() {
-  var IperEdge, IperElement, IperGraph, IperNode, iper, should;
+  var IperEdge, IperElement, IperGraph, IperNode, iper, should, _;
 
   iper = require('../index');
 
   should = require('should');
+
+  _ = require('underscore');
 
   IperEdge = iper.IperEdge;
 
@@ -164,7 +166,32 @@
         });
       });
       describe('#load(data)', function() {
-        it('loads data');
+        it('loads data', function() {
+          var data;
+          graph = new IperGraph();
+          data = {
+            nodes: [
+              {
+                id: 1
+              }, {
+                id: 2
+              }
+            ],
+            edges: [
+              {
+                id: 3,
+                nodeIds: [1, 2]
+              }
+            ]
+          };
+          graph.load(data);
+          _.each(graph.nodes, function(node) {
+            return node.should.be.instanceOf(IperNode);
+          });
+          return _.each(graph.edges, function(edge) {
+            return edge.should.be.instanceOf(IperEdge);
+          });
+        });
         it('checks data is valid', function() {
           var data;
           data = {
