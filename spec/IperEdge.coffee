@@ -59,15 +59,15 @@ describe 'IperEdge', ->
 
   describe 'Methods', ->
     describe '#remove()', ->
-      it 'removes the edge from its graph' #, ->
-        # edge = new IperEdge(graph, nodeIds)
-        # edgeId = edge.id
+      it 'removes the edge from its graph', ->
+        edge = new IperEdge(graph, nodeIds)
+        edgeId = edge.id
 
-        # edge.remove()
+        edge.remove()
 
-        # (() ->
-        #     graph.getEdge(edgeId)
-        # ).should.throwError()
+        (() ->
+           graph.getEdge(edgeId)
+        ).should.throwError()
 
-        # edge.should.exists
+        edge.should.exists
 

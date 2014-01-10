@@ -77,7 +77,16 @@
     });
     return describe('Methods', function() {
       return describe('#remove()', function() {
-        return it('removes the edge from its graph');
+        return it('removes the edge from its graph', function() {
+          var edge, edgeId;
+          edge = new IperEdge(graph, nodeIds);
+          edgeId = edge.id;
+          edge.remove();
+          (function() {
+            return graph.getEdge(edgeId);
+          }).should.throwError();
+          return edge.should.exists;
+        });
       });
     });
   });

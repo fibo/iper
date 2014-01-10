@@ -57,9 +57,6 @@ function IperNode(graph, opts) {
   }
 
   Object.defineProperty(this, 'maxDegree', {get: getMaxDegree})
-
-  /* register in graph */
-  graph.nodes[this.id] = this
 }
 
 inherits(IperNode, IperElement)

@@ -71,8 +71,18 @@ inherits(IperEdge, IperElement)
 //
 // ## Methods
 //
-// This class has no method.
+
 //
+// ### remove()
+//
+// Removes the edge from its graph
+//
+
+function remove () {
+  this.graph.removeEdge(this.id)
+}
+
+IperEdge.prototype.remove = remove
 
 module.exports = IperEdge
 

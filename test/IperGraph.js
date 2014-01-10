@@ -30,9 +30,16 @@
       it('has signature ({nodes, edges})', function() {
         var args, graph;
         args = {
-          nodes: [1, 2],
+          nodes: [
+            {
+              id: 1
+            }, {
+              id: 2
+            }
+          ],
           edges: {
-            3: [1, 2]
+            id: 3,
+            nodeIds: [1, 2]
           }
         };
         graph = new IperGraph(args);
@@ -41,18 +48,30 @@
       it('has signature ({nodes})', function() {
         var args, graph;
         args = {
-          nodes: [1, 2, 3, 4]
+          nodes: [
+            {
+              id: 1
+            }, {
+              id: 2
+            }, {
+              id: 3
+            }, {
+              id: 4
+            }
+          ]
         };
         graph = new IperGraph(args);
         return graph.should.be.instanceOf(IperGraph);
       });
-      return it('has signature ({rank})');
-    });
-    describe('Attributes', function() {
-      return describe('#rank', function() {
-        return it('returns graph rank');
+      return it('has signature ({rank})', function() {
+        var graph;
+        graph = new IperGraph({
+          rank: 2
+        });
+        return graph.should.be.instanceOf(IperGraph);
       });
     });
+    describe('Attributes', function() {});
     return describe('Methods', function() {
       var graph;
       graph = new IperGraph();
@@ -74,47 +93,87 @@
         return it('throws error if nodeId does not exists', function() {
           return (function() {
             return graph.getNode(-1);
-          }).should.throwError();
+          }).should.throwError('node is not defined');
         });
       });
       describe('#check(data)', function() {
-        it('checks data is valid', function() {
+        it('throws *invalid edge*', function() {
           var data;
           data = {
-            nodes: [1, 2],
-            edges: {
-              3: [5, 6]
-            }
+            nodes: [
+              {
+                id: 1
+              }, {
+                id: 2
+              }
+            ],
+            edges: [
+              {
+                id: 3,
+                nodeIds: [5, 6]
+              }
+            ]
           };
           return (function() {
             return graph.check(data);
-          }).should.throwError();
+          }).should.throwError('invalid edge');
+        });
+        it('throws *duplicated node id*', function() {
+          var data;
+          data = {
+            nodes: [
+              {
+                id: 1
+              }, {
+                id: 2
+              }, {
+                id: 2
+              }
+            ]
+          };
+          return (function() {
+            return graph.check(data);
+          }).should.throwError('duplicated node id');
         });
         return it('returns true on success', function() {
           var data;
           graph = new IperGraph();
           data = {
-            nodes: [1, 2, 3],
+            nodes: [
+              {
+                id: 1
+              }, {
+                id: 2
+              }, {
+                id: 3
+              }
+            ],
             edges: {
-              4: [1, 2, 3]
+              id: 4,
+              nodeIds: [1, 2, 3]
             }
           };
           return graph.check(data).should.be["true"];
         });
       });
       describe('#load(data)', function() {
-        it('loads data', function() {});
+        it('loads data');
         it('checks data is valid', function() {
           var data;
           data = {
-            edges: {
-              1: [5, 6],
-              2: [3, 4]
-            }
+            edges: [
+              {
+                id: 1,
+                nodeIds: [3, 4]
+              }, {
+                id: 2,
+                nodeIds: [5, 6]
+              }
+            ]
           };
           return (function() {
             return graph.load(data);
-          }).should.throwError();
+          }).should.throwError('invalid edge');
         });
         return it('removes edges left without nodes');
       });
@@ -129,10 +188,10 @@
           edge.should.be.instanceOf(IperEdge);
           return edge.id.should.be.eql(id);
         });
-        return it('throws error if edge does not exists', function() {
+        return it('throws *edge not found*', function() {
           return (function() {
             return graph.getEdge(-1);
-          }).should.throwError();
+          }).should.throwError('edge not found');
         });
       });
       describe('#createEdge()', function() {

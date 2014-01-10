@@ -22,9 +22,12 @@ describe 'IperGraph', ->
       # This is a simple directed graph
       # 1 -> 2
       args =
-        nodes: [1, 2]
+        nodes: [
+          { id: 1 }
+          { id: 2 }
+        ]
         edges:
-          3: [1, 2]
+          { id: 3, nodeIds: [1, 2] }
 
       graph = new IperGraph(args)
       graph.should.be.instanceOf IperGraph
@@ -32,16 +35,22 @@ describe 'IperGraph', ->
     it 'has signature ({nodes})', ->
       # This is a graph without nodes
       args =
-        nodes: [1, 2, 3, 4]
+        nodes: [
+          { id: 1 }
+          { id: 2 }
+          { id: 3 }
+          { id: 4 }
+        ]
 
       graph = new IperGraph(args)
       graph.should.be.instanceOf IperGraph
 
-    it 'has signature ({rank})'
+    it 'has signature ({rank})', ->
+      graph = new IperGraph({rank: 2})
+      graph.should.be.instanceOf IperGraph
 
   describe 'Attributes', ->
-    describe '#rank', ->
-      it 'returns graph rank'
+    # TODO describe uniform, nodes, edges, subgraphs, rank
 
   describe 'Methods', ->
     graph = new IperGraph()
@@ -64,61 +73,93 @@ describe 'IperGraph', ->
       it 'throws error if nodeId does not exists', ->
         (() ->
           graph.getNode(-1)
-        ).should.throwError()
+        ).should.throwError('node is not defined')
 
     describe '#check(data)', ->
-      it 'checks data is valid', ->
-        # invalid edge
+      it 'throws *invalid edge*', ->
+        # an invalid edge refers to nodeIds that do not exists
         data =
-          nodes: [1, 2]
-          edges:
-            3: [5, 6]
+          nodes: [
+            { id: 1 }
+            { id: 2 }
+          ]
+          edges: [
+            { id: 3, nodeIds: [5, 6] }
+          ]
 
         (() ->
           graph.check(data)
-        ).should.throwError()
+        ).should.throwError('invalid edge')
+
+
+      it 'throws *duplicated node id*', ->
+        data =
+          nodes: [
+            { id: 1 }
+            { id: 2 }
+            { id: 2 }
+          ]
+
+        (() ->
+          graph.check(data)
+        ).should.throwError('duplicated node id')
 
       it 'returns true on success', ->
+        # TODO sarebbe meglio che ritornasse i dati depurati
         graph = new IperGraph()
 
+        # TODO da mettere in esempio hyperedge
         # This is a simple hypergraph
         # 1 -> 2 -> 3
         data =
-          nodes: [1, 2, 3]
+          nodes: [
+            { id: 1 }
+            { id: 2 }
+            { id: 3 }
+          ]
           edges:
-            4: [1, 2, 3]
+            { id: 4, nodeIds: [1, 2, 3] }
 
         graph.check(data).should.be.true
 
     describe '#load(data)', ->
-      it 'loads data', ->
+      it 'loads data' # , ->
         # graph = new IperGraph()
 
-        # # This is a loop graph
-        # # foo -> foo
+        # This is a loop graph
+        # TODO da mettere in esempio loops
+        # 1 -> 1
+        #data =
+        #  nodes:
+        #    { id: 1 }
+        #  edges:
+        #    { id: 2, nodeIds: [1, 1] }
+
         # data =
-        #   nodes:
-        #     1: 'foo'
-        #   edges:
-        #     2: [1, 1]
+        #   nodes: [
+        #     { id: 1 }
+        #     { id: 2 }
+        #   ]
+        #   edges: [
+        #     { id: 3, nodeIds: [1, 2] }
+        #   ]
 
         # graph.load(data)
 
-        # # Since ids will change I can't use
-        # # graph.data.should.be.eql data
-
-        # graph.check(graph.data).should.be.true
+        # node.should.be.instanceOf IperNode for node of graph.nodes
+        # edge.should.be.instanceOf IperEdge for edge of graph.edges
 
       it 'checks data is valid', ->
         # edges without nodes does not make sense
         data =
-          edges:
-            1: [5, 6]
-            2: [3, 4]
+          edges: [
+            { id: 1, nodeIds: [3, 4] }
+            { id: 2, nodeIds: [5, 6] }
+          ]
 
         (() ->
           graph.load(data)
-        ).should.throwError()
+        ).should.throwError('invalid edge')
 
       it 'removes edges left without nodes' # , ->
 
@@ -145,10 +186,10 @@ describe 'IperGraph', ->
         edge.should.be.instanceOf IperEdge
         edge.id.should.be.eql id
 
-      it 'throws error if edge does not exists', ->
+      it 'throws *edge not found*', ->
         (() ->
           graph.getEdge(-1)
-        ).should.throwError()
+        ).should.throwError('edge not found')
 
     describe '#createEdge()', ->
       it 'has signature ([id1, id2, ...]), returns edge', ->

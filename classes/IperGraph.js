@@ -31,35 +31,38 @@ function IperGraph() {
   // ### edges
   //
 
-  var edges = {}
-
-  Object.defineProperty(this, 'edges', {value: edges})
+  Object.defineProperty(this, 'edges', {value: {}})
 
   //
   // ### nodes
   //
 
-  var nodes = {}
-
-  Object.defineProperty(this, 'nodes', {value: nodes})
+  Object.defineProperty(this, 'nodes', {value: {}})
 
   //
   // ### subgraphs
   //
 
-  var subgraphs = {}
+  Object.defineProperty(this, 'subgraphs', {value: {}})
 
-  Object.defineProperty(this, 'subgraphs', {value: subgraphs})
+  /* TODO
+  //
+  // ### rank
+  //
+
+  Object.defineProperty(this, 'rank', {value: {}})
+  */
 
   /* try to load data passed to constructor */
   try {
-    load( {
+    this.load( {
       edges: args.edges,
       nodes: args.nodes,
       subgraphs: args.subgraphs
     })
   }
-  catch (ignore) {}
+  catch (er) { throw er }
+  //catch (ignore) {}
 }
 
 inherits(IperGraph, IperElement)
@@ -78,7 +81,8 @@ inherits(IperGraph, IperElement)
 //
 
 
-// Given an objec with the following format
+//
+// Given an object with the following format
 //
 // ```
 // {
@@ -108,32 +112,26 @@ inherits(IperGraph, IperElement)
 //
 
 function check(data) {
-  var edges    = data.edges
-    , nodes    = data.nodes
-    , subgraph = data.subgraph
+  var edges    = data.edges    || []
+    , nodes    = data.nodes    || []
+    , subgraph = data.subgraph || []
+
+  var nodeIds = _.pluck(nodes, 'id')
 
   // * ids are unique
-  /* TODO usa qualche funzione di underscore, e fai il test
-   * dovrei mettere tutti gli id in un array poi usare
-   *
-   * var ids = []
-   *
-   * if (_.unique(ids).length !== ids.length)
-   *   throw new Error()
-   * */
+
+   /* TODO Da fare anche su edges e subgraph */
+
+    if (_.unique(nodeIds).length !== nodeIds.length)
+      throw new Error('duplicated node id')
 
 
   // * edges refers to existing nodeIds
-  for (var edgeId in edges) {
-    var edgeData = edges[edgeId]
-
-    for (var i in edgeData) {
-      var nodeId = edgeData[i]
-
-      if (_.indexOf(nodes, nodeId) < 0)
-        throw new Error()
-    }
-  }
+  _.each(edges, function (edge) {
+    for (var nodeId in edge.nodeIds)
+      if (_.indexOf(nodeIds, nodeId) < 0)
+        throw new Error('invalid edge')
+  })
 
   return true
 }
@@ -153,21 +151,30 @@ function load(data) {
   }
   catch (er) { throw er }
 
+  var edges = data.edges
+    , nodes = data.nodes
+
   /* store a lookup of new <--> old ids */
-  var nu = {}
+  var brandNew = {}
 
   /* create new nodes first */
-  for (var id in data.nodes)
+  _.each(nodes, function (node) {
+    var id = node.id
+      , opts = {}
+
     /* remember association between old and new id */
-    nu[id] = self.createNode(data.nodes[id])
+    brandNew[id] = self.createNode(id, opts)
+  })
 
   /* create new edges */
-  _.each(data.edges, function (oldNodeIds) {
+  _.each(edges, function (edge) {
+
     var newNodeIds = []
+      , oldNodeIds = edge.nodeIds
 
     /* loop over old node ids and get the corresponding new ids */
     _.each(oldNodeIds, function (id) {
-      newNodeIds.push(nu[id])
+      newNodeIds.push(brandNew[id])
     })
 
     /* use new ids to create a new edge */
@@ -195,6 +202,10 @@ IperGraph.prototype.createEdge = createEdge
 function createNode(opts) {
   var node = new IperNode(this, opts)
 
+  /* register node */
+  this.nodes[node.id] = node
+
+  // * returns node id
   return node.id
 }
 
@@ -210,6 +221,7 @@ function createSubGraph() {
 }
 
 IperGraph.prototype.createNode = createNode
+
 //
 // ### getEdge()
 //
@@ -218,7 +230,7 @@ function getEdge(id) {
   var edge = this.edges[id]
 
   if (_.isUndefined(edge))
-    throw new Error()
+    throw new Error('edge not found')
 
   return edge
 }
