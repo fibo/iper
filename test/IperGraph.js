@@ -78,17 +78,24 @@
       describe('#createNode()', function() {
         return it('returns nodeId', function() {
           var id;
-          id = graph.createNode;
-          return id.should.be.defined;
+          id = graph.createNode();
+          return id.should.be.a.number;
         });
       });
       describe('#createSubgraph()', function() {
-        return it('returns subgraphId');
+        return it('returns subgraphId', function() {
+          var id;
+          id = graph.createSubgraph();
+          return id.should.be.a.number;
+        });
       });
       describe('#getNode()', function() {
         it('has signature (id), returns node', function() {
-          var id;
-          return id = graph.createNode;
+          var id, node;
+          id = graph.createNode();
+          node = graph.getNode(id);
+          node.should.be.instanceOf(IperNode);
+          return node.id.should.be.eql(id);
         });
         return it('throws error if nodeId does not exists', function() {
           return (function() {

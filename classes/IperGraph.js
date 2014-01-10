@@ -18,6 +18,8 @@ function IperGraph() {
 
   var args = arguments[0] || {}
 
+  // TODO var isRoot = typeof args.graph === 'undefined'
+
   var graph = args.graph || this
 
   IperElement.call(this, graph)
@@ -37,7 +39,9 @@ function IperGraph() {
   // ### nodes
   //
 
-  Object.defineProperty(this, 'nodes', {value: {}})
+  this.nodes = {}
+
+  //Object.defineProperty(this, 'nodes', {value: nodes})
 
   //
   // ### subgraphs
@@ -61,8 +65,7 @@ function IperGraph() {
       subgraphs: args.subgraphs
     })
   }
-  catch (er) { throw er }
-  //catch (ignore) {}
+  catch (err) { throw err }
 }
 
 inherits(IperGraph, IperElement)
@@ -122,8 +125,8 @@ function check(data) {
 
    /* TODO Da fare anche su edges e subgraph */
 
-    if (_.unique(nodeIds).length !== nodeIds.length)
-      throw new Error('duplicated node id')
+  if (_.unique(nodeIds).length !== nodeIds.length)
+    throw new Error('duplicated node id')
 
 
   // * edges refers to existing nodeIds
@@ -215,12 +218,13 @@ IperGraph.prototype.createNode = createNode
 // ### createSubgraph()
 //
 
-function createSubGraph() {
+function createSubgraph() {
   var subgraph = new IperGraph({graph: this})
+
   return subgraph.id
 }
 
-IperGraph.prototype.createNode = createNode
+IperGraph.prototype.createSubgraph = createSubgraph
 
 //
 // ### getEdge()

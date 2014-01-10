@@ -57,18 +57,20 @@ describe 'IperGraph', ->
 
     describe '#createNode()', ->
       it 'returns nodeId', ->
-        id = graph.createNode
-        id.should.be.defined
+        id = graph.createNode()
+        id.should.be.a.number
 
     describe '#createSubgraph()', ->
-      it 'returns subgraphId'
+      it 'returns subgraphId', ->
+        id = graph.createSubgraph()
+        id.should.be.a.number
 
     describe '#getNode()', ->
       it 'has signature (id), returns node', ->
-        id = graph.createNode
-      #  node = graph.getNode id
-      #  node.should.be.instanceOf IperNode
-      #  node.id.should.be.eql id
+        id = graph.createNode()
+        node = graph.getNode id
+        node.should.be.instanceOf IperNode
+        node.id.should.be.eql id
 
       it 'throws error if nodeId does not exists', ->
         (() ->
@@ -124,7 +126,7 @@ describe 'IperGraph', ->
 
     describe '#load(data)', ->
       it 'loads data' # , ->
-        # graph = new IperGraph()
+        #graph = new IperGraph()
 
         # This is a loop graph
         # TODO da mettere in esempio loops
