@@ -73,16 +73,16 @@ inherits(IperNode, IperElement)
 //
 
 function getAdjacentNodeIds() {
-  var self = this
+  var id = this.id
 
   var adjacentNodeIds = []
 
   /* loop over all edges */
-  _.each(self.graph.edges, function (edge) {
+  _.each(this.graph.edges, function (edge) {
     /* if edge contains node */
-    if (_.contains(edge.nodeIds, self.id))
+    if (_.contains(edge.nodeIds, id))
       /* take all nodeIds except node self id */
-      adjacentNodeIds.push(_.without(edge.nodeIds, self.id))
+      adjacentNodeIds.push(_.without(edge.nodeIds, id))
   })
 
   /* since _.without() return an array and nodeIds can be repeated,

@@ -30,11 +30,11 @@ var id2 = graph.createNode([]);
 
 graph.createEdge([id1, id2]);
 
-/*
 
 // We can also get a reference to the node
 var node1 = graph.getNode(id1);
 
+/*
 // node1.data is an array, so we can push something in it
 node1.data.push('foo');
 

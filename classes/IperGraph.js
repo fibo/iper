@@ -239,12 +239,12 @@ IperGraph.prototype.getNode = getNode
 //
 
 function removeEdge(id) {
-  var edges = this.edges
+  var self = this;
 
-  _.each(edges, function (edge, index) {
+  _.each(self.edges, function (edge, index) {
 
     if (id === edge.id)
-      edges.splice(index, 1)
+      self.edges.splice(index, 1)
   })
 }
 
@@ -262,6 +262,8 @@ IperGraph.prototype.removeEdge = removeEdge
 //
 
 function removeNode(id) {
+  var self = this
+
   var edges = this.edges
     , nodes = this.nodes
 
@@ -276,6 +278,8 @@ function removeNode(id) {
       /* drop nodeId from edges linked to removed node */
       if (id === nodeId)
         edge.nodeIds.splice(index, 1)
+
+      console.log(edge.nodeIds)
     })
 
     /* remove orphan edges */
@@ -286,7 +290,7 @@ function removeNode(id) {
 
   _.each(nodes, function (node, index) {
     if (id === node.id)
-      nodes.splice(index, 1)
+      self.nodes.splice(index, 1)
   })
 }
 

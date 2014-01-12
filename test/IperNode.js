@@ -92,41 +92,46 @@
     });
     return describe('Methods', function() {
       return describe('#getAdjacentNodeIds()', function() {
-        var adjcentNodes, id1, id2, id3, id4, node;
+        var adjcentNodes, grafo, id1, id2, id3, id4, node;
         adjcentNodes = [];
-        id1 = graph.createNode();
-        id2 = graph.createNode();
-        id3 = graph.createNode();
-        id4 = graph.createNode();
-        node = graph.getNode(id1);
+        grafo = new IperGraph();
+        id1 = grafo.createNode();
+        id2 = grafo.createNode();
+        id3 = grafo.createNode();
+        id4 = grafo.createNode();
+        node = grafo.getNode(id1);
         it('returns an empty array if there is no edge connected', function() {
           adjcentNodes = node.getAdjacentNodeIds();
           adjcentNodes.should.be.instanceOf(Array);
           return adjcentNodes.should.be.empty;
         });
         it('does not count loops', function() {
-          graph.createEdge([id1, id1]);
+          grafo.createEdge([id1, id1]);
           adjcentNodes = node.getAdjacentNodeIds();
           return adjcentNodes.should.be.empty;
         });
         it('returns ids of nodes in hyperedges connected to the node', function() {
-          graph.createEdge([id1, id2]);
+          grafo.createEdge([id1, id2]);
           adjcentNodes = node.getAdjacentNodeIds();
           adjcentNodes.should.be.eql([id2]);
-          graph.createEdge([id2, id3]);
+          grafo.createEdge([id2, id3]);
           adjcentNodes = node.getAdjacentNodeIds();
           adjcentNodes.should.be.eql([id2]);
-          graph.createEdge([id1, id2]);
+          grafo.createEdge([id1, id2]);
           adjcentNodes = node.getAdjacentNodeIds();
           adjcentNodes.should.be.eql([id2]);
-          graph.createEdge([id1, id2, id3]);
+          grafo.createEdge([id1, id2, id3]);
           adjcentNodes = node.getAdjacentNodeIds();
           adjcentNodes.should.be.eql([id2, id3]);
-          graph.createEdge([id1, id4]);
+          grafo.createEdge([id1, id4]);
           adjcentNodes = node.getAdjacentNodeIds();
           return adjcentNodes.should.be.eql([id2, id3, id4]);
         });
-        return it('works when a node is removed');
+        return it('works when a node is removed', function() {
+          grafo.removeNode(id2);
+          adjcentNodes = node.getAdjacentNodeIds();
+          return adjcentNodes.should.be.eql([id3, id4]);
+        });
       });
     });
   });
