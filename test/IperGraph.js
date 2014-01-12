@@ -1,5 +1,5 @@
 (function() {
-  var IperEdge, IperElement, IperGraph, IperNode, iper, should, _;
+  var IperEdge, IperGraph, IperNode, iper, should, _;
 
   iper = require('../index');
 
@@ -9,20 +9,11 @@
 
   IperEdge = iper.IperEdge;
 
-  IperElement = iper.IperElement;
-
   IperGraph = iper.IperGraph;
 
   IperNode = iper.IperNode;
 
   describe('IperGraph', function() {
-    describe('Inheritance', function() {
-      return it('is an IperElement', function() {
-        var graph;
-        graph = new IperGraph();
-        return graph.should.be.instanceOf(IperElement);
-      });
-    });
     describe('Constructor', function() {
       it('has signature ()', function() {
         var graph;
@@ -45,8 +36,7 @@
           }
         };
         graph = new IperGraph(args);
-        graph.should.be.instanceOf(IperGraph);
-        return console.log(graph);
+        return graph.should.be.instanceOf(IperGraph);
       });
       it('has signature ({nodes})', function() {
         var args, graph;
@@ -82,13 +72,6 @@
         return it('returns nodeId', function() {
           var id;
           id = graph.createNode();
-          return id.should.be.a.number;
-        });
-      });
-      describe('#createSubgraph()', function() {
-        return it('returns subgraphId', function() {
-          var id;
-          id = graph.createSubgraph();
           return id.should.be.a.number;
         });
       });
@@ -250,7 +233,7 @@
           graph.removeEdge(edgeId);
           return (function() {
             return graph.getEdge(edgeId);
-          }).should.throwError();
+          }).should.throwError('edge not found');
         });
       });
       return describe('#removeNode()', function() {
@@ -263,7 +246,17 @@
             return graph.getNode(nodeId);
           }).should.throwError('node not found');
         });
-        return it('removes edges left without nodes');
+        return it('removes edges left without nodes', function() {
+          var edgeId, nodeId1, nodeId2, nodeIds;
+          nodeId1 = graph.createNode();
+          nodeId2 = graph.createNode();
+          nodeIds = [nodeId1, nodeId2];
+          edgeId = graph.createEdge(nodeIds);
+          graph.removeNode(nodeId1);
+          return (function() {
+            return graph.getEdge(edgeId);
+          }).should.throwError('edge not found');
+        });
       });
     });
   });

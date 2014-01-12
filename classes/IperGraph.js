@@ -4,26 +4,17 @@
 //
 
 var _        = require('underscore')
-  , inherits = require('inherits')
 
 var IperEdge    = require('./IperEdge')
-  , IperElement = require('./IperElement')
   , IperNode    = require('./IperNode')
 
 //
-// Constructor
+// ## Constructor
 //
 
 function IperGraph () {
 
   var args = arguments[0] || {}
-
-  // TODO var isRoot = typeof args.graph === 'undefined'
-
-  var graph = args.graph || this
-
-  IperElement.call(this, graph)
-
 
   //
   // ## Attributes
@@ -33,21 +24,19 @@ function IperGraph () {
   // ### edges
   //
 
-  Object.defineProperty(this, 'edges', {value: {}})
+  Object.defineProperty(this, 'edges', {
+    enumerable: true,
+    value: []
+  })
 
   //
   // ### nodes
   //
 
-  this.nodes = {}
-
-  //Object.defineProperty(this, 'nodes', {value: nodes})
-
-  //
-  // ### subgraphs
-  //
-
-  Object.defineProperty(this, 'subgraphs', {value: {}})
+  Object.defineProperty(this, 'nodes', {
+    enumerable: true,
+    value: []
+  })
 
   /* TODO
   //
@@ -61,44 +50,10 @@ function IperGraph () {
   try {
     this.load( {
       edges: args.edges,
-      nodes: args.nodes,
-      subgraphs: args.subgraphs
+      nodes: args.nodes
     })
   }
   catch (err) { throw err }
-}
-
-inherits(IperGraph, IperElement)
-
-//
-// ## Overridden methods
-//
-
-//
-// ### valueOf()
-//
-
-function valueOf () {
-  var val = {
-    id: this.id,
-    nodes: [],
-    edges: [],
-    subgraphs: []
-  }
-
-  _.each(this.edges, function (edge) {
-    val.edges.push(edge.valueOf())
-  })
-
-  _.each(this.nodes, function (node) {
-    val.nodes.push(node.valueOf())
-  })
-
-  _.each(this.subgraphs, function (subgraph) {
-    val.subgraphs.push(subgraph.valueOf())
-  })
-
-  return val
 }
 
 //
@@ -135,10 +90,7 @@ function valueOf () {
 //       nodeIds: [1, 2]
 //     }
 //     ...
-//   ],
-//   subgraphs: [
-//
-//   ],
+//   ]
 // }
 // ```
 //
@@ -148,7 +100,6 @@ function valueOf () {
 function check(data) {
   var edges    = data.edges    || []
     , nodes    = data.nodes    || []
-    , subgraph = data.subgraph || []
 
   var nodeIds = _.pluck(nodes, 'id')
 
@@ -244,28 +195,21 @@ function createNode(opts) {
 IperGraph.prototype.createNode = createNode
 
 //
-// ### createSubgraph()
-//
-
-function createSubgraph() {
-  var subgraph = new IperGraph({graph: this})
-
-  return subgraph.id
-}
-
-IperGraph.prototype.createSubgraph = createSubgraph
-
-//
 // ### getEdge()
 //
 
 function getEdge(id) {
-  var edge = this.edges[id]
+  var edgeFound
 
-  if (_.isUndefined(edge))
+  _.each(this.edges, function (edge) {
+    if (id === edge.id)
+      edgeFound = edge
+  })
+
+  if (edgeFound)
+    return edgeFound
+  else
     throw new Error('edge not found')
-
-  return edge
 }
 
 IperGraph.prototype.getEdge = getEdge
@@ -275,12 +219,17 @@ IperGraph.prototype.getEdge = getEdge
 //
 
 function getNode(id) {
-  var node = this.nodes[id]
+  var nodeFound
 
-  if (_.isUndefined(node))
+  _.each(this.nodes, function (node) {
+    if (id === node.id)
+      nodeFound = node
+  })
+
+  if (nodeFound)
+    return nodeFound
+  else
     throw new Error('node not found')
-
-  return node
 }
 
 IperGraph.prototype.getNode = getNode
@@ -292,10 +241,10 @@ IperGraph.prototype.getNode = getNode
 function removeEdge(id) {
   var edges = this.edges
 
-  _.each(edges, function (edge) {
+  _.each(edges, function (edge, index) {
 
     if (id === edge.id)
-      delete edges[id]
+      edges.splice(index, 1)
   })
 }
 
@@ -321,13 +270,14 @@ function removeNode(id) {
     })
 
     /* remove orphan edges */
-    if (edge.nodeIds.lenght < 2)
-      this.removeEdge(edge.id)
+    /* TODO in realta non sarebbe 2 ma il rank dell' edge */
+    if (edge.nodeIds.length < 2)
+      edge.remove()
   })
 
-  _.each(nodes, function (node) {
+  _.each(nodes, function (node, index) {
     if (id === node.id)
-      delete nodes[id]
+      nodes.splice(index, 1)
   })
 }
 

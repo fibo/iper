@@ -4,16 +4,10 @@ should = require 'should'
 _      = require 'underscore'
 
 IperEdge    = iper.IperEdge
-IperElement = iper.IperElement
 IperGraph   = iper.IperGraph
 IperNode    = iper.IperNode
 
 describe 'IperGraph', ->
-  describe 'Inheritance', ->
-    it 'is an IperElement', ->
-      graph = new IperGraph()
-      graph.should.be.instanceOf IperElement
-
   describe 'Constructor', ->
     it 'has signature ()', ->
       graph = new IperGraph()
@@ -59,11 +53,6 @@ describe 'IperGraph', ->
     describe '#createNode()', ->
       it 'returns nodeId', ->
         id = graph.createNode()
-        id.should.be.a.number
-
-    describe '#createSubgraph()', ->
-      it 'returns subgraphId', ->
-        id = graph.createSubgraph()
         id.should.be.a.number
 
     describe '#getNode()', ->
@@ -211,7 +200,7 @@ describe 'IperGraph', ->
 
         (() ->
           graph.getEdge(edgeId)
-        ).should.throwError()
+        ).should.throwError('edge not found')
 
     describe '#removeNode()', ->
       it 'has signature (id), removes node from its graph', ->
@@ -225,17 +214,17 @@ describe 'IperGraph', ->
           graph.getNode(nodeId)
         ).should.throwError('node not found')
 
-      it 'removes edges left without nodes' # , ->
+      it 'removes edges left without nodes', ->
 
-        # nodeId1 = graph.createNode(1)
-        # nodeId2 = graph.createNode(2)
-        # nodeIds = [nodeId1, nodeId2]
+        nodeId1 = graph.createNode()
+        nodeId2 = graph.createNode()
+        nodeIds = [nodeId1, nodeId2]
 
-        # edgeId = graph.createEdge nodeIds
+        edgeId = graph.createEdge(nodeIds)
 
-        # graph.removeNode(nodeId1)
+        graph.removeNode(nodeId1)
 
-        # (() ->
-        #   graph.getEdge(edgeId)
-        # ).should.throwError()
+        (() ->
+          graph.getEdge(edgeId)
+        ).should.throwError('edge not found')
 

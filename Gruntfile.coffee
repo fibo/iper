@@ -23,7 +23,6 @@ mochacliConfig =
     require: ['should']
     reporter: 'spec'
     bail: true
-  all: ['test/*.js']
   examples: ['test/examples.js']
   classes: []
 
