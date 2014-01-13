@@ -39,3 +39,7 @@ Point your browser to [iper site](http://fibo.github.io/iper).
 
 [MIT](http://fibo.mit-license.org/)
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fibo/iper/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
