@@ -1,5 +1,4 @@
 
-
 //
 // # Adjacent nodes
 //
@@ -8,7 +7,10 @@ var iper = require('iper');
 
 var IperGraph = iper.IperGraph;
 
+//
 // Let's create an empty graph and add some nodes
+//
+
 var graph = new IperGraph();
 
 /*

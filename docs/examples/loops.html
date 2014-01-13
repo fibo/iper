@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>index.js</title>
+  <title>loops.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -61,7 +61,7 @@
     <!-- div class="header">
       
  
-      <h1>index.js</h1>
+      <h1>loops.js</h1>
  
       
  
@@ -159,49 +159,34 @@
         
       
         
-        <h1>Iper</h1>
+        <h1>Loops</h1>
 
+        
+          <div class='highlight'><pre>
+<span class="keyword">var</span> iper = require(<span class="string">'iper'</span>);
+
+<span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
         
       
         
-        <p>Learn to use <code>iper</code> by example.</p>
+        <p>Let&#39;s create a graph with one node</p>
 
+        
+          <div class='highlight'><pre>
+<span class="keyword">var</span> graph = <span class="keyword">new</span> IperGraph();
+<span class="keyword">var</span> nodeId = graph.createNode();
+
+<span class="comment">/* TODO degree counts loops */</span></pre></div>
         
       
         
-        <ul>
-<li>common graph</li>
-</ul>
+        <p>A loop is an edge that connects a node with itself</p>
 
         
-          <div class='highlight'><pre>exports.commonGraph = require(<span class="string">'./commonGraph'</span>);</pre></div>
-        
-      
-        
-        <ul>
-<li>generic graph</li>
-</ul>
+          <div class='highlight'><pre>
+<span class="keyword">var</span> edgeId1 = graph.createEdge([nodeId1, nodeId2]);
 
-        
-          <div class='highlight'><pre>exports.genericGraph = require(<span class="string">'./genericGraph'</span>);</pre></div>
-        
-      
-        
-        <ul>
-<li>graph #createNodes() method</li>
-</ul>
-
-        
-          <div class='highlight'><pre>exports.createNodes = require(<span class="string">'./createNodes'</span>);</pre></div>
-        
-      
-        
-        <ul>
-<li>node #getAdjacentNodeIds() method</li>
-</ul>
-
-        
-          <div class='highlight'><pre>exports.adjacentNodes = require(<span class="string">'./adjacentNodes'</span>);</pre></div>
+<span class="comment">/* TODO var edgeId = node.createLoop(); */</span></pre></div>
         
       
  

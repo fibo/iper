@@ -92,20 +92,24 @@
     });
     return describe('Methods', function() {
       return describe('#getAdjacentNodeIds()', function() {
-        return it('returns ids of nodes in hyperedges connected to the node', function() {
-          var adjcentNodes, id1, id2, id3, id4, node;
-          adjcentNodes = [];
-          id1 = graph.createNode();
-          id2 = graph.createNode();
-          id3 = graph.createNode();
-          id4 = graph.createNode();
-          node = graph.getNode(id1);
+        var adjcentNodes, id1, id2, id3, id4, node;
+        adjcentNodes = [];
+        id1 = graph.createNode();
+        id2 = graph.createNode();
+        id3 = graph.createNode();
+        id4 = graph.createNode();
+        node = graph.getNode(id1);
+        it('returns an empty array if there is no edge connected', function() {
           adjcentNodes = node.getAdjacentNodeIds();
           adjcentNodes.should.be.instanceOf(Array);
-          adjcentNodes.should.be.empty;
+          return adjcentNodes.should.be.empty;
+        });
+        it('does not count loops', function() {
           graph.createEdge([id1, id1]);
           adjcentNodes = node.getAdjacentNodeIds();
-          adjcentNodes.should.be.empty;
+          return adjcentNodes.should.be.empty;
+        });
+        it('returns ids of nodes in hyperedges connected to the node', function() {
           graph.createEdge([id1, id2]);
           adjcentNodes = node.getAdjacentNodeIds();
           adjcentNodes.should.be.eql([id2]);
@@ -120,11 +124,9 @@
           adjcentNodes.should.be.eql([id2, id3]);
           graph.createEdge([id1, id4]);
           adjcentNodes = node.getAdjacentNodeIds();
-          adjcentNodes.should.be.eql([id2, id3, id4]);
-          graph.removeNode(id2);
-          adjcentNodes = node.getAdjacentNodeIds();
-          return adjcentNodes.should.be.eql([id3, id4]);
+          return adjcentNodes.should.be.eql([id2, id3, id4]);
         });
+        return it('works when a node is removed');
       });
     });
   });

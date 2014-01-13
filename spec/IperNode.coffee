@@ -70,14 +70,13 @@ describe 'IperNode', ->
         node3.degree.should.be.eql 2
 
       it 'counts loops', ->
-        # TODO non togliere questo test, ma metti sta cosa nell esempio loops
-
         # Create a double loop
         id1 = graph.createNode()
         graph.createEdge([id1, id1])
         node1 = graph.getNode(id1)
         node1.degree.should.be.eql 2
 
+        # TODO non togliere questo test, ma metti sta cosa nell esempio loops
         # Create a triple loop
         id2 = graph.createNode()
         graph.createEdge([id2, id2, id2])
@@ -86,24 +85,27 @@ describe 'IperNode', ->
 
   describe 'Methods', ->
     describe '#getAdjacentNodeIds()', ->
-      it 'returns ids of nodes in hyperedges connected to the node', ->
-        adjcentNodes = []
+      adjcentNodes = []
 
-        id1 = graph.createNode()
-        id2 = graph.createNode()
-        id3 = graph.createNode()
-        id4 = graph.createNode()
+      id1 = graph.createNode()
+      id2 = graph.createNode()
+      id3 = graph.createNode()
+      id4 = graph.createNode()
 
-        node = graph.getNode(id1)
+      node = graph.getNode(id1)
 
+      it 'returns an empty array if there is no edge connected', ->
         adjcentNodes = node.getAdjacentNodeIds()
         adjcentNodes.should.be.instanceOf Array
         adjcentNodes.should.be.empty
 
+      it 'does not count loops', ->
         # loop edges does not imply node is adjacent to itself
         graph.createEdge([id1, id1])
         adjcentNodes = node.getAdjacentNodeIds()
         adjcentNodes.should.be.empty
+
+      it 'returns ids of nodes in hyperedges connected to the node', ->
 
         graph.createEdge([id1, id2])
         adjcentNodes = node.getAdjacentNodeIds()
@@ -127,8 +129,10 @@ describe 'IperNode', ->
         adjcentNodes = node.getAdjacentNodeIds()
         adjcentNodes.should.be.eql [id2, id3, id4]
 
-        # remove a node
-        graph.removeNode(id2)
-        adjcentNodes = node.getAdjacentNodeIds()
-        adjcentNodes.should.be.eql [id3, id4]
+      it 'works when a node is removed' #
+        # # remove a node
+        # adjcentNodes = node.getAdjacentNodeIds()
+        # graph.removeNode(id2)
+        # adjcentNodes = node.getAdjacentNodeIds()
+        # adjcentNodes.should.be.eql [id3, id4]
 

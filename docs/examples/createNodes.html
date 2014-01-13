@@ -132,6 +132,20 @@
           
           
           
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="loops.html">
+ 
+            loops
+ 
+          </a>
+        </li>
+ 
+        
  
       </ul>
     </div>
@@ -152,48 +166,25 @@
 <span class="keyword">var</span> iper = require(<span class="string">'iper'</span>)
   , should = require(<span class="string">'should'</span>);
 
-<span class="keyword">var</span> IperGraph = iper.IperGraph;
-
-<span class="comment">/*</pre></div>
+<span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
         
       
         
-        <p>Create an empty graph</p>
+        <p>Create an empty graph, and create a node</p>
 
         
-          <div class='highlight'><pre><span class="keyword">var</span> graph = <span class="keyword">new</span> IperGraph();</pre></div>
-        
-      
-        
-        <p>Use #createNode() to add nodes to the graph.</p>
-<p>For example, this will create an empty node.</p>
-
-        
-          <div class='highlight'><pre>graph.createNode();</pre></div>
-        
-      
-        
-        <p>You can pass any kind of data</p>
-
-        
-          <div class='highlight'><pre>graph.createNode(<span class="number">0</span>);
-graph.createNode(<span class="string">'foo'</span>);
-graph.createNode([<span class="string">'bar'</span>]);
-graph.createNode({quz:<span class="string">'quuz'</span>});
-graph.createNode(
-  <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span> {</span>
-    console.log(<span class="string">'Hello iper!'</span>);
-  }
-);</pre></div>
+          <div class='highlight'><pre>
+<span class="keyword">var</span> graph = <span class="keyword">new</span> IperGraph();
+graph.createNode();</pre></div>
         
       
         
         <p>Every node will be given a unique identifier, that is returned by #createNode() as a convenience.
-Lets create two nodes with an empty array as data, 
-and lets store ids to use them later.</p>
+Lets create two nodes and store ids to use them later.</p>
 
         
-          <div class='highlight'><pre><span class="keyword">var</span> id1 = graph.createNode([]);
+          <div class='highlight'><pre>
+<span class="keyword">var</span> id1 = graph.createNode([]);
 <span class="keyword">var</span> id2 = graph.createNode([]);</pre></div>
         
       
@@ -202,7 +193,10 @@ and lets store ids to use them later.</p>
 for example we can create an edge joining the nodes.</p>
 
         
-          <div class='highlight'><pre>graph.createEdge([id1, id2]);</pre></div>
+          <div class='highlight'><pre>
+graph.createEdge([id1, id2]);
+
+<span class="comment">/*</pre></div>
         
       
         

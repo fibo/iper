@@ -253,10 +253,19 @@ IperGraph.prototype.removeEdge = removeEdge
 //
 // ### removeNode()
 //
+// Removes node by given id
+//
+//
+//```
+//graph.removeNode(nodeId)
+//```
+//
 
 function removeNode(id) {
   var edges = this.edges
     , nodes = this.nodes
+
+    /* TODO fai try getNode per fare throw di node not found */
 
   /* loop over all edges */
   _.each(edges, function (edge) {
