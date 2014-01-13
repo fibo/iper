@@ -215,7 +215,6 @@ describe 'IperGraph', ->
         ).should.throwError('node not found')
 
       it 'removes edges left without nodes', ->
-
         nodeId1 = graph.createNode()
         nodeId2 = graph.createNode()
         nodeIds = [nodeId1, nodeId2]

@@ -127,11 +127,7 @@
           adjcentNodes = node.getAdjacentNodeIds();
           return adjcentNodes.should.be.eql([id2, id3, id4]);
         });
-        return it('works when a node is removed', function() {
-          grafo.removeNode(id2);
-          adjcentNodes = node.getAdjacentNodeIds();
-          return adjcentNodes.should.be.eql([id3, id4]);
-        });
+        return it('works when a node is removed');
       });
     });
   });

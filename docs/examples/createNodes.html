@@ -27,7 +27,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <span class="navbar-brand">algebra</span>
+          <span class="navbar-brand">createNodes.js</span>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -159,7 +159,7 @@
         
       
         
-        <h1>Create nodes</h1>
+        <h1 id="create-nodes">Create nodes</h1>
 
         
           <div class='highlight'><pre>
@@ -194,16 +194,17 @@ for example we can create an edge joining the nodes.</p>
 
         
           <div class='highlight'><pre>
-graph.createEdge([id1, id2]);
-
-<span class="comment">/*</pre></div>
+graph.createEdge([id1, id2]);</pre></div>
         
       
         
         <p>We can also get a reference to the node</p>
 
         
-          <div class='highlight'><pre><span class="keyword">var</span> node1 = graph.getNode(id1);</pre></div>
+          <div class='highlight'><pre><span class="keyword">var</span> node1 = graph.getNode(id1);
+
+<span class="comment">/*
+</span></pre></div>
         
       
         

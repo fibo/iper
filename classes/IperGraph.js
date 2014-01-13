@@ -278,8 +278,6 @@ function removeNode(id) {
       /* drop nodeId from edges linked to removed node */
       if (id === nodeId)
         edge.nodeIds.splice(index, 1)
-
-      console.log(edge.nodeIds)
     })
 
     /* remove orphan edges */
