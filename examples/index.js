@@ -5,14 +5,14 @@
 // Learn to use `iper` by example.
 
 // * common graph
-exports.graph = require('./commonGraph')
+exports.commonGraph = require('./commonGraph');
 
 // * generic graph
-exports.graph = require('./genericGraph')
+exports.genericGraph = require('./genericGraph');
 
 // * graph #createNodes() method
-exports.createNodes = require('./createNodes')
+exports.createNodes = require('./createNodes');
 
 // * node #getAdjacentNodeIds() method
-exports.adjacentNodes = require('./adjacentNodes')
+exports.adjacentNodes = require('./adjacentNodes');
 

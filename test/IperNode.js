@@ -1,140 +1,135 @@
-var IperEdge, IperElement, IperGraph, IperNode, data, graph, iper;
+(function() {
+  var IperEdge, IperElement, IperGraph, IperNode, graph, iper;
 
-iper = require('../index');
+  iper = require('../index');
 
-IperEdge = iper.IperEdge;
+  IperEdge = iper.IperEdge;
 
-IperElement = iper.IperElement;
+  IperElement = iper.IperElement;
 
-IperGraph = iper.IperGraph;
+  IperGraph = iper.IperGraph;
 
-IperNode = iper.IperNode;
+  IperNode = iper.IperNode;
 
-data = [1, 2, 3];
+  graph = new IperGraph();
 
-graph = new IperGraph();
-
-describe('IperNode', function() {
-  describe('inheritance', function() {
-    return it('is an IperElement', function() {
-      var node;
-      node = new IperNode(graph);
-      return node.should.be.instanceOf(IperElement);
-    });
-  });
-  describe('constructor', function() {
-    it('has signature (graph)', function() {
-      var node;
-      node = new IperNode(graph);
-      return node.should.be.instanceOf(IperNode);
-    });
-    it('has signature (graph, data)', function() {
-      var node;
-      node = new IperNode(graph, data);
-      return node.should.be.instanceOf(IperNode);
-    });
-    it('has signature (graph, data, meta)', function() {
-      var maxDegree, meta, node;
-      maxDegree = 2;
-      meta = {
-        maxDegree: maxDegree
-      };
-      node = new IperNode(graph, data, meta);
-      node.should.be.instanceOf(IperNode);
-      node.data.should.be.eql(data);
-      return node.maxDegree.should.be.eql(maxDegree);
-    });
-    return it('requires graph is defined', function() {
-      return (function() {
+  describe('IperNode', function() {
+    describe('Inheritance', function() {
+      return it('is an IperElement', function() {
         var node;
-        return node = new IperNode();
-      }).should.throwError();
+        node = new IperNode(graph);
+        return node.should.be.instanceOf(IperElement);
+      });
     });
-  });
-  describe('accessors', function() {
-    describe('#maxDegree', function() {
-      return it('returns max number of edges allowed', function() {
-        var maxDegree, meta, node;
-        maxDegree = 4;
-        meta = {
+    describe('Constructor', function() {
+      it('has signature (graph)', function() {
+        var node;
+        node = new IperNode(graph);
+        return node.should.be.instanceOf(IperNode);
+      });
+      it('has signature (graph, opts)', function() {
+        var maxDegree, node, opts;
+        maxDegree = 2;
+        opts = {
           maxDegree: maxDegree
         };
-        node = new IperNode(graph, data, meta);
+        node = new IperNode(graph, opts);
         node.should.be.instanceOf(IperNode);
         return node.maxDegree.should.be.eql(maxDegree);
       });
-    });
-    return describe('#degree', function() {
-      return it('returns number of edges linked', function() {
-        var id1, id2, id3, node1, node2, node3;
-        id1 = graph.createNode();
-        id2 = graph.createNode();
-        id3 = graph.createNode();
-        node1 = graph.getNode(id1);
-        node2 = graph.getNode(id2);
-        node3 = graph.getNode(id3);
-        graph.createEdge([id1, id2]);
-        node1.degree.should.be.eql(1);
-        node2.degree.should.be.eql(1);
-        node3.degree.should.be.eql(0);
-        graph.createEdge([id2, id3]);
-        node1.degree.should.be.eql(1);
-        node2.degree.should.be.eql(2);
-        node3.degree.should.be.eql(1);
-        graph.createEdge([id3, id1]);
-        node1.degree.should.be.eql(2);
-        node2.degree.should.be.eql(2);
-        return node3.degree.should.be.eql(2);
-      });
-    });
-  });
-  return describe('methods', function() {
-    describe('#getAdjacentNodeIds()', function() {
-      return it('returns ids of nodes in hyperedges connected to the node', function() {
-        var adjcentNodes, id1, id2, id3, id4, node;
-        adjcentNodes = [];
-        id1 = graph.createNode();
-        id2 = graph.createNode();
-        id3 = graph.createNode();
-        id4 = graph.createNode();
-        node = graph.getNode(id1);
-        adjcentNodes = node.getAdjacentNodeIds();
-        adjcentNodes.should.be.instanceOf(Array);
-        adjcentNodes.should.be.empty;
-        graph.createEdge([id1, id1]);
-        adjcentNodes = node.getAdjacentNodeIds();
-        adjcentNodes.should.be.empty;
-        graph.createEdge([id1, id2]);
-        adjcentNodes = node.getAdjacentNodeIds();
-        adjcentNodes.should.be.eql([id2]);
-        graph.createEdge([id2, id3]);
-        adjcentNodes = node.getAdjacentNodeIds();
-        adjcentNodes.should.be.eql([id2]);
-        graph.createEdge([id1, id2]);
-        adjcentNodes = node.getAdjacentNodeIds();
-        adjcentNodes.should.be.eql([id2]);
-        graph.createEdge([id1, id2, id3]);
-        adjcentNodes = node.getAdjacentNodeIds();
-        adjcentNodes.should.be.eql([id2, id3]);
-        graph.createEdge([id1, id4]);
-        adjcentNodes = node.getAdjacentNodeIds();
-        adjcentNodes.should.be.eql([id2, id3, id4]);
-        graph.removeNode(id2);
-        adjcentNodes = node.getAdjacentNodeIds();
-        return adjcentNodes.should.be.eql([id3, id4]);
-      });
-    });
-    return describe('#remove()', function() {
-      return it('removes the node from its graph', function() {
-        var node, nodeId;
+      return it('registers node in graph', function() {
+        var node;
         node = new IperNode(graph);
-        nodeId = node.id;
-        node.remove();
-        (function() {
-          return graph.getEdge(nodeId);
-        }).should.throwError();
-        return node.should.exists;
+        return graph.getNode(node.id).should.be.eql(node);
+      });
+    });
+    describe('Attributes', function() {
+      describe('#maxDegree', function() {
+        return it('returns max number of edges allowed', function() {
+          var maxDegree, node, opts;
+          maxDegree = 4;
+          opts = {
+            maxDegree: maxDegree
+          };
+          node = new IperNode(graph, opts);
+          return node.maxDegree.should.be.eql(maxDegree);
+        });
+      });
+      return describe('#degree', function() {
+        it('returns number of edges linked', function() {
+          var id1, id2, id3, node1, node2, node3;
+          id1 = graph.createNode();
+          id2 = graph.createNode();
+          id3 = graph.createNode();
+          node1 = graph.getNode(id1);
+          node2 = graph.getNode(id2);
+          node3 = graph.getNode(id3);
+          graph.createEdge([id1, id2]);
+          node1.degree.should.be.eql(1);
+          node2.degree.should.be.eql(1);
+          node3.degree.should.be.eql(0);
+          graph.createEdge([id2, id3]);
+          node1.degree.should.be.eql(1);
+          node2.degree.should.be.eql(2);
+          node3.degree.should.be.eql(1);
+          graph.createEdge([id3, id1]);
+          node1.degree.should.be.eql(2);
+          node2.degree.should.be.eql(2);
+          return node3.degree.should.be.eql(2);
+        });
+        return it('counts loops', function() {
+          var id1, id2, node1, node2;
+          id1 = graph.createNode();
+          graph.createEdge([id1, id1]);
+          node1 = graph.getNode(id1);
+          node1.degree.should.be.eql(2);
+          id2 = graph.createNode();
+          graph.createEdge([id2, id2, id2]);
+          node2 = graph.getNode(id2);
+          return node2.degree.should.be.eql(3);
+        });
+      });
+    });
+    return describe('Methods', function() {
+      return describe('#getAdjacentNodeIds()', function() {
+        var adjcentNodes, grafo, id1, id2, id3, id4, node;
+        adjcentNodes = [];
+        grafo = new IperGraph();
+        id1 = grafo.createNode();
+        id2 = grafo.createNode();
+        id3 = grafo.createNode();
+        id4 = grafo.createNode();
+        node = grafo.getNode(id1);
+        it('returns an empty array if there is no edge connected', function() {
+          adjcentNodes = node.getAdjacentNodeIds();
+          adjcentNodes.should.be.instanceOf(Array);
+          return adjcentNodes.should.be.empty;
+        });
+        it('does not count loops', function() {
+          grafo.createEdge([id1, id1]);
+          adjcentNodes = node.getAdjacentNodeIds();
+          return adjcentNodes.should.be.empty;
+        });
+        it('returns ids of nodes in hyperedges connected to the node', function() {
+          grafo.createEdge([id1, id2]);
+          adjcentNodes = node.getAdjacentNodeIds();
+          adjcentNodes.should.be.eql([id2]);
+          grafo.createEdge([id2, id3]);
+          adjcentNodes = node.getAdjacentNodeIds();
+          adjcentNodes.should.be.eql([id2]);
+          grafo.createEdge([id1, id2]);
+          adjcentNodes = node.getAdjacentNodeIds();
+          adjcentNodes.should.be.eql([id2]);
+          grafo.createEdge([id1, id2, id3]);
+          adjcentNodes = node.getAdjacentNodeIds();
+          adjcentNodes.should.be.eql([id2, id3]);
+          grafo.createEdge([id1, id4]);
+          adjcentNodes = node.getAdjacentNodeIds();
+          return adjcentNodes.should.be.eql([id2, id3, id4]);
+        });
+        return it('works when a node is removed');
       });
     });
   });
-});
+
+}).call(this);

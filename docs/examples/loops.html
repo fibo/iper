@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>iper</title>
+  <title>loops.js</title>
 
   <!-- Bootstrap -->
   <!-- Latest compiled and minified CSS -->
@@ -27,13 +27,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <span class="navbar-brand">iper</span>
+          <span class="navbar-brand">loops.js</span>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="./">Home</a></li>
-            <li><a href="./classes">Classes</a></li>
-            <li><a href="./examples">Examples</a></li>
+            <li class="active"><a href="../">Home</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <!-- li class="dropdown">
@@ -49,7 +49,6 @@
               </ul>
             </li -->
             <li><a href="http://g14n.info">Site</a></li>
-            <!-- li class="active"><a href="./">Static top</a></li -->
           </ul>
         </div>
       </div> <!-- div class="container" -->
@@ -58,38 +57,141 @@
 
 
   <div class="container">
-    <div class="jumbotron">
-      <h1 id="iper">iper</h1>
-<blockquote>
-<p>Hypergraphs for Node.js</p>
-</blockquote>
-<p><a href="https://travis-ci.org/fibo/iper.png?branch=master"><img src="https://travis-ci.org/fibo/iper.png?branch=master" alt="Build Status"></a> <a href="http://badge.fury.io/js/iper"><img src="https://badge.fury.io/js/iper.png" alt="NPM version"></a></p>
-<h1 id="description">Description</h1>
-<p>What is an hypergraph?</p>
-<p>An hypergraph is a graph which rank can be greater than two.</p>
-<p>Check the following Wikipedia pages:</p>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Hypergraph">Hypergraph</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Graph_theory">Graph theory</a></li>
-</ul>
-<h1 id="installation">Installation</h1>
-<p>With <a href="https://npmjs.org/">npm</a> do</p>
-<pre><code class="lang-bash">npm install iper</code></pre>
-<h1 id="features">Features</h1>
-<ul>
-<li>Graphs of rank n, a.k.a. hypergraphs</li>
-<li>Directed graphs</li>
-<li>Graph theory algorithms:<ul>
-<li>adjacent nodes</li>
-</ul>
-</li>
-</ul>
-<h1 id="documentation">Documentation</h1>
-<p>Point your browser to <a href="http://fibo.github.io/iper">iper site</a>.</p>
-<h1 id="license">License</h1>
-<p><a href="http://fibo.mit-license.org/">MIT</a></p>
-
+  <div class="row">
+    <!-- div class="header">
+      
+ 
+      <h1>loops.js</h1>
+ 
+      
+ 
+    </div -->
+ 
+    <div class="col-md-3">
+      <h2>All Classes</h2>
+      <ul class="list-group">
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="adjacentNodes.html">
+ 
+            adjacentNodes
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="commonGraph.html">
+ 
+            commonGraph
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="createNodes.html">
+ 
+            createNodes
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="genericGraph.html">
+ 
+            genericGraph
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="loops.html">
+ 
+            loops
+ 
+          </a>
+        </li>
+ 
+        
+ 
+      </ul>
     </div>
+ 
+    <div class="col-md-9">
+      <h2>Class</h2>
+
+      
+        
+        
+        
+      
+        
+        <h1 id="loops">Loops</h1>
+
+        
+          <div class='highlight'><pre>
+<span class="keyword">var</span> iper = require(<span class="string">'iper'</span>);
+
+<span class="keyword">var</span> IperGraph = iper.IperGraph;</pre></div>
+        
+      
+        
+        <p>Let&#39;s create a graph with one node</p>
+
+        
+          <div class='highlight'><pre>
+<span class="keyword">var</span> graph = <span class="keyword">new</span> IperGraph();
+<span class="keyword">var</span> nodeId = graph.createNode();
+
+<span class="comment">/* TODO degree counts loops */</span></pre></div>
+        
+      
+        
+        <p>A loop is an edge that connects a node with itself</p>
+
+        
+          <div class='highlight'><pre>
+<span class="keyword">var</span> edgeId1 = graph.createEdge([nodeId1, nodeId2]);
+
+<span class="comment">/* TODO var edgeId = node.createLoop(); */</span></pre></div>
+        
+      
+ 
+    </div>
+  </div>
   </div>
 
 

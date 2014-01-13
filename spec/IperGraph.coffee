@@ -1,171 +1,164 @@
 
 iper   = require '../index'
 should = require 'should'
+_      = require 'underscore'
 
 IperEdge    = iper.IperEdge
-IperElement = iper.IperElement
 IperGraph   = iper.IperGraph
 IperNode    = iper.IperNode
 
 describe 'IperGraph', ->
-  describe 'inheritance', ->
-    it 'is an IperElement', ->
-      graph = new IperGraph()
-      graph.should.be.instanceOf IperElement
-
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'has signature ()', ->
       graph = new IperGraph()
       graph.should.be.instanceOf IperGraph
 
-    it 'has signature (data)', ->
+    it 'has signature ({nodes, edges})', ->
       # This is a simple directed graph
-      # foo -> bar
-      data =
-        nodes:
-          1: 'foo'
-          2: 'bar'
+      # 1 -> 2
+      args =
+        nodes: [
+          { id: 1 }
+          { id: 2 }
+        ]
         edges:
-          3: [1, 2]
+          { id: 3, nodeIds: [1, 2] }
 
-      graph = new IperGraph(data)
+      graph = new IperGraph(args)
       graph.should.be.instanceOf IperGraph
 
-  describe 'accessors', ->
-    describe '#data', ->
-      it 'returns graph data', ->
-        graph = new IperGraph()
+    it 'has signature ({nodes})', ->
+      # This is a graph without nodes
+      args =
+        nodes: [
+          { id: 1 }
+          { id: 2 }
+          { id: 3 }
+          { id: 4 }
+        ]
 
-        nodeId1 = graph.createNode('foo')
-        nodeId2 = graph.createNode([1, 2])
-        edgeId1 = graph.createEdge([nodeId1, nodeId2])
+      graph = new IperGraph(args)
+      graph.should.be.instanceOf IperGraph
 
-        data = {}
-        data.nodes = {}
-        data.edges = {}
+    it 'has signature ({rank})', ->
+      graph = new IperGraph({rank: 2})
+      graph.should.be.instanceOf IperGraph
 
-        data.nodes[nodeId1] = 'foo'
-        data.nodes[nodeId2] = [1, 2]
-        data.edges[edgeId1] = [nodeId1, nodeId2]
+  describe 'Attributes', ->
+    # TODO describe uniform, nodes, edges, subgraphs, rank
 
-        graph.data.should.eql data
-
-  describe 'methods', ->
+  describe 'Methods', ->
     graph = new IperGraph()
-    data = 'foo'
 
     describe '#createNode()', ->
-      it 'has signature (data), returns nodeId', ->
-        id = graph.createNode data
-        id.should.be.defined
-
-      it 'has signature (data, meta), returns nodeId', ->
-        maxDegree = 4
-        meta =
-          maxDegree: maxDegree
-
-        id = graph.createNode data, meta
-        id.should.be.defined
-
-        node = graph.getNode id
-        node.maxDegree.should.eql maxDegree
+      it 'returns nodeId', ->
+        id = graph.createNode()
+        id.should.be.a.number
 
     describe '#getNode()', ->
       it 'has signature (id), returns node', ->
-        id = graph.createNode data
+        id = graph.createNode()
         node = graph.getNode id
         node.should.be.instanceOf IperNode
         node.id.should.be.eql id
 
-      it 'throws error if edge does not exists', ->
+      it 'throws *node not found*', ->
         (() ->
           graph.getNode(-1)
-        ).should.throwError()
+        ).should.throwError('node not found')
 
     describe '#check(data)', ->
-      it 'checks data is valid', ->
-        # invalid edge
+      it 'throws *invalid edge*', ->
+        # an invalid edge refers to nodeIds that do not exists
         data =
-          nodes:
-            1: 'foo'
-            2: 'bar'
-          edges:
-            3: [5, 6]
+          nodes: [
+            { id: 1 }
+            { id: 2 }
+          ]
+          edges: [
+            { id: 3, nodeIds: [5, 6] }
+          ]
 
         (() ->
           graph.check(data)
-        ).should.throwError()
+        ).should.throwError('invalid edge')
 
-      it 'returns trus on success', ->
+
+      it 'throws *duplicated node id*', ->
+        data =
+          nodes: [
+            { id: 1 }
+            { id: 2 }
+            { id: 2 }
+          ]
+
+        (() ->
+          graph.check(data)
+        ).should.throwError('duplicated node id')
+
+      it 'returns true on success', ->
+        # TODO sarebbe meglio che ritornasse i dati depurati
         graph = new IperGraph()
 
+        # TODO da mettere in esempio hyperedge
         # This is a simple hypergraph
-        # foo -> bar -> quz
+        # 1 -> 2 -> 3
         data =
-          nodes:
-            1: 'foo'
-            2: 'bar'
-            3: 'quz'
+          nodes: [
+            { id: 1 }
+            { id: 2 }
+            { id: 3 }
+          ]
           edges:
-            4: [1, 2, 3]
+            { id: 4, nodeIds: [1, 2, 3] }
 
         graph.check(data).should.be.true
 
     describe '#load(data)', ->
-      it 'loads data', ->
+      it 'loads data' , ->
         graph = new IperGraph()
 
         # This is a loop graph
-        # foo -> foo
+        # TODO da mettere in esempio loops
+        # 1 -> 1
+        #data =
+        #  nodes:
+        #    { id: 1 }
+        #  edges:
+        #    { id: 2, nodeIds: [1, 1] }
+
         data =
-          nodes:
-            1: 'foo'
-          edges:
-            2: [1, 1]
+          nodes: [
+            { id: 1 }
+            { id: 2 }
+          ]
+          edges: [
+            { id: 3, nodeIds: [1, 2] }
+          ]
 
         graph.load(data)
 
-        # Since ids will change I can't use
-        # graph.data.should.be.eql data
+        _.each(graph.nodes,
+        (node) ->
+          node.should.be.instanceOf IperNode
+        )
 
-        graph.check(graph.data).should.be.true
+        _.each(graph.edges,
+        (edge) ->
+          edge.should.be.instanceOf IperEdge
+        )
 
       it 'checks data is valid', ->
         # edges without nodes does not make sense
         data =
-          edges:
-            1: [5, 6]
-            2: [3, 4]
+          edges: [
+            { id: 1, nodeIds: [3, 4] }
+            { id: 2, nodeIds: [5, 6] }
+          ]
 
         (() ->
           graph.load(data)
-        ).should.throwError()
-
-    describe '#removeNode()', ->
-      it 'has signature (id), removes node from its graph', ->
-        graph = new IperGraph()
-
-        nodeId = graph.createNode()
-
-        graph.removeNode(nodeId)
-
-        (() ->
-          graph.getNode(nodeid)
-        ).should.throwError()
-
-      it 'removes edges left without nodes', ->
-
-      # nodeId1 = graph.createNode(1)
-      # nodeId2 = graph.createNode(2)
-      # nodeIds = [nodeId1, nodeId2]
-
-      # edgeId = graph.createEdge nodeIds
-
-      # graph.removeNode(nodeId1)
-
-      # (() ->
-      #   graph.getEdge(edgeId)
-      # ).should.throwError()
+        ).should.throwError('invalid edge')
 
     describe '#getEdge()', ->
       it 'has signature (id), returns edge', ->
@@ -178,10 +171,10 @@ describe 'IperGraph', ->
         edge.should.be.instanceOf IperEdge
         edge.id.should.be.eql id
 
-      it 'throws error if edge does not exists', ->
+      it 'throws *edge not found*', ->
         (() ->
-          graph.getEdge(-1)
-        ).should.throwError()
+          graph.getEdge(100)
+        ).should.throwError('edge not found')
 
     describe '#createEdge()', ->
       it 'has signature ([id1, id2, ...]), returns edge', ->
@@ -207,5 +200,30 @@ describe 'IperGraph', ->
 
         (() ->
           graph.getEdge(edgeId)
-        ).should.throwError()
+        ).should.throwError('edge not found')
+
+    describe '#removeNode()', ->
+      it 'has signature (id), removes node from its graph', ->
+        graph = new IperGraph()
+
+        nodeId = graph.createNode()
+
+        graph.removeNode(nodeId)
+
+        (() ->
+          graph.getNode(nodeId)
+        ).should.throwError('node not found')
+
+      it 'removes edges left without nodes', ->
+        nodeId1 = graph.createNode()
+        nodeId2 = graph.createNode()
+        nodeIds = [nodeId1, nodeId2]
+
+        edgeId = graph.createEdge(nodeIds)
+
+        graph.removeNode(nodeId1)
+
+        (() ->
+          graph.getEdge(edgeId)
+        ).should.throwError('edge not found')
 

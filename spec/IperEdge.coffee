@@ -8,18 +8,18 @@ IperGraph   = iper.IperGraph
 IperNode    = iper.IperNode
 
 graph = new IperGraph()
-id1 = graph.createNode(1)
-id2 = graph.createNode(2)
-id3 = graph.createNode(3)
+id1 = graph.createNode()
+id2 = graph.createNode()
+id3 = graph.createNode()
 nodeIds = [id1, id2, id3]
 
 describe 'IperEdge', ->
-  describe 'inheritance', ->
+  describe 'Inheritance', ->
     it 'is an IperElement', ->
       edge = new IperEdge(graph, nodeIds)
       edge.should.be.instanceOf IperElement
 
-  describe 'constructor', ->
+  describe 'Constructor', ->
     it 'has signature (graph, nodeIds)', ->
       edge = new IperEdge(graph, nodeIds)
       edge.should.be.instanceOf IperEdge
@@ -38,25 +38,30 @@ describe 'IperEdge', ->
           edge = new IperEdge(graph, [-1, -2])
       ).should.throwError()
 
-    it 'checks node #degree does not excede its #maxDegree', ->
-      meta =
+    it 'checks node *degree* does not excede its #maxDegree' , ->
+      opts =
         maxDegree: 2
 
-      id = graph.createNode('example', meta)
+      id = graph.createNode(opts)
 
       edge = new IperEdge(graph, [id1, id])
       edge = new IperEdge(graph, [id2, id])
+
       ( () ->
           edge = new IperEdge(graph, [id2, id])
       ).should.throwError()
 
-  describe 'accessors', ->
+    it 'registers edge in graph', ->
+      edge = new IperEdge(graph, [id1, id2])
+      graph.getEdge(edge.id).should.be.eql edge
+
+  describe 'Attributes', ->
     describe '#nodeIds', ->
       it 'returns the #nodeIds', ->
         edge = new IperEdge(graph, nodeIds)
         edge.nodeIds.should.eql nodeIds 
 
-  describe 'methods', ->
+  describe 'Methods', ->
     describe '#remove()', ->
       it 'removes the edge from its graph', ->
         edge = new IperEdge(graph, nodeIds)
@@ -65,7 +70,7 @@ describe 'IperEdge', ->
         edge.remove()
 
         (() ->
-            graph.getEdge(edgeId)
+           graph.getEdge(edgeId)
         ).should.throwError()
 
         edge.should.exists

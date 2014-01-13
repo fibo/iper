@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>IperGraph.js</title>
+
+  <!-- Bootstrap -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+</head>
+<body style>
+
+
+
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">IperGraph.js</span>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="../">Home</a></li>
+            <li><a href="../classes">Classes</a></li>
+            <li><a href="../examples">Examples</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li -->
+            <li><a href="http://g14n.info">Site</a></li>
+          </ul>
+        </div>
+      </div> <!-- div class="container" -->
+    </div> <!-- div class="navbar" -->
+
+
+
+  <div class="container">
+  <div class="row">
+    <!-- div class="header">
+      
+ 
+      <h1>IperGraph.js</h1>
+ 
+      
+ 
+    </div -->
+ 
+    <div class="col-md-3">
+      <h2>All Classes</h2>
+      <ul class="list-group">
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="IperEdge.html">
+ 
+            IperEdge
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="IperElement.html">
+ 
+            IperElement
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="IperGraph.html">
+ 
+            IperGraph
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+        <li class="list-group-item">
+          <a href="IperNode.html">
+ 
+            IperNode
+ 
+          </a>
+        </li>
+ 
+        
+          
+          
+          
+          
+ 
+      </ul>
+    </div>
+ 
+    <div class="col-md-9">
+      <h2>Class</h2>
+
+      
+        
+        
+      
+        
+        <h1 id="ipergraph">IperGraph</h1>
+
+      
+        
+        <h2 id="constructor">Constructor</h2>
+
+      
+        
+        <h2 id="attributes">Attributes</h2>
+
+      
+        
+        <h3 id="edges">edges</h3>
+
+      
+        
+        <h3 id="nodes">nodes</h3>
+
+      
+        
+        <h3 id="rank">rank</h3>
+
+      
+        
+        <h2 id="methods">Methods</h2>
+
+      
+        
+        <h3 id="check-data-">check(data)</h3>
+<p><strong>TODO</strong>: vedi se riesco a referenziare la funzione load qui sotto nella documentazione
+This method is used by load to check data is valid
+ma può essere usata anche esternamente come metodo statico
+dovrebbe essere statico ma ereditabile</p>
+
+      
+        
+        <p>Given an object with the following format</p>
+<pre><code>{
+  nodes: [
+    {
+      id: 1
+    },
+    {
+      id: 2
+    }
+    ...
+  ],
+  edges: [
+    {
+      id: 3,
+      nodeIds: [1, 2]
+    }
+    ...
+  ]
+}
+</code></pre><p>performs the followings data checks</p>
+
+      
+        
+        <ul>
+<li>ids are unique</li>
+</ul>
+
+      
+        
+        <ul>
+<li>edges refers to existing nodeIds</li>
+</ul>
+
+      
+        
+        <h3 id="load-data-load-">load(data) {#load}</h3>
+
+      
+        
+        <h3 id="createedge-">createEdge()</h3>
+
+      
+        
+        <h3 id="createnode-">createNode()</h3>
+
+      
+        
+        <ul>
+<li>returns node id</li>
+</ul>
+
+      
+        
+        <h3 id="getedge-">getEdge()</h3>
+
+      
+        
+        <h3 id="getnode-">getNode()</h3>
+
+      
+        
+        <h3 id="removeedge-">removeEdge()</h3>
+
+      
+        
+        <h3 id="removenode-">removeNode()</h3>
+<p>Removes node by given id</p>
+<pre><code>graph.removeNode(nodeId)
+</code></pre>
+      
+ 
+    </div>
+  </div>
+  </div>
+
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+  <!-- Start of Google Analytics tracking code -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12635045-12']);
+    _gaq.push(['_trackPageview']);
+
+   (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
+
+  </script>
+  <!-- End of Google Analytics tracking code -->
+
+</body>
+</html>
