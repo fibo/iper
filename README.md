@@ -63,3 +63,7 @@ See [examples with annotated sources](http://fibo.github.io/iper).
     //   5: [1, 2, 3]
     // }
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fibo/iper/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
