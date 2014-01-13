@@ -1,6 +1,6 @@
 {
   "name": "iper",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Hypergraphs for breakfast",
   "author": "fibo",
   "main": "index.js",
