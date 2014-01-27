@@ -144,6 +144,6 @@ module.exports = (grunt) ->
   # autoload grunt npmTasks
   grunt.loadNpmTasks npmTask for npmTask in require('matchdep').filterDev('grunt-*')
 
-  grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli', 'docs']
-  grunt.registerTask 'docs', ['docco', 'markdown', 'connect', 'open', 'watch']
+  grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli']
+  # grunt.registerTask 'docs', ['docco', 'markdown', 'connect', 'open', 'watch']
 
