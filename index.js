@@ -1,7 +1,10 @@
 
 require('strict-mode')(function () {
 
-module.exports = require('./classes')
+  exports.IperElement = require('./classes/IperElement.js')
+  exports.IperEdge    = require('./classes/IperEdge.js')
+  exports.IperGraph   = require('./classes/IperGraph.js')
+  exports.IperNode    = require('./classes/IperNode.js')
 
 })
 
