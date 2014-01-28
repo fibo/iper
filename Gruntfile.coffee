@@ -9,8 +9,6 @@ templates =
 
 livereloadPort = 35729
 
-coffeeConfig = {}
-
 concatConfig =
   examples:
     options:
@@ -38,13 +36,6 @@ for klass of classes
     testPath = 'test/' + klass + '.js'
     specPath = 'spec/' + klass + '.coffee'
 
-    testFromSpec = {}
-    testFromSpec[testPath] = specPath
-
-    coffeeConfig[klass] =
-      files:
-        testFromSpec
-
     # One test for every class
     mochacliConfig[klass] = [testPath]
 
@@ -63,11 +54,7 @@ module.exports = (grunt) ->
 
       classes:
         files: ['classes/*.js']
-        tasks: ['mochacli:classes', 'docco']
-
-      coffee:
-        files: ['spec/*.coffee']
-        tasks: 'coffee'
+        tasks: ['mochacli:classes']
 
       docs:
         files: ['docs/*', 'docs/*/*']
@@ -81,13 +68,11 @@ module.exports = (grunt) ->
 
       examples:
         files: ['examples/*.js']
-        tasks: ['mochacli:examples', 'docco']
+        tasks: ['mochacli:examples', 'docco:examples']
 
       jshint:
         files: ['index.js', 'classes/*js']
         tasks: 'jshint'
-
-    coffee: coffeeConfig
 
     concat: concatConfig
 
@@ -104,11 +89,6 @@ module.exports = (grunt) ->
         options:
           template: templates.examples
           output: 'docs/examples'
-      classes:
-        src: ['classes/*.js']
-        options:
-          template: templates.classes
-          output: 'docs/classes'
 
     jshint:
       options: grunt.file.readJSON('.jshintrc')
@@ -144,6 +124,6 @@ module.exports = (grunt) ->
   # autoload grunt npmTasks
   grunt.loadNpmTasks npmTask for npmTask in require('matchdep').filterDev('grunt-*')
 
-  grunt.registerTask 'default', ['jshint', 'coffee', 'mochacli']
+  grunt.registerTask 'default', ['jshint', 'mochacli']
   # grunt.registerTask 'docs', ['docco', 'markdown', 'connect', 'open', 'watch']
 
