@@ -1,58 +1,51 @@
-(function() {
-  'use strict';
-  var IperElement, IperGraph, graph, iper;
+'use strict'
 
-  iper = require('../index');
+var iper = require('../index')
 
-  IperElement = iper.IperElement;
+var IperElement = iper.IperElement
+  , IperGraph   = iper.IperGraph
 
-  IperGraph = iper.IperGraph;
+var graph = new IperGraph()
 
-  graph = new IperGraph();
+describe('IperElement', function () {
+  describe('Constructor', function () {
+    it('has signature (graph)', function () {
+      var element = new IperElement(graph)
+      element.should.be.instanceOf(IperElement)
+    })
 
-  describe('IperElement', function() {
-    describe('Constructor', function() {
-      it('has signature (graph)', function() {
-        var element;
-        element = new IperElement(graph);
-        return element.should.be.instanceOf(IperElement);
-      });
-      return it('requires graph is defined', function() {
-        return (function() {
-          var element;
-          return element = new IperElement();
-        }).should.throwError('graph is not defined');
-      });
-    });
-    return describe('Attributes', function() {
-      describe('#id', function() {
-        it('is a number', function() {
-          var element;
-          element = new IperElement(graph);
-          return element.id.should.be.a.number;
-        });
-        it('should be unique', function() {
-          var element1, element2;
-          element1 = new IperElement(graph);
-          element2 = new IperElement(graph);
-          return element1.id.should.not.be.eql(element2.id);
-        });
-        return it('is readonly', function() {
-          var element;
-          element = new IperElement(graph);
-          return (function() {
-            return element.id = 4;
-          }).should.throwError();
-        });
-      });
-      return describe('#graph', function() {
-        return it('returns the graph passed to constructor', function() {
-          var element;
-          element = new IperElement(graph);
-          return element.graph.should.be.eql(graph);
-        });
-      });
-    });
-  });
+    it('requires graph is defined', function () {
+      ;(function () {
+        var element
+        element = new IperElement()
+      }).should.throwError('graph is not defined')
+    })
+  })
+  describe('Attributes', function () {
+    describe('#id', function () {
+      it('is a number', function () {
+        var element = new IperElement(graph)
+        element.id.should.be.a.number
+      })
+      it('should be unique', function () {
+        var element1 = new IperElement(graph)
+          , element2 = new IperElement(graph)
 
-}).call(this);
+        element1.id.should.not.be.eql(element2.id)
+      })
+      it('is readonly', function () {
+        var element = new IperElement(graph)
+
+        ;(function () {
+          element.id = 4
+        }).should.throwError()
+      })
+    })
+    describe('#graph', function () {
+      it('returns the graph passed to constructor', function () {
+        var element = new IperElement(graph)
+        element.graph.should.be.eql(graph)
+      })
+    })
+  })
+})

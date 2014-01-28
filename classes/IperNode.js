@@ -1,9 +1,4 @@
 
-//
-// # IperNode
-//
-// A node in an hypergraph.
-//
 
 var _        = require('underscore')
   , inherits = require('inherits')
@@ -17,18 +12,6 @@ function IperNode(graph, opts) {
 
   if (!_.isObject(opts))
     opts = {}
-
-  //
-  // ## Attributes
-  //
-
-  //
-  // ### degree
-  //
-  // It is the number of edges incident to the vertex.
-  //
-  // See also [degree on wikipedia](http://en.wikipedia.org/wiki/Degree_(graph_theory)).
-  //
 
   function getDegree () {
     var degree = 0
@@ -48,10 +31,6 @@ function IperNode(graph, opts) {
 
   Object.defineProperty(this, 'degree', {get: getDegree})
 
-  //
-  // ### maxDegree
-  //
-
   function getMaxDegree () {
     return opts.maxDegree
   }
@@ -63,14 +42,6 @@ function IperNode(graph, opts) {
 }
 
 inherits(IperNode, IperElement)
-
-//
-// ## Methods
-//
-
-//
-// ### getAdjacentNodeIds()
-//
 
 function getAdjacentNodeIds() {
   var id = this.id
