@@ -25,24 +25,15 @@
     "url": "https://github.com/fibo/iper/issues"
   },
   "devDependencies": {
-    "should": "~1.2.2",
-    "coffee-script": "~1.6.3",
-    "grunt": "~0.4.1",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-connect": "~0.5.0",
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt-contrib-watch": "~0.5.1",
-    "grunt-docco-multi": "0.0.2",
-    "grunt-markdown": "~0.4.0",
-    "grunt-mocha-cli": "~1.0.6",
-    "grunt-open": "~0.2.2",
-    "matchdep": "~0.3.0",
-    "mocha": "~1.12.0"
+    "fibo-gulptasks": "git+ssh://git@github.com/fibo/fibo-gulptasks.git",
+    "gulp": "~3.5.0",
+    "gulp-util": "~2.2.13",
+    "should": "~3.1.2",
+    "mocha": "~1.17.1"
   },
   "dependencies": {
     "underscore": "~1.5.2",
-    "inherits": "~2.0.1",
-    "should": "~1.2.2",
-    "strict-mode": "~0.1.0"
+    "strict-mode": "~0.1.0",
+    "inherits": "~2.0.1"
   }
 }
