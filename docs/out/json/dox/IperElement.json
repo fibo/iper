@@ -1,0 +1,12 @@
+[
+    {
+        "tags": [],
+        "description": {
+            "full": "check graph",
+            "summary": "check graph",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "if (_.isUndefined(graph))\n    throw new Error('graph is not defined')\n\n  Object.defineProperty(this, 'graph', {\n    enumerable: false,\n    value: graph,\n    writable: false\n  })\n\n  //\n  // ### id\n  //\n  // Every IperElement has a unique id.\n  //\n\n  Object.defineProperty(this, 'id', {\n    enumerable: true,\n    value: _.uniqueId(),\n    writable: false\n  })\n}\n\nmodule.exports = IperElement"
+    }
+]
