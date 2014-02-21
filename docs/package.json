@@ -1,15 +1,17 @@
 {
-  "name": "no-skeleton.docpad",
+  "name": "fibo.docpad",
   "version": "0.1.0",
-  "description": "New DocPad project without using a skeleton",
+  "description": "documentation",
   "engines": {
     "node": "0.10",
     "npm": "1.3"
   },
   "dependencies": {
-    "docpad": "~6.63.6",
+    "docpad": "~6.63.7",
     "docpad-plugin-partials": "~2.8.1",
-    "docpad-plugin-eco": "~2.0.3"
+    "docpad-plugin-eco": "~2.0.3",
+    "docpad-plugin-marked": "~2.2.0",
+    "docpad-plugin-ghpages": "~2.4.3"
   },
   "main": "node_modules/docpad/bin/docpad-server",
   "scripts": {
