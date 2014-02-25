@@ -1,3 +1,7 @@
+---
+layout: 'default'
+---
+
 
 # Description
 
@@ -25,7 +29,5 @@ npm install iper
 * Graph theory algorithms:
   * adjacent nodes
 
-# Documentation
 
-Point your browser to [iper site](http://fibo.github.io/iper).
 
