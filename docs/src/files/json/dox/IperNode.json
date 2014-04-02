@@ -17,7 +17,31 @@
             "body": ""
         },
         "ignore": false,
-        "code": "graph.nodes.push(this)\n}\n\ninherits(IperNode, IperElement)\n\nfunction getAdjacentNodeIds() {\n  var id = this.id\n\n  var adjacentNodeIds = []"
+        "code": "graph.nodes.push(this)\n}\n\ninherits(IperNode, IperElement)"
+    },
+    {
+        "tags": [
+            {
+                "type": "return",
+                "types": [
+                    "Array"
+                ],
+                "description": "adjacent node ids"
+            }
+        ],
+        "description": {
+            "full": "Compute adjacent nodes\n",
+            "summary": "Compute adjacent nodes\n",
+            "body": ""
+        },
+        "isPrivate": false,
+        "ignore": false,
+        "code": "function getAdjacentNodeIds() {\n  var id = this.id\n\n  var adjacentNodeIds = []",
+        "ctx": {
+            "type": "function",
+            "name": "getAdjacentNodeIds",
+            "string": "getAdjacentNodeIds()"
+        }
     },
     {
         "tags": [],

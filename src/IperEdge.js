@@ -1,8 +1,4 @@
 
-//
-// # IperEdge
-//
-
 var _        = require('underscore')
   , inherits = require('inherits')
 
@@ -69,15 +65,10 @@ function IperEdge(graph, nodeIds) {
 
 inherits(IperEdge, IperElement)
 
-//
-// ## Methods
-//
-
-//
-// ### remove()
-//
-// Removes the edge from its graph
-//
+/**
+ * Removes the edge from its graph
+ *
+ */
 
 function remove () {
   this.graph.removeEdge(this.id)

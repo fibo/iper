@@ -16,7 +16,32 @@
             "body": ""
         },
         "ignore": false,
-        "code": "try {\n    this.load( {\n      edges: args.edges,\n      nodes: args.nodes\n    })\n  }\n  catch (err) { throw err }\n}\n\n//\n// ## Methods\n//\n\n//\n// ### check(data)\n//\n// **TODO**: vedi se riesco a referenziare la funzione load qui sotto nella documentazione\n// This method is used by load to check data is valid\n// ma può essere usata anche esternamente come metodo statico\n// dovrebbe essere statico ma ereditabile\n//\n\n\n//\n// Given an object with the following format\n//\n// ```\n// {\n//   nodes: [\n//     {\n//       id: 1\n//     },\n//     {\n//       id: 2\n//     }\n//     ...\n//   ],\n//   edges: [\n//     {\n//       id: 3,\n//       nodeIds: [1, 2]\n//     }\n//     ...\n//   ]\n// }\n// ```\n//\n// performs the followings data checks\n//\n\nfunction check(data) {\n  var edges    = data.edges    || []\n    , nodes    = data.nodes    || []\n\n  var nodeIds = _.pluck(nodes, 'id')\n\n  // * ids are unique"
+        "code": "try {\n    this.load( {\n      edges: args.edges,\n      nodes: args.nodes\n    })\n  }\n  catch (err) { throw err }\n}\n\n//\n// ## Methods\n//\n\n//\n// ### check(data)\n//\n// **TODO**: vedi se riesco a referenziare la funzione load qui sotto nella documentazione\n// This method is used by load to check data is valid\n// ma può essere usata anche esternamente come metodo statico\n// dovrebbe essere statico ma ereditabile\n//\n\n\n//\n// Given an object with the following format\n//\n// ```\n// {\n//   nodes: [\n//     {\n//       id: 1\n//     },\n//     {\n//       id: 2\n//     }\n//     ...\n//   ],\n//   edges: [\n//     {\n//       id: 3,\n//       nodeIds: [1, 2]\n//     }\n//     ...\n//   ]\n// }\n// ```\n//\n// performs the followings data checks\n//"
+    },
+    {
+        "tags": [
+            {
+                "type": "param",
+                "types": [
+                    "Object"
+                ],
+                "name": "data",
+                "description": ""
+            }
+        ],
+        "description": {
+            "full": "Performs dataa check\n",
+            "summary": "Performs dataa check\n",
+            "body": ""
+        },
+        "isPrivate": false,
+        "ignore": false,
+        "code": "function check(data) {\n  var edges    = data.edges    || []\n    , nodes    = data.nodes    || []\n\n  var nodeIds = _.pluck(nodes, 'id')\n\n  // * ids are unique",
+        "ctx": {
+            "type": "function",
+            "name": "check",
+            "string": "check()"
+        }
     },
     {
         "tags": [],

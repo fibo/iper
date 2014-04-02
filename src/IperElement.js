@@ -1,23 +1,19 @@
 
-//
-// # IperElement
-//
-// Base class for *iper*.
-//
-
 var _ = require('underscore')
 
-//
-// ## Constructor
-//
-// Do not use *IperElement* directly, it is used internally by *iper* as a base class.
-//
-// If `this` refers to an *iper* class instance
-//
-// ```
-// IperElement.call(this, graph)
-// ```
-//
+/**
+ * Base class for *iper*.
+ *
+ * Do not use *IperElement* directly, it is used internally by *iper* as a base class.
+ *
+ * If `this` refers to an *iper* class instance
+ *
+ * ```
+ * IperElement.call(this, graph)
+ * ```
+ *
+ * @param {Object} graph
+ */
 
 function IperElement (graph) {
 

@@ -1,5 +1,4 @@
 
-
 var _        = require('underscore')
   , inherits = require('inherits')
 
@@ -42,6 +41,11 @@ function IperNode(graph, opts) {
 }
 
 inherits(IperNode, IperElement)
+
+/** Compute adjacent nodes
+ *
+ * @return {Array} adjacent node ids
+ */
 
 function getAdjacentNodeIds() {
   var id = this.id

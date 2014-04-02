@@ -1,5 +1,30 @@
 [
     {
+        "tags": [
+            {
+                "type": "param",
+                "types": [
+                    "Object"
+                ],
+                "name": "graph",
+                "description": ""
+            }
+        ],
+        "description": {
+            "full": "Base class for *iper*.\n\nDo not use *IperElement* directly, it is used internally by *iper* as a base class.\n\nIf `this` refers to an *iper* class instance\n\n```\nIperElement.call(this, graph)\n```\n",
+            "summary": "Base class for *iper*.",
+            "body": "Do not use *IperElement* directly, it is used internally by *iper* as a base class.\n\nIf `this` refers to an *iper* class instance\n\n```\nIperElement.call(this, graph)\n```\n"
+        },
+        "isPrivate": false,
+        "ignore": false,
+        "code": "function IperElement (graph) {\n\n  //\n  // ## Attributes\n  //\n\n  //\n  // ### graph\n  //\n  // References the graph containing the element.\n  //",
+        "ctx": {
+            "type": "function",
+            "name": "IperElement",
+            "string": "IperElement()"
+        }
+    },
+    {
         "tags": [],
         "description": {
             "full": "check graph",

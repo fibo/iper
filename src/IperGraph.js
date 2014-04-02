@@ -1,16 +1,9 @@
 
-//
-// # IperGraph
-//
-
 var _        = require('underscore')
 
 var IperEdge    = require('./IperEdge')
   , IperNode    = require('./IperNode')
 
-//
-// ## Constructor
-//
 
 function IperGraph () {
 
@@ -96,6 +89,11 @@ function IperGraph () {
 //
 // performs the followings data checks
 //
+
+/** Performs dataa check
+ *
+ * @param {Object} data
+ */
 
 function check(data) {
   var edges    = data.edges    || []

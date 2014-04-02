@@ -37,6 +37,21 @@
             "body": ""
         },
         "ignore": false,
-        "code": "graph.edges.push(this)\n}\n\ninherits(IperEdge, IperElement)\n\n//\n// ## Methods\n//\n\n//\n// ### remove()\n//\n// Removes the edge from its graph\n//\n\nfunction remove () {\n  this.graph.removeEdge(this.id)\n}\n\nIperEdge.prototype.remove = remove\n\nmodule.exports = IperEdge"
+        "code": "graph.edges.push(this)\n}\n\ninherits(IperEdge, IperElement)"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "Removes the edge from its graph",
+            "summary": "Removes the edge from its graph",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "function remove () {\n  this.graph.removeEdge(this.id)\n}\n\nIperEdge.prototype.remove = remove\n\nmodule.exports = IperEdge",
+        "ctx": {
+            "type": "function",
+            "name": "remove",
+            "string": "remove()"
+        }
     }
 ]
