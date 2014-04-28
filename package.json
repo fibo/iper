@@ -28,12 +28,14 @@
     "gulp": "~3.6.0",
     "should": "~3.1.4",
     "mocha": "~1.18.2",
-    "fibo-gulptasks": "~0.1.4"
+    "fibo-gulptasks": "https://registry.npmjs.org/fibo-gulptasks/-/fibo-gulptasks-0.1.56.tgz"
   },
   "dependencies": {
     "underscore": "~1.5.2",
     "strict-mode": "~0.1.0",
     "inherits": "~2.0.1",
-    "should": "~3.1.4"
+    "should": "~3.1.4",
+    "gulp": "~3.6.2",
+    "mocha": "~1.18.2"
   }
 }
