@@ -1,0 +1,103 @@
+[
+    {
+        "tags": [],
+        "description": {
+            "full": "Count occurrences of node id in edge.nodeIds\nfor every edge in the graph.",
+            "summary": "Count occurrences of node id in edge.nodeIds\nfor every edge in the graph.",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "_.each(graph.edges, function (edge) {\n      _.each(edge.nodeIds, function (nodeId) {\n        if (nodeId === self.id)\n          degree++\n      })\n    })\n\n    return degree\n  }\n\n  Object.defineProperty(this, 'degree', {get: getDegree})\n\n  function getMaxDegree () {\n    return opts.maxDegree\n  }\n\n  Object.defineProperty(this, 'maxDegree', {get: getMaxDegree})"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "add this node to graph",
+            "summary": "add this node to graph",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "graph.nodes.push(this)\n}\n\ninherits(IperNode, IperElement)"
+    },
+    {
+        "tags": [
+            {
+                "type": "return",
+                "types": [
+                    "Array"
+                ],
+                "description": "adjacent node ids"
+            }
+        ],
+        "description": {
+            "full": "Compute adjacent nodes\n",
+            "summary": "Compute adjacent nodes\n",
+            "body": ""
+        },
+        "isPrivate": false,
+        "ignore": false,
+        "code": "function getAdjacentNodeIds() {\n  var id = this.id\n\n  var adjacentNodeIds = []",
+        "ctx": {
+            "type": "function",
+            "name": "getAdjacentNodeIds",
+            "string": "getAdjacentNodeIds()"
+        }
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "loop over all edges",
+            "summary": "loop over all edges",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "_.each(this.graph.edges, function (edge) {"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "if edge contains node",
+            "summary": "if edge contains node",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "if (_.contains(edge.nodeIds, id))"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "take all nodeIds except node self id",
+            "summary": "take all nodeIds except node self id",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "adjacentNodeIds.push(_.without(edge.nodeIds, id))\n  })"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "since _.without() return an array and nodeIds can be repeated,\nuse _.uniq() and _.flatten() to return a flat array with no repetition",
+            "summary": "since _.without() return an array and nodeIds can be repeated,\nuse _.uniq() and _.flatten() to return a flat array with no repetition",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "return _.uniq(_.flatten(adjacentNodeIds))\n}\n\nIperNode.prototype.getAdjacentNodeIds = getAdjacentNodeIds"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "TODO remove(), oppure toglilo ad IperEdge",
+            "summary": "TODO remove(), oppure toglilo ad IperEdge",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "module.exports = IperNode",
+        "ctx": {
+            "type": "property",
+            "receiver": "module",
+            "name": "exports",
+            "value": "IperNode",
+            "string": "module.exports"
+        }
+    }
+]

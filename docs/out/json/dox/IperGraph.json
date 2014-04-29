@@ -1,0 +1,190 @@
+[
+    {
+        "tags": [],
+        "description": {
+            "full": "TODO\n  //\n  // ### rank\n  //\n\n  Object.defineProperty(this, 'rank', {value: {}})",
+            "summary": "TODO\n  //\n  // ### rank\n  //",
+            "body": "  Object.defineProperty(this, 'rank', {value: {}})"
+        },
+        "ignore": false
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "try to load data passed to constructor",
+            "summary": "try to load data passed to constructor",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "try {\n    this.load( {\n      edges: args.edges,\n      nodes: args.nodes\n    })\n  }\n  catch (err) { throw err }\n}\n\n//\n// ## Methods\n//\n\n//\n// ### check(data)\n//\n// **TODO**: vedi se riesco a referenziare la funzione load qui sotto nella documentazione\n// This method is used by load to check data is valid\n// ma può essere usata anche esternamente come metodo statico\n// dovrebbe essere statico ma ereditabile\n//\n\n\n//\n// Given an object with the following format\n//\n// ```\n// {\n//   nodes: [\n//     {\n//       id: 1\n//     },\n//     {\n//       id: 2\n//     }\n//     ...\n//   ],\n//   edges: [\n//     {\n//       id: 3,\n//       nodeIds: [1, 2]\n//     }\n//     ...\n//   ]\n// }\n// ```\n//\n// performs the followings data checks\n//"
+    },
+    {
+        "tags": [
+            {
+                "type": "param",
+                "types": [
+                    "Object"
+                ],
+                "name": "data",
+                "description": ""
+            }
+        ],
+        "description": {
+            "full": "Performs dataa check\n",
+            "summary": "Performs dataa check\n",
+            "body": ""
+        },
+        "isPrivate": false,
+        "ignore": false,
+        "code": "function check(data) {\n  var edges    = data.edges    || []\n    , nodes    = data.nodes    || []\n\n  var nodeIds = _.pluck(nodes, 'id')\n\n  // * ids are unique",
+        "ctx": {
+            "type": "function",
+            "name": "check",
+            "string": "check()"
+        }
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "TODO Da fare anche su edges e subgraph",
+            "summary": "TODO Da fare anche su edges e subgraph",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "if (_.unique(nodeIds).length !== nodeIds.length)\n    throw new Error('duplicated node id')\n\n\n  // * edges refers to existing nodeIds\n  _.each(edges, function (edge) {\n    _.each(edge.nodeIds, function (nodeId) {\n      if (_.indexOf(nodeIds, nodeId) < 0)\n        throw new Error('invalid edge')\n    })\n  })\n\n  return true\n}\n\nIperGraph.prototype.check = check\n\n//\n// ### load(data) {#load}\n//\n\nfunction load(data) {\n  var self = this"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "check if data is valid",
+            "summary": "check if data is valid",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "try {\n    check(data)\n  }\n  catch (er) { throw er }\n\n  var edges = data.edges\n    , nodes = data.nodes"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "store a lookup of new <--> old ids",
+            "summary": "store a lookup of new <--> old ids",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "var brandNew = {}",
+        "ctx": {
+            "type": "declaration",
+            "name": "brandNew",
+            "value": "{}",
+            "string": "brandNew"
+        }
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "create new nodes first",
+            "summary": "create new nodes first",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "_.each(nodes, function (node) {\n    var id = node.id\n      , opts = {}"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "remember association between old and new id",
+            "summary": "remember association between old and new id",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "brandNew[id] = self.createNode(id, opts)\n  })"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "create new edges",
+            "summary": "create new edges",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "_.each(edges, function (edge) {\n\n    var newNodeIds = []\n      , oldNodeIds = edge.nodeIds"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "loop over old node ids and get the corresponding new ids",
+            "summary": "loop over old node ids and get the corresponding new ids",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "_.each(oldNodeIds, function (id) {\n      newNodeIds.push(brandNew[id])\n    })"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "use new ids to create a new edge",
+            "summary": "use new ids to create a new edge",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "self.createEdge(newNodeIds)\n  })\n}\n\nIperGraph.prototype.load = load\n\n//\n// ### createEdge()\n//\n\nfunction createEdge(nodeIds) {\n  var edge = new IperEdge(this, nodeIds)\n  return edge.id\n}\n\nIperGraph.prototype.createEdge = createEdge\n\n//\n// ### createNode()\n//\n\nfunction createNode(opts) {\n  var node = new IperNode(this, opts)\n\n  // * returns node id\n  return node.id\n}\n\nIperGraph.prototype.createNode = createNode\n\n//\n// ### getEdge()\n//\n\nfunction getEdge(id) {\n  var edgeFound\n\n  _.each(this.edges, function (edge) {\n    if (id === edge.id)\n      edgeFound = edge\n  })\n\n  if (edgeFound)\n    return edgeFound\n  else\n    throw new Error('edge not found')\n}\n\nIperGraph.prototype.getEdge = getEdge\n\n//\n// ### getNode()\n//\n\nfunction getNode(id) {\n  var nodeFound\n\n  _.each(this.nodes, function (node) {\n    if (id === node.id)\n      nodeFound = node\n  })\n\n  if (nodeFound)\n    return nodeFound\n  else\n    throw new Error('node not found')\n}\n\nIperGraph.prototype.getNode = getNode\n\n//\n// ### removeEdge()\n//\n\nfunction removeEdge(id) {\n  var self = this;\n\n  _.each(self.edges, function (edge, index) {\n\n    if (id === edge.id)\n      self.edges.splice(index, 1)\n  })\n}\n\nIperGraph.prototype.removeEdge = removeEdge\n\n//\n// ### removeNode()\n//\n// Removes node by given id\n//\n//\n//```\n//graph.removeNode(nodeId)\n//```\n//\n\nfunction removeNode(id) {\n  var self = this\n\n  var edges = this.edges\n    , nodes = this.nodes"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "TODO fai try getNode per fare throw di node not found",
+            "summary": "TODO fai try getNode per fare throw di node not found",
+            "body": ""
+        },
+        "ignore": false
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "loop over all edges",
+            "summary": "loop over all edges",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "_.each(edges, function (edge) {"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "loop over edge nodeIds",
+            "summary": "loop over edge nodeIds",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "_.each(edge.nodeIds, function (nodeId, index) {"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "drop nodeId from edges linked to removed node",
+            "summary": "drop nodeId from edges linked to removed node",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "if (id === nodeId)\n        edge.nodeIds.splice(index, 1)\n    })"
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "remove orphan edges",
+            "summary": "remove orphan edges",
+            "body": ""
+        },
+        "ignore": false
+    },
+    {
+        "tags": [],
+        "description": {
+            "full": "TODO in realta non sarebbe 2 ma il rank dell' edge",
+            "summary": "TODO in realta non sarebbe 2 ma il rank dell' edge",
+            "body": ""
+        },
+        "ignore": false,
+        "code": "if (edge.nodeIds.length < 2)\n      edge.remove()\n  })\n\n  _.each(nodes, function (node, index) {\n    if (id === node.id)\n      self.nodes.splice(index, 1)\n  })\n}\n\nIperGraph.prototype.removeNode = removeNode\n\nmodule.exports = IperGraph"
+    }
+]
