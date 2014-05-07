@@ -17,7 +17,7 @@
   <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a href="../" class="navbar-brand">iper</a>
+        <a href="./" class="navbar-brand">iper</a>
       </div>
 
       <div class="navbar-collapse collapse">
@@ -36,27 +36,121 @@
 
   <div class="container">
     <div style="height: 50px;"></div>
-    <h1 id="description">Description</h1>
-<p>What is an hypergraph?</p>
-<p>An hypergraph is a graph which rank can be greater than two.</p>
-<p>Check the following Wikipedia pages:</p>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Hypergraph">Hypergraph</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Graph_theory">Graph theory</a></li>
-</ul>
-<h1 id="installation">Installation</h1>
-<p>With <a href="https://npmjs.org/">npm</a> do</p>
-<pre><code class="lang-bash">npm install iper
+    <h1 id="installation">Installation</h1>
+<p>Install packages</p>
+<pre><code class="lang-bash">$ npm install -g gulp
+$ npm install --save-dev gulp fibo-gulptasks
 </code></pre>
-<h1 id="features">Features</h1>
-<ul>
-<li>Graphs of rank n, a.k.a. hypergraphs</li>
-<li>Directed graphs</li>
-<li>Graph theory algorithms:<ul>
-<li>adjacent nodes</li>
-</ul>
-</li>
-</ul>
+<p>Then create a <em>gulpfile.js</em></p>
+<pre><code class="lang-bash">$ cat &lt;&lt;EOF &gt; gulpfile.js
+
+var gulp = require(&#39;gulp&#39;)
+  , pkg  = require(&#39;./package.json&#39;)
+
+require(&#39;fibo-gulptasks&#39;)(gulp, pkg)
+
+EOF
+</code></pre>
+<h1 id="configuration">Configuration</h1>
+<p>Config is stored in <em>config.md</em> file, you can see it in JSON format launching</p>
+<pre><code class="lang-bash">gulp config
+</code></pre>
+<h1 id="scaffolding">Scaffolding</h1>
+<p><code>fibo-gulptasks</code> generates files and folders by copying, touching or rendering templates.
+Almost all the content is taken from the <em>root/</em> folder.</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>task</th>
+<th>note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.gitignore</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#gitignore">.gitignore</a></td>
+<td></td>
+</tr>
+<tr>
+<td>.npmignore</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#npmignore">.npmignore</a></td>
+<td></td>
+</tr>
+<tr>
+<td>.jshintrc</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#copyfiles">copyfiles</a></td>
+<td></td>
+</tr>
+<tr>
+<td>.travis.yml</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#copyfiles">copyfiles</a></td>
+<td></td>
+</tr>
+<tr>
+<td>docs/docpad.coffee</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#copyfiles">copyfiles</a></td>
+<td></td>
+</tr>
+<tr>
+<td>docs/package.json</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#copyfiles">copyfiles</a></td>
+<td></td>
+</tr>
+<tr>
+<td>docs/src/documents/index.html.md</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#rendertemplates">rendertemplates</a></td>
+<td>source is <em>readmeContent.md</em> file</td>
+</tr>
+<tr>
+<td>docs/src/documents/api.html.eco</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#copyfiles">copyfiles</a></td>
+<td></td>
+</tr>
+<tr>
+<td>docs/src/documents/spec.html.eco</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#copyfiles">copyfiles</a></td>
+<td></td>
+</tr>
+<tr>
+<td>docs/src/layouts/default.html.eco</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#copyfiles">copyfiles</a></td>
+<td></td>
+</tr>
+<tr>
+<td>gulpfile.js</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#copyfiles">copyfiles</a></td>
+<td></td>
+</tr>
+<tr>
+<td>index.js</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#copyfiles">copyfiles</a></td>
+<td></td>
+</tr>
+<tr>
+<td>package.json</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#overwritepackagejson">overwrite:package.json</a></td>
+<td>some attributes are overwritten</td>
+</tr>
+<tr>
+<td>README.md</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#rendertemplates">rendertemplates</a></td>
+<td>source is <em>readmeContent.md</em> file</td>
+</tr>
+<tr>
+<td>test/require.js</td>
+<td><a href="https://github.com/fibo/fibo-gulptasks/blob/master/config.md#copyfiles">copyfiles</a></td>
+</tr>
+</tbody>
+</table>
+<h1 id="development">Development</h1>
+<p>Yep, this module depend on itself. To avoid npm complain</p>
+<pre><code class="lang-bash">$ npm install --save-dev fibo-gulptasks
+Refusing to install fibo-gulptasks as a dependency of itself
+</code></pre>
+<p>install from GitHub instead, without saving</p>
+<pre><code class="lang-bash">$ npm install fibo/fibo-gulptasks
+</code></pre>
 
   </div>
 
