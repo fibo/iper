@@ -25,10 +25,8 @@
     "url": "https://github.com/fibo/iper/issues"
   },
   "devDependencies": {
-    "gulp": "~3.6.2",
     "should": "~3.3.1",
-    "mocha": "~1.18.2",
-    "fibo-gulptasks": "git+ssh://git@github.com:fibo/fibo-gulptasks"
+    "mocha": "~1.18.2"
   },
   "dependencies": {
     "underscore": "~1.5.2",
