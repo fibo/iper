@@ -2,10 +2,13 @@
   "name": "iper",
   "version": "0.1.1",
   "description": "Hypergraphs",
-  "author": "fibo",
+  "author": {
+    "name": "fibo",
+    "url": "http://g14n.info"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "mocha --bail --require should --reporter nyan"
+    "test": "mocha --bail --require should --reporter min"
   },
   "repository": {
     "type": "git",
@@ -32,5 +35,6 @@
     "underscore": "~1.5.2",
     "strict-mode": "~0.1.0",
     "inherits": "~2.0.1"
-  }
+  },
+  "homepage": "http://g14n.info/iper"
 }
