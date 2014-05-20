@@ -32,8 +32,8 @@
     "mocha": "~1.18.2"
   },
   "dependencies": {
-    "underscore": "~1.5.2",
-    "strict-mode": "~0.1.0",
+    "underscore": "^1.6.0",
+    "strict-mode": "^0.1.4",
     "inherits": "~2.0.1"
   },
   "homepage": "http://g14n.info/iper"

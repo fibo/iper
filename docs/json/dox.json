@@ -1,0 +1,379 @@
+{
+    "IperEdge": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>check that nodeIds refers to existing nodes</p>\n",
+                "summary": "<p>check that nodeIds refers to existing nodes</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "if (_.isUndefined(node))\n      throw new Error()"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>if maxDegree is not defined there is no trouble ...</p>\n",
+                "summary": "<p>if maxDegree is not defined there is no trouble ...</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "if (_.isUndefined(node.maxDegree))\n      return"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>otherwise check that node degree is not going to exceed its maxDegree</p>\n",
+                "summary": "<p>otherwise check that node degree is not going to exceed its maxDegree</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "if (node.degree === node.maxDegree)\n      throw new Error()\n  })\n\n  IperElement.call(this, graph)\n\n  //\n  // ## Attributes\n  //\n\n  //\n  // ### nodeIds\n  //\n  // It is an array of node ids.\n  //\n\n  Object.defineProperty(this, 'nodeIds', {\n    enumerable: true,\n    value: nodeIds\n  })\n\n  // add this edge to graph\n  graph.edges.push(this)\n}\n\ninherits(IperEdge, IperElement)"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>Removes the edge from its graph</p>\n",
+                "summary": "<p>Removes the edge from its graph</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "function remove () {\n  this.graph.removeEdge(this.id)\n}\n\nIperEdge.prototype.remove = remove\n\nmodule.exports = IperEdge",
+            "ctx": {
+                "type": "function",
+                "name": "remove",
+                "string": "remove()"
+            }
+        }
+    ],
+    "IperElement": [
+        {
+            "tags": [
+                {
+                    "type": "param",
+                    "types": [
+                        "Object"
+                    ],
+                    "name": "graph",
+                    "description": ""
+                }
+            ],
+            "description": {
+                "full": "<p>Base class for <em>iper</em>.</p>\n<p>Do not use <em>IperElement</em> directly, it is used internally by <em>iper</em> as a base class.</p>\n<p>If <code>this</code> refers to an <em>iper</em> class instance</p>\n<pre><code>IperElement.call(this, graph)\n</code></pre>",
+                "summary": "<p>Base class for <em>iper</em>.</p>\n",
+                "body": "<p>Do not use <em>IperElement</em> directly, it is used internally by <em>iper</em> as a base class.</p>\n<p>If <code>this</code> refers to an <em>iper</em> class instance</p>\n<pre><code>IperElement.call(this, graph)\n</code></pre>"
+            },
+            "isPrivate": false,
+            "ignore": false,
+            "code": "function IperElement (graph) {\n\n  //\n  // ## Attributes\n  //\n\n  //\n  // ### graph\n  //\n  // References the graph containing the element.\n  //",
+            "ctx": {
+                "type": "function",
+                "name": "IperElement",
+                "string": "IperElement()"
+            }
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>check graph</p>\n",
+                "summary": "<p>check graph</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "if (_.isUndefined(graph))\n    throw new Error('graph is not defined')\n\n  Object.defineProperty(this, 'graph', {\n    enumerable: false,\n    value: graph,\n    writable: false\n  })\n\n  //\n  // ### id\n  //\n  // Every IperElement has a unique id.\n  //\n\n  Object.defineProperty(this, 'id', {\n    enumerable: true,\n    value: _.uniqueId(),\n    writable: false\n  })\n}\n\nmodule.exports = IperElement"
+        }
+    ],
+    "IperGraph": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO\n  //\n  // ### rank\n  //</p>\n<p>  Object.defineProperty(this, &#39;rank&#39;, {value: {}})</p>\n",
+                "summary": "<p>TODO\n  //\n  // ### rank\n  //</p>\n",
+                "body": "<p>  Object.defineProperty(this, &#39;rank&#39;, {value: {}})</p>\n"
+            },
+            "ignore": false
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>try to load data passed to constructor</p>\n",
+                "summary": "<p>try to load data passed to constructor</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "try {\n    this.load( {\n      edges: args.edges,\n      nodes: args.nodes\n    })\n  }\n  catch (err) { throw err }\n}\n\n//\n// ## Methods\n//\n\n//\n// ### check(data)\n//\n// **TODO**: vedi se riesco a referenziare la funzione load qui sotto nella documentazione\n// This method is used by load to check data is valid\n// ma può essere usata anche esternamente come metodo statico\n// dovrebbe essere statico ma ereditabile\n//\n\n\n//\n// Given an object with the following format\n//\n// ```\n// {\n//   nodes: [\n//     {\n//       id: 1\n//     },\n//     {\n//       id: 2\n//     }\n//     ...\n//   ],\n//   edges: [\n//     {\n//       id: 3,\n//       nodeIds: [1, 2]\n//     }\n//     ...\n//   ]\n// }\n// ```\n//\n// performs the followings data checks\n//"
+        },
+        {
+            "tags": [
+                {
+                    "type": "param",
+                    "types": [
+                        "Object"
+                    ],
+                    "name": "data",
+                    "description": ""
+                }
+            ],
+            "description": {
+                "full": "<p>Performs dataa check</p>\n",
+                "summary": "<p>Performs dataa check</p>\n",
+                "body": ""
+            },
+            "isPrivate": false,
+            "ignore": false,
+            "code": "function check(data) {\n  var edges    = data.edges    || []\n    , nodes    = data.nodes    || []\n\n  var nodeIds = _.pluck(nodes, 'id')\n\n  // * ids are unique",
+            "ctx": {
+                "type": "function",
+                "name": "check",
+                "string": "check()"
+            }
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO Da fare anche su edges e subgraph</p>\n",
+                "summary": "<p>TODO Da fare anche su edges e subgraph</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "if (_.unique(nodeIds).length !== nodeIds.length)\n    throw new Error('duplicated node id')\n\n\n  // * edges refers to existing nodeIds\n  _.each(edges, function (edge) {\n    _.each(edge.nodeIds, function (nodeId) {\n      if (_.indexOf(nodeIds, nodeId) < 0)\n        throw new Error('invalid edge')\n    })\n  })\n\n  return true\n}\n\nIperGraph.prototype.check = check\n\n//\n// ### load(data) {#load}\n//\n\nfunction load(data) {\n  var self = this"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>check if data is valid</p>\n",
+                "summary": "<p>check if data is valid</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "try {\n    check(data)\n  }\n  catch (er) { throw er }\n\n  var edges = data.edges\n    , nodes = data.nodes"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>store a lookup of new &lt;--&gt; old ids</p>\n",
+                "summary": "<p>store a lookup of new &lt;--&gt; old ids</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "var brandNew = {}",
+            "ctx": {
+                "type": "declaration",
+                "name": "brandNew",
+                "value": "{}",
+                "string": "brandNew"
+            }
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>create new nodes first</p>\n",
+                "summary": "<p>create new nodes first</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "_.each(nodes, function (node) {\n    var id = node.id\n      , opts = {}"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>remember association between old and new id</p>\n",
+                "summary": "<p>remember association between old and new id</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "brandNew[id] = self.createNode(id, opts)\n  })"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>create new edges</p>\n",
+                "summary": "<p>create new edges</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "_.each(edges, function (edge) {\n\n    var newNodeIds = []\n      , oldNodeIds = edge.nodeIds"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>loop over old node ids and get the corresponding new ids</p>\n",
+                "summary": "<p>loop over old node ids and get the corresponding new ids</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "_.each(oldNodeIds, function (id) {\n      newNodeIds.push(brandNew[id])\n    })"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>use new ids to create a new edge</p>\n",
+                "summary": "<p>use new ids to create a new edge</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "self.createEdge(newNodeIds)\n  })\n}\n\nIperGraph.prototype.load = load\n\n//\n// ### createEdge()\n//\n\nfunction createEdge(nodeIds) {\n  var edge = new IperEdge(this, nodeIds)\n  return edge.id\n}\n\nIperGraph.prototype.createEdge = createEdge\n\n//\n// ### createNode()\n//\n\nfunction createNode(opts) {\n  var node = new IperNode(this, opts)\n\n  // * returns node id\n  return node.id\n}\n\nIperGraph.prototype.createNode = createNode\n\n//\n// ### getEdge()\n//\n\nfunction getEdge(id) {\n  var edgeFound\n\n  _.each(this.edges, function (edge) {\n    if (id === edge.id)\n      edgeFound = edge\n  })\n\n  if (edgeFound)\n    return edgeFound\n  else\n    throw new Error('edge not found')\n}\n\nIperGraph.prototype.getEdge = getEdge\n\n//\n// ### getNode()\n//\n\nfunction getNode(id) {\n  var nodeFound\n\n  _.each(this.nodes, function (node) {\n    if (id === node.id)\n      nodeFound = node\n  })\n\n  if (nodeFound)\n    return nodeFound\n  else\n    throw new Error('node not found')\n}\n\nIperGraph.prototype.getNode = getNode\n\n//\n// ### removeEdge()\n//\n\nfunction removeEdge(id) {\n  var self = this;\n\n  _.each(self.edges, function (edge, index) {\n\n    if (id === edge.id)\n      self.edges.splice(index, 1)\n  })\n}\n\nIperGraph.prototype.removeEdge = removeEdge\n\n//\n// ### removeNode()\n//\n// Removes node by given id\n//\n//\n//```\n//graph.removeNode(nodeId)\n//```\n//\n\nfunction removeNode(id) {\n  var self = this\n\n  var edges = this.edges\n    , nodes = this.nodes"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO fai try getNode per fare throw di node not found</p>\n",
+                "summary": "<p>TODO fai try getNode per fare throw di node not found</p>\n",
+                "body": ""
+            },
+            "ignore": false
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>loop over all edges</p>\n",
+                "summary": "<p>loop over all edges</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "_.each(edges, function (edge) {"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>loop over edge nodeIds</p>\n",
+                "summary": "<p>loop over edge nodeIds</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "_.each(edge.nodeIds, function (nodeId, index) {"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>drop nodeId from edges linked to removed node</p>\n",
+                "summary": "<p>drop nodeId from edges linked to removed node</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "if (id === nodeId)\n        edge.nodeIds.splice(index, 1)\n    })"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>remove orphan edges</p>\n",
+                "summary": "<p>remove orphan edges</p>\n",
+                "body": ""
+            },
+            "ignore": false
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO in realta non sarebbe 2 ma il rank dell&#39; edge</p>\n",
+                "summary": "<p>TODO in realta non sarebbe 2 ma il rank dell&#39; edge</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "if (edge.nodeIds.length < 2)\n      edge.remove()\n  })\n\n  _.each(nodes, function (node, index) {\n    if (id === node.id)\n      self.nodes.splice(index, 1)\n  })\n}\n\nIperGraph.prototype.removeNode = removeNode\n\nmodule.exports = IperGraph"
+        }
+    ],
+    "IperNode": [
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>Count occurrences of node id in edge.nodeIds\nfor every edge in the graph.</p>\n",
+                "summary": "<p>Count occurrences of node id in edge.nodeIds\nfor every edge in the graph.</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "_.each(graph.edges, function (edge) {\n      _.each(edge.nodeIds, function (nodeId) {\n        if (nodeId === self.id)\n          degree++\n      })\n    })\n\n    return degree\n  }\n\n  Object.defineProperty(this, 'degree', {get: getDegree})\n\n  function getMaxDegree () {\n    return opts.maxDegree\n  }\n\n  Object.defineProperty(this, 'maxDegree', {get: getMaxDegree})"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>add this node to graph</p>\n",
+                "summary": "<p>add this node to graph</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "graph.nodes.push(this)\n}\n\ninherits(IperNode, IperElement)"
+        },
+        {
+            "tags": [
+                {
+                    "type": "return",
+                    "types": [
+                        "Array"
+                    ],
+                    "description": "<p>adjacent node ids</p>\n"
+                }
+            ],
+            "description": {
+                "full": "<p>Compute adjacent nodes</p>\n",
+                "summary": "<p>Compute adjacent nodes</p>\n",
+                "body": ""
+            },
+            "isPrivate": false,
+            "ignore": false,
+            "code": "function getAdjacentNodeIds() {\n  var id = this.id\n\n  var adjacentNodeIds = []",
+            "ctx": {
+                "type": "function",
+                "name": "getAdjacentNodeIds",
+                "string": "getAdjacentNodeIds()"
+            }
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>loop over all edges</p>\n",
+                "summary": "<p>loop over all edges</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "_.each(this.graph.edges, function (edge) {"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>if edge contains node</p>\n",
+                "summary": "<p>if edge contains node</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "if (_.contains(edge.nodeIds, id))"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>take all nodeIds except node self id</p>\n",
+                "summary": "<p>take all nodeIds except node self id</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "adjacentNodeIds.push(_.without(edge.nodeIds, id))\n  })"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>since <em>.without() return an array and nodeIds can be repeated,\nuse </em>.uniq() and _.flatten() to return a flat array with no repetition</p>\n",
+                "summary": "<p>since <em>.without() return an array and nodeIds can be repeated,\nuse </em>.uniq() and _.flatten() to return a flat array with no repetition</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "return _.uniq(_.flatten(adjacentNodeIds))\n}\n\nIperNode.prototype.getAdjacentNodeIds = getAdjacentNodeIds"
+        },
+        {
+            "tags": [],
+            "description": {
+                "full": "<p>TODO remove(), oppure toglilo ad IperEdge</p>\n",
+                "summary": "<p>TODO remove(), oppure toglilo ad IperEdge</p>\n",
+                "body": ""
+            },
+            "ignore": false,
+            "code": "module.exports = IperNode",
+            "ctx": {
+                "type": "property",
+                "receiver": "module",
+                "name": "exports",
+                "value": "IperNode",
+                "string": "module.exports"
+            }
+        }
+    ]
+}

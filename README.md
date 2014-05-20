@@ -7,9 +7,7 @@
 
 # Description
 
-What is an hypergraph?
-
-An hypergraph is a graph which rank can be greater than two.
+What is an hypergraph? It is a graph which rank can be greater than two.
 
 Check the following Wikipedia pages:
 

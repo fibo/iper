@@ -59,14 +59,13 @@ function IperEdge(graph, nodeIds) {
     value: nodeIds
   })
 
-  /* add this edge to graph */
+  // add this edge to graph
   graph.edges.push(this)
 }
 
 inherits(IperEdge, IperElement)
 
-/**
- * Removes the edge from its graph
+/* Removes the edge from its graph
  *
  */
 
