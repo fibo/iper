@@ -4,15 +4,13 @@ var _        = require('underscore')
 
 var IperElement = require('./IperElement')
 
-//
-// ## Constructor
-//
+/* Connects nodes
+ *
+ * @param {IperGraph} graph
+ * @param {Array} nodeIds
+ */
 
 function IperEdge(graph, nodeIds) {
-
-  //
-  // ### signature (graph, nodeIds)
-  //
 
   // *graph* must be defined
   if (_.isUndefined(graph))
@@ -29,30 +27,20 @@ function IperEdge(graph, nodeIds) {
   _.each(nodeIds, function (id) {
     var node = graph.getNode(id)
 
-    /* check that nodeIds refers to existing nodes */
+    // check that nodeIds refers to existing nodes
     if (_.isUndefined(node))
       throw new Error()
 
-    /* if maxDegree is not defined there is no trouble ... */
+    // if maxDegree is not defined there is no trouble ...
     if (_.isUndefined(node.maxDegree))
       return
 
-    /* otherwise check that node degree is not going to exceed its maxDegree */
+    // otherwise check that node degree is not going to exceed its maxDegree 
     if (node.degree === node.maxDegree)
       throw new Error()
   })
 
   IperElement.call(this, graph)
-
-  //
-  // ## Attributes
-  //
-
-  //
-  // ### nodeIds
-  //
-  // It is an array of node ids.
-  //
 
   Object.defineProperty(this, 'nodeIds', {
     enumerable: true,
@@ -63,9 +51,15 @@ function IperEdge(graph, nodeIds) {
   graph.edges.push(this)
 }
 
+/**
+ * inheritance
+ *
+ */
+
 inherits(IperEdge, IperElement)
 
-/* Removes the edge from its graph
+/**
+ * Removes the edge from its graph
  *
  */
 

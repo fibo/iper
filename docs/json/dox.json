@@ -1,34 +1,47 @@
 {
     "IperEdge": [
         {
-            "tags": [],
+            "tags": [
+                {
+                    "type": "param",
+                    "types": [
+                        "IperGraph"
+                    ],
+                    "name": "graph",
+                    "description": ""
+                },
+                {
+                    "type": "param",
+                    "types": [
+                        "Array"
+                    ],
+                    "name": "nodeIds",
+                    "description": ""
+                }
+            ],
             "description": {
-                "full": "<p>check that nodeIds refers to existing nodes</p>\n",
-                "summary": "<p>check that nodeIds refers to existing nodes</p>\n",
+                "full": "<p>Connects nodes</p>\n",
+                "summary": "<p>Connects nodes</p>\n",
                 "body": ""
             },
+            "isPrivate": false,
             "ignore": false,
-            "code": "if (_.isUndefined(node))\n      throw new Error()"
+            "code": "function IperEdge(graph, nodeIds) {\n\n  // *graph* must be defined\n  if (_.isUndefined(graph))\n    throw new Error()\n\n  // *graph.nodes* must be an object\n  if (! (_.isObject(graph.nodes)))\n    throw new Error()\n\n  // *nodeIds* must be an array\n  if (! (_.isArray(nodeIds)))\n    throw new Error()\n\n  _.each(nodeIds, function (id) {\n    var node = graph.getNode(id)\n\n    // check that nodeIds refers to existing nodes\n    if (_.isUndefined(node))\n      throw new Error()\n\n    // if maxDegree is not defined there is no trouble ...\n    if (_.isUndefined(node.maxDegree))\n      return\n\n    // otherwise check that node degree is not going to exceed its maxDegree \n    if (node.degree === node.maxDegree)\n      throw new Error()\n  })\n\n  IperElement.call(this, graph)\n\n  Object.defineProperty(this, 'nodeIds', {\n    enumerable: true,\n    value: nodeIds\n  })\n\n  // add this edge to graph\n  graph.edges.push(this)\n}",
+            "ctx": {
+                "type": "function",
+                "name": "IperEdge",
+                "string": "IperEdge()"
+            }
         },
         {
             "tags": [],
             "description": {
-                "full": "<p>if maxDegree is not defined there is no trouble ...</p>\n",
-                "summary": "<p>if maxDegree is not defined there is no trouble ...</p>\n",
+                "full": "<p>inheritance</p>\n",
+                "summary": "<p>inheritance</p>\n",
                 "body": ""
             },
             "ignore": false,
-            "code": "if (_.isUndefined(node.maxDegree))\n      return"
-        },
-        {
-            "tags": [],
-            "description": {
-                "full": "<p>otherwise check that node degree is not going to exceed its maxDegree</p>\n",
-                "summary": "<p>otherwise check that node degree is not going to exceed its maxDegree</p>\n",
-                "body": ""
-            },
-            "ignore": false,
-            "code": "if (node.degree === node.maxDegree)\n      throw new Error()\n  })\n\n  IperElement.call(this, graph)\n\n  //\n  // ## Attributes\n  //\n\n  //\n  // ### nodeIds\n  //\n  // It is an array of node ids.\n  //\n\n  Object.defineProperty(this, 'nodeIds', {\n    enumerable: true,\n    value: nodeIds\n  })\n\n  // add this edge to graph\n  graph.edges.push(this)\n}\n\ninherits(IperEdge, IperElement)"
+            "code": "inherits(IperEdge, IperElement)"
         },
         {
             "tags": [],
@@ -52,35 +65,25 @@
                 {
                     "type": "param",
                     "types": [
-                        "Object"
+                        "IperGraph"
                     ],
                     "name": "graph",
                     "description": ""
                 }
             ],
             "description": {
-                "full": "<p>Base class for <em>iper</em>.</p>\n<p>Do not use <em>IperElement</em> directly, it is used internally by <em>iper</em> as a base class.</p>\n<p>If <code>this</code> refers to an <em>iper</em> class instance</p>\n<pre><code>IperElement.call(this, graph)\n</code></pre>",
-                "summary": "<p>Base class for <em>iper</em>.</p>\n",
-                "body": "<p>Do not use <em>IperElement</em> directly, it is used internally by <em>iper</em> as a base class.</p>\n<p>If <code>this</code> refers to an <em>iper</em> class instance</p>\n<pre><code>IperElement.call(this, graph)\n</code></pre>"
+                "full": "<p>Base class</p>\n<ul>\n<li>graph</li>\n<li>id</li>\n</ul>\n",
+                "summary": "<p>Base class</p>\n",
+                "body": "<ul>\n<li>graph</li>\n<li>id</li>\n</ul>\n"
             },
             "isPrivate": false,
             "ignore": false,
-            "code": "function IperElement (graph) {\n\n  //\n  // ## Attributes\n  //\n\n  //\n  // ### graph\n  //\n  // References the graph containing the element.\n  //",
+            "code": "function IperElement (graph) {\n\n  if (_.isUndefined(graph))\n    throw new Error('graph is not defined')\n\n  Object.defineProperty(this, 'graph', {\n    enumerable: false,\n    value: graph,\n    writable: false\n  })\n\n  Object.defineProperty(this, 'id', {\n    enumerable: true,\n    value: _.uniqueId(),\n    writable: false\n  })\n}\n\nmodule.exports = IperElement",
             "ctx": {
                 "type": "function",
                 "name": "IperElement",
                 "string": "IperElement()"
             }
-        },
-        {
-            "tags": [],
-            "description": {
-                "full": "<p>check graph</p>\n",
-                "summary": "<p>check graph</p>\n",
-                "body": ""
-            },
-            "ignore": false,
-            "code": "if (_.isUndefined(graph))\n    throw new Error('graph is not defined')\n\n  Object.defineProperty(this, 'graph', {\n    enumerable: false,\n    value: graph,\n    writable: false\n  })\n\n  //\n  // ### id\n  //\n  // Every IperElement has a unique id.\n  //\n\n  Object.defineProperty(this, 'id', {\n    enumerable: true,\n    value: _.uniqueId(),\n    writable: false\n  })\n}\n\nmodule.exports = IperElement"
         }
     ],
     "IperGraph": [

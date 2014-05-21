@@ -2,32 +2,15 @@
 var _ = require('underscore')
 
 /**
- * Base class for *iper*.
+ * Base class
  *
- * Do not use *IperElement* directly, it is used internally by *iper* as a base class.
+ * * graph
+ * * id
  *
- * If `this` refers to an *iper* class instance
- *
- * ```
- * IperElement.call(this, graph)
- * ```
- *
- * @param {Object} graph
+ * @param {IperGraph} graph
  */
 
 function IperElement (graph) {
-
-  //
-  // ## Attributes
-  //
-
-  //
-  // ### graph
-  //
-  // References the graph containing the element.
-  //
-
-  /* check graph */
 
   if (_.isUndefined(graph))
     throw new Error('graph is not defined')
@@ -37,12 +20,6 @@ function IperElement (graph) {
     value: graph,
     writable: false
   })
-
-  //
-  // ### id
-  //
-  // Every IperElement has a unique id.
-  //
 
   Object.defineProperty(this, 'id', {
     enumerable: true,

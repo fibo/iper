@@ -14,6 +14,13 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1//css/bootstrap-theme.min.css">
 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
@@ -24,11 +31,15 @@
 </head>
 <body style>
 
-  <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+  <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <!-- GitHub ribbon -->
-        <a href="https://github.com/fibo/iper"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
 
         <a href="./" class="navbar-brand">iper</a>
       </div>
@@ -36,13 +47,10 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="./api.html">api</a></li>
+          <li><a href="https://github.com/fibo/iper" target="_blank">code</a></li>
         </ul>
-
-        <!-- ul class="nav navbar-nav navbar-right">
-          <li><a href="http://g14n.info" >about me</a></li>
-        </ul -->
       </div>
-    </div> <!-- div class="container" -->
+    </div>
   </div> <!-- div class="navbar" -->
 
   <div class="container">
@@ -63,53 +71,108 @@
       
       
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
 
-      <h2>remove()</h2>
-
-      <em><p>Removes the edge from its graph</p>
-</em>
+      <div class="page-header">
+        <h2>IperEdge()</h2> <small><p>Connects nodes</p>
+</small>
+      </div>
 
       
 
-      <!--div class="table-responsive"-->
-        <table class="table">
-          <thead>
-            <tr>
-              <th>param</th>
-              <th>type</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>param</th>
+            <th>type</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          
             
-          </tbody>
-        </table>
-      <!--/div-->
+              <tr>
+                <th>
+                  graph
+                </th>
+                <td>
+                  
+                    <span class="badge">IperGraph</span>
+                  
+                </td>
+                <td colspan="10">
+                  
+                </td>
+              <tr>
+            
+          
+            
+              <tr>
+                <th>
+                  nodeIds
+                </th>
+                <td>
+                  
+                    <span class="badge">Array</span>
+                  
+                </td>
+                <td colspan="10">
+                  
+                </td>
+              <tr>
+            
+          
+        </tbody>
+      </table>
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      <div class="page-header">
+        <h2>remove()</h2> <small><p>Removes the edge from its graph</p>
+</small>
+      </div>
+
+      
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>param</th>
+            <th>type</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
     
 
   </section>
@@ -126,60 +189,55 @@
       
       
 
-      <h2>IperElement()</h2>
+      <div class="page-header">
+        <h2>IperElement()</h2> <small><p>Base class</p>
+</small>
+      </div>
 
-      <em><p>Base class for <em>iper</em>.</p>
-</em>
+      <p><ul>
+<li>graph</li>
+<li>id</li>
+</ul>
+</p>
 
-      <p><p>Do not use <em>IperElement</em> directly, it is used internally by <em>iper</em> as a base class.</p>
-<p>If <code>this</code> refers to an <em>iper</em> class instance</p>
-<pre><code>IperElement.call(this, graph)
-</code></pre></p>
-
-      <!--div class="table-responsive"-->
-        <table class="table">
-          <thead>
-            <tr>
-              <th>param</th>
-              <th>type</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>param</th>
+            <th>type</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          
             
-              
-                <tr>
-                  <th>
-                    graph
-                  </th>
-                  <td>
-                    
-                      <span class="badge">Object</span>
-                    
-                  </td>
-                  <td colspan="10">
-                    
-                  </td>
-                <tr>
-              
+              <tr>
+                <th>
+                  graph
+                </th>
+                <td>
+                  
+                    <span class="badge">IperGraph</span>
+                  
+                </td>
+                <td colspan="10">
+                  
+                </td>
+              <tr>
             
-          </tbody>
-        </table>
-      <!--/div-->
+          
+        </tbody>
+      </table>
     
-      
-      
-      
-      
 
   </section>
 
@@ -203,52 +261,50 @@
       
       
 
-      <h2>check()</h2>
-
-      <em><p>Performs dataa check</p>
-</em>
+      <div class="page-header">
+        <h2>check()</h2> <small><p>Performs dataa check</p>
+</small>
+      </div>
 
       
 
-      <!--div class="table-responsive"-->
-        <table class="table">
-          <thead>
-            <tr>
-              <th>param</th>
-              <th>type</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>param</th>
+            <th>type</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          
             
-              
-                <tr>
-                  <th>
-                    data
-                  </th>
-                  <td>
-                    
-                      <span class="badge">Object</span>
-                    
-                  </td>
-                  <td colspan="10">
-                    
-                  </td>
-                <tr>
-              
+              <tr>
+                <th>
+                  data
+                </th>
+                <td>
+                  
+                    <span class="badge">Object</span>
+                  
+                </td>
+                <td colspan="10">
+                  
+                </td>
+              <tr>
             
-          </tbody>
-        </table>
-      <!--/div-->
+          
+        </tbody>
+      </table>
     
       
       
@@ -266,36 +322,34 @@
       
       
 
-      <h2>brandNew</h2>
-
-      <em><p>store a lookup of new &lt;--&gt; old ids</p>
-</em>
+      <div class="page-header">
+        <h2>brandNew</h2> <small><p>store a lookup of new &lt;--&gt; old ids</p>
+</small>
+      </div>
 
       
 
-      <!--div class="table-responsive"-->
-        <table class="table">
-          <thead>
-            <tr>
-              <th>param</th>
-              <th>type</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            
-          </tbody>
-        </table>
-      <!--/div-->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>param</th>
+            <th>type</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
     
       
       
@@ -364,38 +418,36 @@
       
       
 
-      <h2>getAdjacentNodeIds()</h2>
-
-      <em><p>Compute adjacent nodes</p>
-</em>
+      <div class="page-header">
+        <h2>getAdjacentNodeIds()</h2> <small><p>Compute adjacent nodes</p>
+</small>
+      </div>
 
       
 
-      <!--div class="table-responsive"-->
-        <table class="table">
-          <thead>
-            <tr>
-              <th>param</th>
-              <th>type</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>param</th>
+            <th>type</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          
             
-              
-            
-          </tbody>
-        </table>
-      <!--/div-->
+          
+        </tbody>
+      </table>
     
       
       
@@ -421,36 +473,34 @@
       
       
 
-      <h2>module.exports</h2>
-
-      <em><p>TODO remove(), oppure toglilo ad IperEdge</p>
-</em>
+      <div class="page-header">
+        <h2>module.exports</h2> <small><p>TODO remove(), oppure toglilo ad IperEdge</p>
+</small>
+      </div>
 
       
 
-      <!--div class="table-responsive"-->
-        <table class="table">
-          <thead>
-            <tr>
-              <th>param</th>
-              <th>type</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            
-          </tbody>
-        </table>
-      <!--/div-->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>param</th>
+            <th>type</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
     
 
   </section>
