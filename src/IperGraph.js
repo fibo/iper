@@ -4,6 +4,14 @@ var _        = require('underscore')
 var IperEdge    = require('./IperEdge')
   , IperNode    = require('./IperNode')
 
+/**
+ * A graph with the following attributes
+ *
+ * * edges
+ * * nodes
+ *
+ * @param {Object} args
+ */
 
 function IperGraph () {
 
@@ -50,12 +58,6 @@ function IperGraph () {
 }
 
 //
-// ## Methods
-//
-
-//
-// ### check(data)
-//
 // **TODO**: vedi se riesco a referenziare la funzione load qui sotto nella documentazione
 // This method is used by load to check data is valid
 // ma può essere usata anche esternamente come metodo statico
@@ -90,7 +92,8 @@ function IperGraph () {
 // performs the followings data checks
 //
 
-/** Performs dataa check
+/**
+ * Performs data check
  *
  * @param {Object} data
  */
@@ -103,7 +106,7 @@ function check(data) {
 
   // * ids are unique
 
-   /* TODO Da fare anche su edges e subgraph */
+   // TODO Da fare anche su edges e subgraph
 
   if (_.unique(nodeIds).length !== nodeIds.length)
     throw new Error('duplicated node id')
@@ -122,14 +125,16 @@ function check(data) {
 
 IperGraph.prototype.check = check
 
-//
-// ### load(data) {#load}
-//
+/**
+ * Load data
+ *
+ * @param {Object} data
+ */
 
 function load(data) {
   var self = this
 
-  /* check if data is valid */
+  // check if data is valid
   try {
     check(data)
   }
@@ -138,39 +143,41 @@ function load(data) {
   var edges = data.edges
     , nodes = data.nodes
 
-  /* store a lookup of new <--> old ids */
+  // store a lookup of new <--> old ids
   var brandNew = {}
 
-  /* create new nodes first */
+  // create new nodes first
   _.each(nodes, function (node) {
     var id = node.id
       , opts = {}
 
-    /* remember association between old and new id */
+    // remember association between old and new id
     brandNew[id] = self.createNode(id, opts)
   })
 
-  /* create new edges */
+  // create new edges
   _.each(edges, function (edge) {
 
     var newNodeIds = []
       , oldNodeIds = edge.nodeIds
 
-    /* loop over old node ids and get the corresponding new ids */
+    // loop over old node ids and get the corresponding new ids
     _.each(oldNodeIds, function (id) {
       newNodeIds.push(brandNew[id])
     })
 
-    /* use new ids to create a new edge */
+    // use new ids to create a new edge
     self.createEdge(newNodeIds)
   })
 }
 
 IperGraph.prototype.load = load
 
-//
-// ### createEdge()
-//
+/**
+ * Join nodes with a new edge
+ *
+ * @param {Array} nodeIds
+ */
 
 function createEdge(nodeIds) {
   var edge = new IperEdge(this, nodeIds)
@@ -179,9 +186,11 @@ function createEdge(nodeIds) {
 
 IperGraph.prototype.createEdge = createEdge
 
-//
-// ### createNode()
-//
+/**
+ * Create a new node
+ *
+ * @param {Object} opts passed to IperNode constructor
+ */
 
 function createNode(opts) {
   var node = new IperNode(this, opts)
@@ -192,9 +201,11 @@ function createNode(opts) {
 
 IperGraph.prototype.createNode = createNode
 
-//
-// ### getEdge()
-//
+/**
+ * Return edge given by id
+ *
+ * @param {Integer} id
+ */
 
 function getEdge(id) {
   var edgeFound
@@ -212,9 +223,11 @@ function getEdge(id) {
 
 IperGraph.prototype.getEdge = getEdge
 
-//
-// ### getNode()
-//
+/**
+ * Return node given by id
+ *
+ * @param {Integer} id
+ */
 
 function getNode(id) {
   var nodeFound
@@ -232,9 +245,11 @@ function getNode(id) {
 
 IperGraph.prototype.getNode = getNode
 
-//
-// ### removeEdge()
-//
+/**
+ * Remove edge given by id
+ *
+ * @param {Integer} id
+ */
 
 function removeEdge(id) {
   var self = this;
@@ -248,16 +263,14 @@ function removeEdge(id) {
 
 IperGraph.prototype.removeEdge = removeEdge
 
-//
-// ### removeNode()
-//
-// Removes node by given id
-//
-//
-//```
-//graph.removeNode(nodeId)
-//```
-//
+/**
+ * Remove node given by id
+ *
+ * ```
+ * graph.removeNode(nodeId) 
+ * ```
+ * @param {Integer} id
+ */
 
 function removeNode(id) {
   var self = this
@@ -265,21 +278,21 @@ function removeNode(id) {
   var edges = this.edges
     , nodes = this.nodes
 
-    /* TODO fai try getNode per fare throw di node not found */
+    //TODO fai try getNode per fare throw di node not found
 
-  /* loop over all edges */
+  // loop over all edges
   _.each(edges, function (edge) {
 
-    /* loop over edge nodeIds */
+    // loop over edge nodeIds
     _.each(edge.nodeIds, function (nodeId, index) {
 
-      /* drop nodeId from edges linked to removed node */
+      // drop nodeId from edges linked to removed node
       if (id === nodeId)
         edge.nodeIds.splice(index, 1)
     })
 
-    /* remove orphan edges */
-    /* TODO in realta non sarebbe 2 ma il rank dell' edge */
+    // remove orphan edges
+    // TODO in realta non sarebbe 2 ma il rank dell' edge
     if (edge.nodeIds.length < 2)
       edge.remove()
   })
