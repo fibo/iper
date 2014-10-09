@@ -16,27 +16,10 @@ var id1 = graph.createNode()
 var nodeIds = [id1, id2, id3]
 
 describe('IperEdge', function () {
-  describe('Inheritance', function () {
-    it('is an IperElement', function () {
-      var edge = new IperEdge(graph, nodeIds)
-      edge.should.be.instanceOf(IperElement)
-    })
-  })
-
   describe('Constructor', function () {
     it('has signature (graph, nodeIds)', function () {
       var edge = new IperEdge(graph, nodeIds)
       edge.should.be.instanceOf(IperEdge)
-    })
-
-    it('requires graph is defined and nodeIds is an array', function () {
-      ;(function () {
-        var edge = new IperEdge()
-      }).should.throwError()
-
-      ;(function () {
-        var edge = new IperEdge(graph)
-      }).should.throwError()
     })
 
     it('checks #nodeIds is an array of valid node ids', function () {

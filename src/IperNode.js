@@ -1,8 +1,6 @@
 
-var _        = require('underscore')
-  , inherits = require('inherits')
-
-var IperElement = require('./IperElement')
+var uniqueId = require('./uniqueId')
+var _ = require('underscore')
 
 /**
  * A node graph
@@ -14,9 +12,10 @@ var IperElement = require('./IperElement')
 function IperNode(graph, opts) {
   var self = this
 
-  IperElement.call(this, graph)
+  this.graph = graph
+  this.id = uniqueId()
 
-  if (!_.isObject(opts))
+  if (typeof opts !== 'object')
     opts = {}
 
   function getDegree () {
@@ -24,8 +23,8 @@ function IperNode(graph, opts) {
 
     // Count occurrences of node id in edge.nodeIds
     // for every edge in the graph.
-    _.each(graph.edges, function (edge) {
-      _.each(edge.nodeIds, function (nodeId) {
+    graph.edges.forEach(function (edge) {
+      edge.nodeIds.forEach(function (nodeId) {
         if (nodeId === self.id)
           degree++
       })
@@ -45,8 +44,6 @@ function IperNode(graph, opts) {
   // add this node to graph
   graph.nodes.push(this)
 }
-
-inherits(IperNode, IperElement)
 
 /**
  * Compute adjacent nodes

@@ -9,14 +9,6 @@ var IperEdge    = iper.IperEdge
 var graph = new IperGraph()
 
 describe('IperNode', function () {
-  describe('Inheritance', function () {
-    it('is an IperElement', function () {
-      var node
-      node = new IperNode(graph)
-      node.should.be.instanceOf(IperElement)
-    })
-  })
-
   describe('Constructor', function () {
     it('has signature (graph)', function () {
       var node
