@@ -131,7 +131,7 @@ IperGraph.prototype.check = check
  * @param {Object} data
  */
 
-function load(data) {
+function load (data) {
   var self = this
 
   // check if data is valid
@@ -140,14 +140,14 @@ function load(data) {
   }
   catch (er) { throw er }
 
-  var edges = data.edges
-    , nodes = data.nodes
+  var edges = data.edges || []
+    , nodes = data.nodes || []
 
   // store a lookup of new <--> old ids
   var brandNew = {}
 
   // create new nodes first
-  _.each(nodes, function (node) {
+  nodes.forEach(function (node) {
     var id = node.id
       , opts = {}
 
@@ -251,11 +251,10 @@ IperGraph.prototype.getNode = getNode
  * @param {Integer} id
  */
 
-function removeEdge(id) {
-  var self = this;
+function removeEdge (id) {
+  var self = this
 
-  _.each(self.edges, function (edge, index) {
-
+  this.edges.forEach(function (edge, index) {
     if (id === edge.id)
       self.edges.splice(index, 1)
   })
@@ -266,25 +265,14 @@ IperGraph.prototype.removeEdge = removeEdge
 /**
  * Remove node given by id
  *
- * ```
- * graph.removeNode(nodeId) 
- * ```
  * @param {Integer} id
  */
 
-function removeNode(id) {
+function removeNode (id) {
   var self = this
 
-  var edges = this.edges
-    , nodes = this.nodes
-
-    //TODO fai try getNode per fare throw di node not found
-
-  // loop over all edges
-  _.each(edges, function (edge) {
-
-    // loop over edge nodeIds
-    _.each(edge.nodeIds, function (nodeId, index) {
+  this.edges.forEach(function (edge) {
+    edge.nodeIds.forEach(function (nodeId, index) {
 
       // drop nodeId from edges linked to removed node
       if (id === nodeId)
@@ -297,7 +285,7 @@ function removeNode(id) {
       edge.remove()
   })
 
-  _.each(nodes, function (node, index) {
+  this.nodes.forEach(function (node, index) {
     if (id === node.id)
       self.nodes.splice(index, 1)
   })

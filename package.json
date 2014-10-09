@@ -29,12 +29,12 @@
   },
   "devDependencies": {
     "mocha": "^1.19.0",
+    "strict-mode": "^0.1.4",
     "should": "^3.3.1"
   },
   "dependencies": {
     "underscore": "^1.6.0",
-    "strict-mode": "^0.1.4",
     "inherits": "~2.0.1"
   },
-  "homepage": "http://g14n.info/iper"
+  "homepage": "http://www.g14n.info/iper"
 }
