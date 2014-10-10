@@ -12,12 +12,12 @@ function getOrphanEdgeIds () {
   var edges = this.edges
     , nodes = this.nodes
 
+  function nodeIdsNotFound (nodeId) {
+    return typeof nodes[nodeId] === 'undefined'
+  }
+
   for (var edgeId in edges) {
     var edge = edges[edgeId]
-
-    function nodeIdsNotFound (nodeId) {
-      return typeof nodes[nodeId] === 'undefined'
-    }
 
     if (edge.filter(nodeIdsNotFound).length > 0)
       orphanEdgeIds.push(edgeId)
