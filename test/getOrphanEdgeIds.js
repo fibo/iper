@@ -1,7 +1,7 @@
 
 var should = require('should')
 
-var getOrphanEdgeIds = require('../src/getOrphanEdgeIds')
+var getOrphanEdgeIds = require('..').getOrphanEdgeIds
 
 var graph1 = require('./examples/graphs/graph1.json')
   , orphanEdges1 = require('./examples/graphs/orphanEdges1.json')

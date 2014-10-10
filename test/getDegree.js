@@ -1,7 +1,7 @@
 
 var should = require('should')
 
-var getDegree = require('../src/getDegree')
+var getDegree = require('..').getDegree
 
 var graph1 = require('./examples/graphs/graph1.json')
   , isolatedNode = require('./examples/graphs/isolatedNode.json')
