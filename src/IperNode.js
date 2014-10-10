@@ -60,7 +60,7 @@ function getAdjacentNodeIds() {
   _.each(this.graph.edges, function (edge) {
     // if edge contains node
     if (_.contains(edge.nodeIds, id))
-      /* take all nodeIds except node self id */
+      // take all nodeIds except node self id
       adjacentNodeIds.push(_.without(edge.nodeIds, id))
   })
 

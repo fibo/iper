@@ -2,25 +2,36 @@
 /**
  * Compute adjacent nodes
  *
+ * @param {String} nodeId
  * @returns {Array} adjacentNodeIds
  */
 
 function getAdjacentNodeIds (nodeId) {
   var adjacentNodeIds = []
 
-/*
-  // loop over all edges
-  _.each(this.graph.edges, function (edge) {
-    // if edge contains node
-    if (_.contains(edge.nodeIds, id))
-      // take all nodeIds except node self id
-      adjacentNodeIds.push(_.without(edge.nodeIds, id))
-  })
+  var edges = this.edges
 
-  // since _.without() return an array and nodeIds can be repeated,
-  // use _.uniq() and _.flatten() to return a flat array with no repetition
-  return _.uniq(_.flatten(adjacentNodeIds))
-*/
+  for (var edgeId in edges) {
+    var edge = edges[edgeId]
+
+    // Nothing to do if edge does not contain nodeId.
+    if (edge.indexOf(nodeId) === -1)
+      continue
+
+      function givenNodeId (id) {
+        return id !== nodeId
+      }
+
+      function foundNodeIds (id) {
+        return adjacentNodeIds.indexOf(id) === -1
+      }
+
+      // Take all nodeIds except given nodeId, avoid repetitions.
+      var nodeIds = edge.filter(givenNodeId)
+                        .filter(foundNodeIds)
+
+      adjacentNodeIds = adjacentNodeIds.concat(nodeIds)
+  }
 
   return adjacentNodeIds
 }
