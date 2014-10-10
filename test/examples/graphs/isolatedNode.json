@@ -1,0 +1,10 @@
+{
+  "nodes": {
+    "isolated": "node",
+    "another": ["node"],
+    "yet": {"another": 1}
+  },
+  "edges": {
+    "0": ["another", "yet"]
+  }
+}

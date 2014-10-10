@@ -17,35 +17,11 @@ function IperGraph () {
 
   var args = arguments[0] || {}
 
-  //
-  // ## Attributes
-  //
 
-  //
-  // ### edges
-  //
+  this.edges = args.edges || []
+  this.nodes = args.nodes || []
 
-  Object.defineProperty(this, 'edges', {
-    enumerable: true,
-    value: []
-  })
-
-  //
-  // ### nodes
-  //
-
-  Object.defineProperty(this, 'nodes', {
-    enumerable: true,
-    value: []
-  })
-
-  /* TODO
-  //
-  // ### rank
-  //
-
-  Object.defineProperty(this, 'rank', {value: {}})
-  */
+  // TODO rank
 
   /* try to load data passed to constructor */
   try {
