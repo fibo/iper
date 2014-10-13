@@ -1,5 +1,7 @@
 
-var uniqueId = require('./uniqueId')
+var getIncidentEdgeIds = require('./getIncidentEdgeIds')
+  , getOrphanEdgeIds = require('./getOrphanEdgeIds')
+  , uniqueId = require('./uniqueId')
 
 /**
  * Hypergraph
@@ -56,7 +58,11 @@ Graph.prototype.addNode = addNode
  */
 
 function delEdge (id) {
+  var nodeIds = this.edges[id]
+
   delete this.edges[id]
+
+  return nodeIds
 }
 
 Graph.prototype.delEdge = delEdge
@@ -68,7 +74,15 @@ Graph.prototype.delEdge = delEdge
  */
 
 function delNode (id) {
+  var edges = this.edges
+
+  var data = this.nodes[id]
   delete this.nodes[id]
+
+  var incidentEdgeIds = getIncidentEdgeIds.bind(this)(id)
+  incidentEdgeIds.forEach(delEdge.bind(this))
+
+  return data
 }
 
 Graph.prototype.delNode = delNode
