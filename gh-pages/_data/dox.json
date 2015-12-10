@@ -1,0 +1,513 @@
+[
+  {
+    "tags": [
+      {
+        "type": "class",
+        "string": "\nhttp://en.wikipedia.org/wiki/Hypergraph",
+        "html": "<p><a href=\"http://en.wikipedia.org/wiki/Hypergraph\">http://en.wikipedia.org/wiki/Hypergraph</a></p>"
+      },
+      {
+        "type": "param",
+        "string": "{Object} graph",
+        "name": "graph",
+        "description": "",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Object} graph</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Hypergraph</p>",
+      "summary": "<p>Hypergraph</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": true,
+    "isEvent": false,
+    "ignore": false,
+    "line": 6,
+    "codeStart": 15,
+    "code": "function Graph () {\n  var arg = arguments[0] || {}\n\n  this.edges = arg.edges || {}\n  this.nodes = arg.nodes || {}\n}",
+    "ctx": {
+      "type": "function",
+      "name": "Graph",
+      "string": "Graph()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{Array} nodeIds",
+        "name": "nodeIds",
+        "description": "",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Array} nodeIds</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{String} id",
+        "types": [
+          "String"
+        ],
+        "typesDescription": "<code>String</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>id</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 22,
+    "codeStart": 28,
+    "code": "function addEdge (nodeIds) {\n  var id = uniqueId()\n\n  this.edges[id] = nodeIds\n\n  return id\n}\n\nGraph.prototype.addEdge = addEdge",
+    "ctx": {
+      "type": "function",
+      "name": "addEdge",
+      "string": "addEdge()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{Any} data",
+        "name": "data",
+        "description": "",
+        "types": [
+          "Any"
+        ],
+        "typesDescription": "<a href=\"Any.html\">Any</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Any} data</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{String} id",
+        "types": [
+          "String"
+        ],
+        "typesDescription": "<code>String</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>id</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 38,
+    "codeStart": 44,
+    "code": "function addNode (data) {\n  var id = uniqueId()\n\n  this.nodes[id] = data\n\n  return id\n}\n\nGraph.prototype.addNode = addNode",
+    "ctx": {
+      "type": "function",
+      "name": "addNode",
+      "string": "addNode()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{String} id",
+        "name": "id",
+        "description": "",
+        "types": [
+          "String"
+        ],
+        "typesDescription": "<code>String</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{String} id</p>"
+      },
+      {
+        "type": "returns",
+        "string": "",
+        "types": [],
+        "typesDescription": "",
+        "variable": false,
+        "nonNullable": false,
+        "nullable": false,
+        "optional": false,
+        "description": "",
+        "html": ""
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 54,
+    "codeStart": 60,
+    "code": "function delEdge (id) {\n  var nodeIds = this.edges[id]\n\n  delete this.edges[id]\n\n  return nodeIds\n}\n\nGraph.prototype.delEdge = delEdge",
+    "ctx": {
+      "type": "function",
+      "name": "delEdge",
+      "string": "delEdge()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{String} id",
+        "name": "id",
+        "description": "",
+        "types": [
+          "String"
+        ],
+        "typesDescription": "<code>String</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{String} id</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Any} data",
+        "types": [
+          "Any"
+        ],
+        "typesDescription": "<a href=\"Any.html\">Any</a>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>data</p>"
+      }
+    ],
+    "description": {
+      "full": "",
+      "summary": "",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 70,
+    "codeStart": 76,
+    "code": "function delNode (id) {\n  var edges = this.edges\n\n  var data = this.nodes[id]\n  delete this.nodes[id]\n\n  var incidentEdgeIds = getIncidentEdgeIds.bind(this)(id)\n  incidentEdgeIds.forEach(delEdge.bind(this))\n\n  return data\n}\n\nGraph.prototype.delNode = delNode\n\nmodule.exports = Graph",
+    "ctx": {
+      "type": "function",
+      "name": "delNode",
+      "string": "delNode()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{String} nodeId",
+        "name": "nodeId",
+        "description": "",
+        "types": [
+          "String"
+        ],
+        "typesDescription": "<code>String</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{String} nodeId</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Array} adjacentNodeIds",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>adjacentNodeIds</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Compute adjacent nodes</p>",
+      "summary": "<p>Compute adjacent nodes</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 93,
+    "codeStart": 100,
+    "code": "function getAdjacentNodeIds (nodeId) {\n  var adjacentNodeIds = []\n\n  var edges = this.edges\n\n  function givenNodeId (id) {\n    return id !== nodeId\n  }\n\n  function foundNodeIds (id) {\n    return adjacentNodeIds.indexOf(id) === -1\n  }\n\n  for (var edgeId in edges) {\n    var edge = edges[edgeId]\n\n    // Nothing to do if edge does not contain nodeId.\n    if (edge.indexOf(nodeId) === -1)\n      continue\n\n      // Take all nodeIds except given nodeId, avoid repetitions.\n      var nodeIds = edge.filter(givenNodeId)\n                        .filter(foundNodeIds)\n\n      adjacentNodeIds = adjacentNodeIds.concat(nodeIds)\n  }\n\n  return adjacentNodeIds\n}\n\nmodule.exports = getAdjacentNodeIds",
+    "ctx": {
+      "type": "function",
+      "name": "getAdjacentNodeIds",
+      "string": "getAdjacentNodeIds()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{String} nodeId",
+        "name": "nodeId",
+        "description": "",
+        "types": [
+          "String"
+        ],
+        "typesDescription": "<code>String</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{String} nodeId</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Number} degree",
+        "types": [
+          "Number"
+        ],
+        "typesDescription": "<code>Number</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>degree</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>The degree of a vertex is the number of incident edges, with loops counted twice.</p><p><a href=\"http://en.wikipedia.org/wiki/Degree_(graph_theory\">http://en.wikipedia.org/wiki/Degree_(graph_theory</a>)</p>",
+      "summary": "<p>The degree of a vertex is the number of incident edges, with loops counted twice.</p>",
+      "body": "<p><a href=\"http://en.wikipedia.org/wiki/Degree_(graph_theory\">http://en.wikipedia.org/wiki/Degree_(graph_theory</a>)</p>"
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 133,
+    "codeStart": 142,
+    "code": "function getDegree (nodeId) {\n  var degree = 0\n\n  var edges = this.edges\n\n  function countIncidents (id) {\n    if (id === nodeId)\n      degree++\n  }\n\n  for (var edgeId in edges) {\n    var edge = edges[edgeId]\n\n    edge.forEach(countIncidents)\n  }\n\n  return degree\n}\n\nmodule.exports = getDegree",
+    "ctx": {
+      "type": "function",
+      "name": "getDegree",
+      "string": "getDegree()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{String} nodeId",
+        "name": "nodeId",
+        "description": "",
+        "types": [
+          "String"
+        ],
+        "typesDescription": "<code>String</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{String} nodeId</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Array} incidentEdgeIds",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>incidentEdgeIds</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Edges incident to given node</p>",
+      "summary": "<p>Edges incident to given node</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 164,
+    "codeStart": 171,
+    "code": "function getIncidentEdgeIds (nodeId) {\n  var incidentEdgeIds = []\n\n  var edges = this.edges\n\n  function pushUniqueIncidents (edgeId, nodeId, id) {\n    var isIncident = (id === nodeId)\n      , isUnique = (incidentEdgeIds.indexOf(edgeId) < 0)\n\n    if (isIncident && isUnique)\n      incidentEdgeIds.push(edgeId)\n  }\n\n  for (var edgeId in edges) {\n    var edge = edges[edgeId]\n\n    edge.forEach(pushUniqueIncidents.bind(null, edgeId, nodeId))\n  }\n\n  return incidentEdgeIds\n}\n\nmodule.exports = getIncidentEdgeIds",
+    "ctx": {
+      "type": "function",
+      "name": "getIncidentEdgeIds",
+      "string": "getIncidentEdgeIds()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "string": "{Object} graph",
+        "name": "graph",
+        "description": "",
+        "types": [
+          "Object"
+        ],
+        "typesDescription": "<code>Object</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "html": "<p>{Object} graph</p>"
+      },
+      {
+        "type": "returns",
+        "string": "{Array} orphanEdgeIds",
+        "types": [
+          "Array"
+        ],
+        "typesDescription": "<code>Array</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>orphanEdgeIds</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Compute edges which does not refer to existing nodeIds</p>",
+      "summary": "<p>Compute edges which does not refer to existing nodeIds</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 196,
+    "codeStart": 203,
+    "code": "function getOrphanEdgeIds () {\n  var orphanEdgeIds = []\n\n  var edges = this.edges\n    , nodes = this.nodes\n\n  function nodeIdsNotFound (nodeId) {\n    return typeof nodes[nodeId] === 'undefined'\n  }\n\n  for (var edgeId in edges) {\n    var edge = edges[edgeId]\n\n    if (edge.filter(nodeIdsNotFound).length > 0)\n      orphanEdgeIds.push(edgeId)\n  }\n\n  return orphanEdgeIds\n}\n\nmodule.exports = getOrphanEdgeIds",
+    "ctx": {
+      "type": "function",
+      "name": "getOrphanEdgeIds",
+      "string": "getOrphanEdgeIds()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "returns",
+        "string": "{Number} rank",
+        "types": [
+          "Number"
+        ],
+        "typesDescription": "<code>Number</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>rank</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>The rank is the maximum cardinality of any of the edges in the hypergraph</p>",
+      "summary": "<p>The rank is the maximum cardinality of any of the edges in the hypergraph</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 226,
+    "codeStart": 232,
+    "code": "function getRank () {\n  var rank = 0\n\n  var edges = this.edges\n\n  for (var edgeId in edges) {\n    var edge = edges[edgeId]\n\n    rank = Math.max(rank, edge.length)\n  }\n\n  return rank\n}\n\nmodule.exports = getRank\n\n\nexports.Graph = require('./Graph')\n\nexports.getAdjacentNodeIds = require('./getAdjacentNodeIds')\nexports.getDegree = require('./getDegree')\nexports.getIncidentEdgeIds = require('./getIncidentEdgeIds')\nexports.getOrphanEdgeIds = require('./getOrphanEdgeIds')\nexports.getRank = require('./getRank')\n\n\nvar nextId = 0",
+    "ctx": {
+      "type": "function",
+      "name": "getRank",
+      "string": "getRank()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "returns",
+        "string": "{String} nextId",
+        "types": [
+          "String"
+        ],
+        "typesDescription": "<code>String</code>",
+        "optional": false,
+        "nullable": false,
+        "nonNullable": false,
+        "variable": false,
+        "description": "<p>nextId</p>"
+      }
+    ],
+    "description": {
+      "full": "<p>Get unique identifier.</p>",
+      "summary": "<p>Get unique identifier.</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "isConstructor": false,
+    "isClass": false,
+    "isEvent": false,
+    "ignore": false,
+    "line": 260,
+    "codeStart": 266,
+    "code": "function uniqueId () {\n  return ++nextId + ''\n}\n\nmodule.exports = uniqueId",
+    "ctx": {
+      "type": "function",
+      "name": "uniqueId",
+      "string": "uniqueId()"
+    }
+  }
+]

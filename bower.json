@@ -1,0 +1,30 @@
+{
+  "name": "iper",
+  "main": "dist/iper.js",
+  "version": "0.1.1",
+  "homepage": "http://g14n.info/iper",
+  "authors": [
+    "Gianluca Casati"
+  ],
+  "description": "Hypergraphs for breakfast",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "dataflow",
+    "visual"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "bin",
+    "build",
+    "gh-pages",
+    "index.js",
+    "node_modules",
+    "npm-debug.log",
+    "package.json",
+    "src",
+    "test"
+  ]
+}
