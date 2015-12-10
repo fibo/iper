@@ -1,8 +1,10 @@
 {
   "asi": true,
-  "laxcomma": true,
+  "expr": true,
   "globals": {
     "module": true,
     "require": true
-  }
+  },
+  "laxcomma": true,
+  "esnext": true
 }
