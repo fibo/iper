@@ -1,4 +1,3 @@
-
 var nextId = 0
 
 /**
@@ -7,9 +6,8 @@ var nextId = 0
  * @returns {String} nextId
  */
 
-function uniqueId () {
+const uniqueId = () => {
   return ++nextId + ''
 }
 
 module.exports = uniqueId
-

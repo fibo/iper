@@ -1,26 +1,24 @@
-
 /**
  * Edges incident to given node
- * 
+ *
+ * @param {Array} edges
  * @param {String} nodeId
  * @returns {Array} incidentEdgeIds
  */
 
-function getIncidentEdgeIds (nodeId) {
-  var incidentEdgeIds = []
+const getIncidentEdgeIds = (edges, nodeId) => {
+  let incidentEdgeIds = []
 
-  var edges = this.edges
-
-  function pushUniqueIncidents (edgeId, nodeId, id) {
-    var isIncident = (id === nodeId)
-      , isUnique = (incidentEdgeIds.indexOf(edgeId) < 0)
+  const pushUniqueIncidents = (edgeId, nodeId, id) => {
+    let isIncident = (id === nodeId)
+    let isUnique = (incidentEdgeIds.indexOf(edgeId) < 0)
 
     if (isIncident && isUnique)
       incidentEdgeIds.push(edgeId)
   }
 
-  for (var edgeId in edges) {
-    var edge = edges[edgeId]
+  for (let edgeId in edges) {
+    let edge = edges[edgeId]
 
     edge.forEach(pushUniqueIncidents.bind(null, edgeId, nodeId))
   }
@@ -29,4 +27,3 @@ function getIncidentEdgeIds (nodeId) {
 }
 
 module.exports = getIncidentEdgeIds
-

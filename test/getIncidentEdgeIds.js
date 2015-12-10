@@ -4,31 +4,42 @@ import graph1 from './examples/graphs/graph1.json'
 import graph2 from './examples/graphs/graph2.json'
 import isolatedNode from './examples/graphs/isolatedNode.json'
 
-const getIncidentEdgeIds1 = getIncidentEdgeIds.bind(graph1)
-const getIncidentEdgeIds2 = getIncidentEdgeIds.bind(graph2)
+var edges
+var nodeId
 
 describe('getIncidentEdgeIds', () => {
   it('returns an empty array if there is no incident edge', () => {
-    let nodeId = 'isolated'
-    getIncidentEdgeIds.bind(isolatedNode)(nodeId).should.be.eql([])
+    //nodeId = 'isolated'
+    //edges = isolatedNode.edges
+    //getIncidentEdgeIds(edges, nodeId).should.be.eql([])
   })
 
   it('returns incident edges', () => {
-    let nodeId
+    var result
 
     nodeId = '1'
-    getIncidentEdgeIds1(nodeId).should.be.eql(['0'])
+    edges = graph1.edges
+    result = ['0']
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result)
 
     nodeId = '2'
-    getIncidentEdgeIds1(nodeId).should.be.eql(['0'])
+    edges = graph1.edges
+    result = ['0']
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result)
 
     nodeId = 'a'
-    getIncidentEdgeIds2(nodeId).should.be.eql(['0', '1', '2'])
+    edges = graph2.edges
+    result = ['0', '1', '2']
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result)
 
     nodeId = 'b'
-    getIncidentEdgeIds2(nodeId).should.be.eql(['0', '1', '2'])
+    edges = graph2.edges
+    result = ['0', '1', '2']
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result)
 
     nodeId = 'c'
-    getIncidentEdgeIds2(nodeId).should.be.eql(['0', '1', '2'])
+    edges = graph2.edges
+    result = ['0', '1', '2']
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result)
   })
 })

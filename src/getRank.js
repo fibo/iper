@@ -1,18 +1,15 @@
-
 /**
   The rank is the maximum cardinality of any of the edges in the hypergraph
  *
  * @returns {Number} rank
  */
 
-function getRank () {
-  var rank = 0
+const getRank = () => {
+  let rank = 0
 
   var edges = this.edges
 
-  for (var edgeId in edges) {
-    var edge = edges[edgeId]
-
+  for (let edge of edges) {
     rank = Math.max(rank, edge.length)
   }
 
@@ -20,4 +17,3 @@ function getRank () {
 }
 
 module.exports = getRank
-

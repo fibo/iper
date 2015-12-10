@@ -1,4 +1,3 @@
-
 /**
  * Compute edges which does not refer to existing nodeIds
  *
@@ -6,25 +5,23 @@
  * @returns {Array} orphanEdgeIds
  */
 
-function getOrphanEdgeIds () {
-  var orphanEdgeIds = []
+const getOrphanEdgeIds = () => {
+  let orphanEdgeIds = []
 
   var edges = this.edges
-    , nodes = this.nodes
+  var nodes = this.nodes
 
-  function nodeIdsNotFound (nodeId) {
+  const nodeIdsNotFound = (nodeId) => {
     return typeof nodes[nodeId] === 'undefined'
   }
 
-  for (var edgeId in edges) {
-    var edge = edges[edgeId]
-
-    if (edge.filter(nodeIdsNotFound).length > 0)
+  for (let edge of edges) {
+    if (edge.filter(nodeIdsNotFound).length > 0) {
       orphanEdgeIds.push(edgeId)
+    }
   }
 
   return orphanEdgeIds
 }
 
 module.exports = getOrphanEdgeIds
-

@@ -2,32 +2,32 @@
 /**
  * Compute adjacent nodes
  *
+ * @param {Array} edges
  * @param {String} nodeId
  * @returns {Array} adjacentNodeIds
  */
 
-function getAdjacentNodeIds (nodeId) {
-  var adjacentNodeIds = []
+const getAdjacentNodeIds = (edges, nodeId) => {
+  let adjacentNodeIds = []
 
-  var edges = this.edges
-
-  function givenNodeId (id) {
+  const givenNodeId = (id) => {
     return id !== nodeId
   }
 
-  function foundNodeIds (id) {
+  const foundNodeIds = (id) => {
     return adjacentNodeIds.indexOf(id) === -1
   }
 
-  for (var edgeId in edges) {
-    var edge = edges[edgeId]
+  for (let edgeId in edges) {
+    let edge = edges[edgeId]
 
     // Nothing to do if edge does not contain nodeId.
-    if (edge.indexOf(nodeId) === -1)
+    if (edge.indexOf(nodeId) === -1) {
       continue
+    }
 
       // Take all nodeIds except given nodeId, avoid repetitions.
-      var nodeIds = edge.filter(givenNodeId)
+      let nodeIds = edge.filter(givenNodeId)
                         .filter(foundNodeIds)
 
       adjacentNodeIds = adjacentNodeIds.concat(nodeIds)
@@ -37,4 +37,3 @@ function getAdjacentNodeIds (nodeId) {
 }
 
 module.exports = getAdjacentNodeIds
-

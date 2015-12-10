@@ -12,7 +12,7 @@ import uniqueId from './uniqueId'
  * @param {Object} graph
  */
 
-export default class Graph {
+class Graph {
   constructor () {
     var arg = arguments[0] || {}
 
@@ -69,13 +69,14 @@ export default class Graph {
    */
 
    delNode (id) {
-    var edges = this.edges
-
-    var data = this.nodes[id]
+    let data = this.nodes[id]
     delete this.nodes[id]
 
-    var incidentEdgeIds = getIncidentEdgeIds.bind(this)(id)
-    incidentEdgeIds.forEach(delEdge.bind(this))
+    let incidentEdgeIds = getIncidentEdgeIds(this.edges, id)
+
+    for (let edgeId in incidentEdgeIds) {
+      this.delEdge(edgeId)
+    }
 
     return data
   }
