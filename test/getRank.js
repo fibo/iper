@@ -1,13 +1,10 @@
+import {getRank} from 'iper'
 
-var should = require('should')
+import graph1 from './examples/graphs/graph1.json'
+import graph2 from './examples/graphs/graph2.json'
 
-var getRank = require('..').getRank
-
-var graph1 = require('./examples/graphs/graph1.json')
-  , graph2 = require('./examples/graphs/graph2.json')
-
-var getRank1 = getRank.bind(graph1)
-  , getRank2 = getRank.bind(graph2)
+const getRank1 = getRank.bind(graph1)
+const getRank2 = getRank.bind(graph2)
 
 describe('getRank', () => {
   it('returns the maximum cardinality of the edges', () => {

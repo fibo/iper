@@ -1,26 +1,21 @@
+import {getIncidentEdgeIds} from 'iper'
 
-var should = require('should')
+import graph1 from './examples/graphs/graph1.json'
+import graph2 from './examples/graphs/graph2.json'
+import isolatedNode from './examples/graphs/isolatedNode.json'
 
-var getIncidentEdgeIds = require('..').getIncidentEdgeIds
-
-var graph1 = require('./examples/graphs/graph1.json')
-  , graph2 = require('./examples/graphs/graph2.json')
-  , isolatedNode = require('./examples/graphs/isolatedNode.json')
-
-var nodeId
-  , nodeId1
-  , nodeId2
-
-var getIncidentEdgeIds1 = getIncidentEdgeIds.bind(graph1)
-  , getIncidentEdgeIds2 = getIncidentEdgeIds.bind(graph2)
+const getIncidentEdgeIds1 = getIncidentEdgeIds.bind(graph1)
+const getIncidentEdgeIds2 = getIncidentEdgeIds.bind(graph2)
 
 describe('getIncidentEdgeIds', () => {
   it('returns an empty array if there is no incident edge', () => {
-    nodeId = 'isolated'
+    let nodeId = 'isolated'
     getIncidentEdgeIds.bind(isolatedNode)(nodeId).should.be.eql([])
   })
 
   it('returns incident edges', () => {
+    let nodeId
+
     nodeId = '1'
     getIncidentEdgeIds1(nodeId).should.be.eql(['0'])
 
@@ -37,4 +32,3 @@ describe('getIncidentEdgeIds', () => {
     getIncidentEdgeIds2(nodeId).should.be.eql(['0', '1', '2'])
   })
 })
-

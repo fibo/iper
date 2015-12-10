@@ -1,17 +1,12 @@
+import {Graph} from 'iper'
 
-var should = require('should')
-
-var iper = require('..')
-
-var Graph = iper.Graph
-
-var graph = new Graph()
-  , nodeIds
-  , nodeData1 = 'foo'
-  , nodeData2 = ['bar']
-  , edgeId1
-  , nodeId1
-  , nodeId2
+let graph = new Graph()
+let nodeIds
+let nodeData1 = 'foo'
+let nodeData2 = ['bar']
+let edgeId1
+let nodeId1
+let nodeId2
 
 describe('Graph', () => {
   describe('addNode()', () => {
@@ -42,12 +37,12 @@ describe('Graph', () => {
     it('removes a node', () => {
       graph.delNode(nodeId1)
 
-      var nodeNotDefined = (typeof graph.nodes[nodeId1] === 'undefined')
+      let nodeNotDefined = (typeof graph.nodes[nodeId1] === 'undefined')
       nodeNotDefined.should.be.true
    })
 
     it('removes incident edges', () => {
-      var incidentEdgeRemoved = (typeof graph.edges[edgeId1] === 'undefined')
+      let incidentEdgeRemoved = (typeof graph.edges[edgeId1] === 'undefined')
       incidentEdgeRemoved.should.be.true
     })
 
@@ -64,7 +59,8 @@ describe('Graph', () => {
       edgeId1 = graph.addEdge(nodeIds)
 
       graph.delEdge(edgeId1).should.be.eql(nodeIds)
-      var edgeNotDefined = (typeof graph.edges[edgeId1] === 'undefined')
+
+      let edgeNotDefined = (typeof graph.edges[edgeId1] === 'undefined')
       edgeNotDefined.should.be.true
     })
   })
