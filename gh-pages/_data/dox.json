@@ -39,7 +39,7 @@
     "ignore": false,
     "line": 5,
     "codeStart": 15,
-    "code": "class Graph {\n  constructor () {\n    var arg = arguments[0] || {}\n\n    this.edges = arg.edges || {}\n    this.nodes = arg.nodes || {}\n  }",
+    "code": "export default class Graph {\n  constructor () {\n    var arg = arguments[0] || {}\n\n    this.edges = arg.edges || {}\n    this.nodes = arg.nodes || {}\n  }",
     "ctx": {
       "type": "class",
       "constructor": "Graph",

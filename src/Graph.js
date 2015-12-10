@@ -12,7 +12,7 @@ import uniqueId from './uniqueId'
  * @param {Object} graph
  */
 
-class Graph {
+export default class Graph {
   constructor () {
     var arg = arguments[0] || {}
 

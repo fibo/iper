@@ -1,6 +1,9 @@
 {
   "name": "iper",
   "version": "0.1.1",
+  "engines": {
+    "node": ">=4.2.2"
+  },
   "description": "Hypergraphs for breakfast",
   "author": {
     "name": "fibo",
@@ -23,7 +26,7 @@
     "gh-pages:push": "git subtree --prefix gh-pages push origin gh-pages",
     "gh-pages:pull": "git subtree --prefix gh-pages pull origin gh-pages",
     "jekyll": "npm run homepage; npm run gh-pages:_data; cd gh-pages; jekyll build; cd ..",
-    "istanbul": "istanbul cover _mocha",
+    "istanbul": "istanbul cover _mocha -- --compilers js:babel-register --require should ",
     "package.json": "cp package.json gh-pages/_data",
     "jshint": "jshint -c .jshintrc src/*.js",
     "tex": "npm run tex:display; npm run tex:inline",
@@ -50,6 +53,7 @@
     "babelify": "^7.2.0",
     "browserify": "^12.0.1",
     "dox": "^0.8.0",
+    "istanbul": "^0.4.1",
     "katex": "^0.5.1"
   },
   "dependencies": {
