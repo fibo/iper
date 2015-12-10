@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "_build": "npm test && npm run browserify",
+    "_build": "npm test && npm run browserify && npm run tex && npm run jekyll; git status",
     "_pull": "git pull origin master && npm run gh-pages:pull",
     "_push": "git push origin master && npm run gh-pages:push",
     "babel": "babel src --out-dir build",
@@ -26,6 +26,9 @@
     "istanbul": "istanbul cover _mocha",
     "package.json": "cp package.json gh-pages/_data",
     "jshint": "jshint -c .jshintrc src/*.js",
+    "tex": "npm run tex:display; npm run tex:inline",
+    "tex:display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
+    "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
     "test": "mocha --bail --compilers js:babel-register --require should --reporter min --recursive"
   },
   "repository": {
@@ -46,7 +49,8 @@
     "babel-register": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^12.0.1",
-    "dox": "^0.8.0"
+    "dox": "^0.8.0",
+    "katex": "^0.5.1"
   },
   "dependencies": {
     "mocha": "^2.3.4",
