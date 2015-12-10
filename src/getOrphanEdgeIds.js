@@ -1,21 +1,22 @@
 /**
  * Compute edges which does not refer to existing nodeIds
  *
+ * @param {Array} edges
+ * @param {Array} nodes
  * @param {Object} graph
  * @returns {Array} orphanEdgeIds
  */
 
-const getOrphanEdgeIds = () => {
-  let orphanEdgeIds = []
-
-  var edges = this.edges
-  var nodes = this.nodes
+const getOrphanEdgeIds = (edges, nodes) => {
+  var orphanEdgeIds = []
 
   const nodeIdsNotFound = (nodeId) => {
     return typeof nodes[nodeId] === 'undefined'
   }
 
-  for (let edge of edges) {
+  for (var edgeId in edges) {
+    var edge = edges[edgeId]
+
     if (edge.filter(nodeIdsNotFound).length > 0) {
       orphanEdgeIds.push(edgeId)
     }

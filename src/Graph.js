@@ -1,6 +1,6 @@
-import getIncidentEdgeIds from './getIncidentEdgeIds'
-import getOrphanEdgeIds from './getOrphanEdgeIds'
-import uniqueId from './uniqueId'
+var getIncidentEdgeIds = require('./getIncidentEdgeIds')
+var getOrphanEdgeIds = require('./getOrphanEdgeIds')
+var uniqueId = require('./uniqueId')
 
 /**
  * Hypergraph

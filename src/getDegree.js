@@ -9,7 +9,7 @@
  */
 
 const getDegree = (edges, nodeId) => {
-  let degree = 0
+  var degree = 0
 
   const countIncidents = (id) => {
     if (id === nodeId) {
@@ -17,8 +17,8 @@ const getDegree = (edges, nodeId) => {
     }
   }
 
-  for (let edgeId in edges) {
-    let edge = edges[edgeId]
+  for (var edgeId in edges) {
+    var edge = edges[edgeId]
 
     edge.forEach(countIncidents)
   }

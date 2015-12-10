@@ -6,12 +6,15 @@ import orphanEdges2 from './examples/graphs/orphanEdges2.json'
 
 describe('getOrphanEdgeIds', () => {
   it('returns orphan edges', () => {
-    getOrphanEdgeIds.bind(orphanEdges1)().should.be.eql(['0'])
+    getOrphanEdgeIds(orphanEdges1.edges, orphanEdges1.nodes).should.be.eql(['0'])
 
-    getOrphanEdgeIds.bind(orphanEdges2)().should.be.eql(['3', '6'])
+    getOrphanEdgeIds(orphanEdges2.edges, orphanEdges2.nodes).should.be.eql(['3', '6'])
   })
 
   it('returns an empty array if there is no orphan edge', () => {
-    getOrphanEdgeIds.bind(graph1)().should.be.eql([])
+    var edges = graph1.edges
+    var nodes = graph1.nodes
+
+    getOrphanEdgeIds(edges, nodes).should.be.eql([])
   })
 })

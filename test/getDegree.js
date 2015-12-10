@@ -7,8 +7,8 @@ import loop1 from './examples/graphs/loop1.json'
 describe('getDegree', () => {
   it('returns number of incident edges', () => {
     let edges = graph1.edges
-    getDegree('1').should.be.eql(1)
-    getDegree('2').should.be.eql(1)
+    getDegree(edges, '1').should.be.eql(1)
+    getDegree(edges, '2').should.be.eql(1)
   })
 
   it('is 0 for isolated nodes', () => {
