@@ -568,48 +568,12 @@
     "ignore": false,
     "line": 211,
     "codeStart": 218,
-    "code": "const getRank = (edges) => {\n  var rank = 0\n\n  for (var edgeId in edges) {\n    var edge = edges[edgeId]\n    rank = Math.max(rank, edge.length)\n  }\n\n  return rank\n}\n\nmodule.exports = getRank\nrequire('strict-mode')(() => {\n  exports.Graph = require('./Graph')\n\n  exports.getAdjacentNodeIds = require('./getAdjacentNodeIds')\n  exports.getDegree = require('./getDegree')\n  exports.getIncidentEdgeIds = require('./getIncidentEdgeIds')\n  exports.getOrphanEdgeIds = require('./getOrphanEdgeIds')\n  exports.getRank = require('./getRank')\n})\nvar nextId = 0",
+    "code": "const getRank = (edges) => {\n  var rank = 0\n\n  for (var edgeId in edges) {\n    var edge = edges[edgeId]\n    rank = Math.max(rank, edge.length)\n  }\n\n  return rank\n}\n\nmodule.exports = getRank\nrequire('strict-mode')(() => {\n  exports.Graph = require('./Graph')\n\n  exports.getAdjacentNodeIds = require('./getAdjacentNodeIds')\n  exports.getDegree = require('./getDegree')\n  exports.getIncidentEdgeIds = require('./getIncidentEdgeIds')\n  exports.getOrphanEdgeIds = require('./getOrphanEdgeIds')\n  exports.getRank = require('./getRank')\n})",
     "ctx": {
       "type": "declaration",
       "name": "getRank",
       "value": "(edges) => {",
       "string": "getRank"
-    }
-  },
-  {
-    "tags": [
-      {
-        "type": "returns",
-        "string": "{String} nextId",
-        "types": [
-          "String"
-        ],
-        "typesDescription": "<code>String</code>",
-        "optional": false,
-        "nullable": false,
-        "nonNullable": false,
-        "variable": false,
-        "description": "<p>nextId</p>"
-      }
-    ],
-    "description": {
-      "full": "<p>Get unique identifier.</p>",
-      "summary": "<p>Get unique identifier.</p>",
-      "body": ""
-    },
-    "isPrivate": false,
-    "isConstructor": false,
-    "isClass": false,
-    "isEvent": false,
-    "ignore": false,
-    "line": 241,
-    "codeStart": 247,
-    "code": "const uniqueId = () => {\n  return ++nextId + ''\n}\n\nmodule.exports = uniqueId",
-    "ctx": {
-      "type": "declaration",
-      "name": "uniqueId",
-      "value": "() => {",
-      "string": "uniqueId"
     }
   }
 ]

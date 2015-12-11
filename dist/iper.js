@@ -1,10 +1,71 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/**
+ * lodash 3.0.0 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.7.0 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+var baseToString = require('lodash._basetostring');
+
+/** Used to generate unique IDs. */
+var idCounter = 0;
+
+/**
+ * Generates a unique ID. If `prefix` is provided the ID is appended to it.
+ *
+ * @static
+ * @memberOf _
+ * @category Utility
+ * @param {string} [prefix] The value to prefix the ID with.
+ * @returns {string} Returns the unique ID.
+ * @example
+ *
+ * _.uniqueId('contact_');
+ * // => 'contact_104'
+ *
+ * _.uniqueId();
+ * // => '105'
+ */
+function uniqueId(prefix) {
+  var id = ++idCounter;
+  return baseToString(prefix) + id;
+}
+
+module.exports = uniqueId;
+
+},{"lodash._basetostring":2}],2:[function(require,module,exports){
+/**
+ * lodash 3.0.1 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+
+/**
+ * Converts `value` to a string if it's not one. An empty string is returned
+ * for `null` or `undefined` values.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ */
+function baseToString(value) {
+  return value == null ? '' : (value + '');
+}
+
+module.exports = baseToString;
+
+},{}],3:[function(require,module,exports){
 
 // IN browserify context, fall back to a no op
 module.exports = function (cb) { cb() }
 
 
-},{}],2:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -13,7 +74,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var getIncidentEdgeIds = require('./getIncidentEdgeIds');
 var getOrphanEdgeIds = require('./getOrphanEdgeIds');
-var uniqueId = require('./uniqueId');
+var uniqueId = require('lodash.uniqueid');
 
 /**
  * Hypergraph
@@ -110,7 +171,7 @@ var Graph = (function () {
 
 module.exports = Graph;
 
-},{"./getIncidentEdgeIds":5,"./getOrphanEdgeIds":6,"./uniqueId":9}],3:[function(require,module,exports){
+},{"./getIncidentEdgeIds":7,"./getOrphanEdgeIds":8,"lodash.uniqueid":1}],5:[function(require,module,exports){
 "use strict";
 
 /**
@@ -151,7 +212,7 @@ var getAdjacentNodeIds = function getAdjacentNodeIds(edges, nodeId) {
 
 module.exports = getAdjacentNodeIds;
 
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 /**
@@ -184,7 +245,7 @@ var getDegree = function getDegree(edges, nodeId) {
 
 module.exports = getDegree;
 
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 /**
@@ -216,7 +277,7 @@ var getIncidentEdgeIds = function getIncidentEdgeIds(edges, nodeId) {
 
 module.exports = getIncidentEdgeIds;
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 /**
@@ -248,7 +309,7 @@ var getOrphanEdgeIds = function getOrphanEdgeIds(edges, nodes) {
 
 module.exports = getOrphanEdgeIds;
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 /**
@@ -271,7 +332,7 @@ var getRank = function getRank(edges) {
 
 module.exports = getRank;
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 require('strict-mode')(function () {
@@ -284,26 +345,9 @@ require('strict-mode')(function () {
   exports.getRank = require('./getRank');
 });
 
-},{"./Graph":2,"./getAdjacentNodeIds":3,"./getDegree":4,"./getIncidentEdgeIds":5,"./getOrphanEdgeIds":6,"./getRank":7,"strict-mode":1}],9:[function(require,module,exports){
-'use strict';
-
-var nextId = 0;
-
-/**
- * Get unique identifier.
- *
- * @returns {String} nextId
- */
-
-var uniqueId = function uniqueId() {
-  return ++nextId + '';
-};
-
-module.exports = uniqueId;
-
-},{}],"iper":[function(require,module,exports){
+},{"./Graph":4,"./getAdjacentNodeIds":5,"./getDegree":6,"./getIncidentEdgeIds":7,"./getOrphanEdgeIds":8,"./getRank":9,"strict-mode":3}],"iper":[function(require,module,exports){
 'use strict';
 
 module.exports = require('./src');
 
-},{"./src":8}]},{},[]);
+},{"./src":10}]},{},[]);

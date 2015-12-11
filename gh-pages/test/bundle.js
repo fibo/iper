@@ -3,19 +3,80 @@
 
 module.exports = require('./src');
 
-},{"./src":10}],2:[function(require,module,exports){
+},{"./src":12}],2:[function(require,module,exports){
 
 // Cheating npm require.
 module.exports = require('../..')
 
 
 },{"../..":1}],3:[function(require,module,exports){
+/**
+ * lodash 3.0.0 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.7.0 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+var baseToString = require('lodash._basetostring');
+
+/** Used to generate unique IDs. */
+var idCounter = 0;
+
+/**
+ * Generates a unique ID. If `prefix` is provided the ID is appended to it.
+ *
+ * @static
+ * @memberOf _
+ * @category Utility
+ * @param {string} [prefix] The value to prefix the ID with.
+ * @returns {string} Returns the unique ID.
+ * @example
+ *
+ * _.uniqueId('contact_');
+ * // => 'contact_104'
+ *
+ * _.uniqueId();
+ * // => '105'
+ */
+function uniqueId(prefix) {
+  var id = ++idCounter;
+  return baseToString(prefix) + id;
+}
+
+module.exports = uniqueId;
+
+},{"lodash._basetostring":4}],4:[function(require,module,exports){
+/**
+ * lodash 3.0.1 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modern modularize exports="npm" -o ./`
+ * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * Available under MIT license <https://lodash.com/license>
+ */
+
+/**
+ * Converts `value` to a string if it's not one. An empty string is returned
+ * for `null` or `undefined` values.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ */
+function baseToString(value) {
+  return value == null ? '' : (value + '');
+}
+
+module.exports = baseToString;
+
+},{}],5:[function(require,module,exports){
 
 // IN browserify context, fall back to a no op
 module.exports = function (cb) { cb() }
 
 
-},{}],4:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -24,7 +85,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var getIncidentEdgeIds = require('./getIncidentEdgeIds');
 var getOrphanEdgeIds = require('./getOrphanEdgeIds');
-var uniqueId = require('./uniqueId');
+var uniqueId = require('lodash.uniqueid');
 
 /**
  * Hypergraph
@@ -121,7 +182,7 @@ var Graph = (function () {
 
 module.exports = Graph;
 
-},{"./getIncidentEdgeIds":7,"./getOrphanEdgeIds":8,"./uniqueId":11}],5:[function(require,module,exports){
+},{"./getIncidentEdgeIds":9,"./getOrphanEdgeIds":10,"lodash.uniqueid":3}],7:[function(require,module,exports){
 "use strict";
 
 /**
@@ -162,7 +223,7 @@ var getAdjacentNodeIds = function getAdjacentNodeIds(edges, nodeId) {
 
 module.exports = getAdjacentNodeIds;
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 /**
@@ -195,7 +256,7 @@ var getDegree = function getDegree(edges, nodeId) {
 
 module.exports = getDegree;
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 /**
@@ -227,7 +288,7 @@ var getIncidentEdgeIds = function getIncidentEdgeIds(edges, nodeId) {
 
 module.exports = getIncidentEdgeIds;
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 /**
@@ -259,7 +320,7 @@ var getOrphanEdgeIds = function getOrphanEdgeIds(edges, nodes) {
 
 module.exports = getOrphanEdgeIds;
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 /**
@@ -282,7 +343,7 @@ var getRank = function getRank(edges) {
 
 module.exports = getRank;
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 require('strict-mode')(function () {
@@ -295,24 +356,7 @@ require('strict-mode')(function () {
   exports.getRank = require('./getRank');
 });
 
-},{"./Graph":4,"./getAdjacentNodeIds":5,"./getDegree":6,"./getIncidentEdgeIds":7,"./getOrphanEdgeIds":8,"./getRank":9,"strict-mode":3}],11:[function(require,module,exports){
-'use strict';
-
-var nextId = 0;
-
-/**
- * Get unique identifier.
- *
- * @returns {String} nextId
- */
-
-var uniqueId = function uniqueId() {
-  return ++nextId + '';
-};
-
-module.exports = uniqueId;
-
-},{}],12:[function(require,module,exports){
+},{"./Graph":6,"./getAdjacentNodeIds":7,"./getDegree":8,"./getIncidentEdgeIds":9,"./getOrphanEdgeIds":10,"./getRank":11,"strict-mode":5}],13:[function(require,module,exports){
 'use strict';
 
 describe('Graph', function () {
@@ -384,7 +428,7 @@ describe('Graph', function () {
   });
 });
 
-},{"iper":2}],13:[function(require,module,exports){
+},{"iper":2}],14:[function(require,module,exports){
 module.exports={
   "nodes": {
     "1": "foo",
@@ -395,7 +439,7 @@ module.exports={
   }
 }
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 module.exports={
   "edges": {
     "0": ["a", "b", "c"],
@@ -409,7 +453,7 @@ module.exports={
   }
 }
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports={
   "nodes": {
     "isolated": "node",
@@ -421,7 +465,7 @@ module.exports={
   }
 }
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports={
   "nodes": {
     "0": "foo"
@@ -431,7 +475,7 @@ module.exports={
   }
 }
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports={
   "nodes": {
     "1": "foo",
@@ -442,7 +486,7 @@ module.exports={
   } 
 }
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 module.exports={
   "nodes": {
     "1": "foo",
@@ -455,7 +499,7 @@ module.exports={
   } 
 }
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 describe('getAdjacentNodeIds', function () {
@@ -492,7 +536,7 @@ describe('getAdjacentNodeIds', function () {
   });
 });
 
-},{"./examples/graphs/graph1.json":13,"./examples/graphs/graph2.json":14,"iper":2}],20:[function(require,module,exports){
+},{"./examples/graphs/graph1.json":14,"./examples/graphs/graph2.json":15,"iper":2}],21:[function(require,module,exports){
 'use strict';
 
 describe('getDegree', function () {
@@ -519,7 +563,7 @@ describe('getDegree', function () {
   });
 });
 
-},{"./examples/graphs/graph1.json":13,"./examples/graphs/isolatedNode.json":15,"./examples/graphs/loop1.json":16,"iper":2}],21:[function(require,module,exports){
+},{"./examples/graphs/graph1.json":14,"./examples/graphs/isolatedNode.json":16,"./examples/graphs/loop1.json":17,"iper":2}],22:[function(require,module,exports){
 'use strict';
 
 describe('getIncidentEdgeIds', function () {
@@ -568,7 +612,7 @@ describe('getIncidentEdgeIds', function () {
   });
 });
 
-},{"./examples/graphs/graph1.json":13,"./examples/graphs/graph2.json":14,"./examples/graphs/isolatedNode.json":15,"iper":2}],22:[function(require,module,exports){
+},{"./examples/graphs/graph1.json":14,"./examples/graphs/graph2.json":15,"./examples/graphs/isolatedNode.json":16,"iper":2}],23:[function(require,module,exports){
 'use strict';
 
 describe('getOrphanEdgeIds', function () {
@@ -592,7 +636,7 @@ describe('getOrphanEdgeIds', function () {
   });
 });
 
-},{"./examples/graphs/graph1.json":13,"./examples/graphs/orphanEdges1.json":17,"./examples/graphs/orphanEdges2.json":18,"iper":2}],23:[function(require,module,exports){
+},{"./examples/graphs/graph1.json":14,"./examples/graphs/orphanEdges1.json":18,"./examples/graphs/orphanEdges2.json":19,"iper":2}],24:[function(require,module,exports){
 'use strict';
 
 describe('getRank', function () {
@@ -607,4 +651,4 @@ describe('getRank', function () {
   });
 });
 
-},{"./examples/graphs/graph1.json":13,"./examples/graphs/graph2.json":14,"iper":2}]},{},[12,19,20,21,22,23]);
+},{"./examples/graphs/graph1.json":14,"./examples/graphs/graph2.json":15,"iper":2}]},{},[13,20,21,22,23,24]);
