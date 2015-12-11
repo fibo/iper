@@ -19,6 +19,7 @@
     "browserify:test": "browserify test/*.js -t babelify -o gh-pages/test/bundle.js",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
     "coverage": "npm run istanbul && npm run coveralls",
+    "decrypt:.coveralls.yml": "keybase decrypt -o .coveralls.yml .coveralls.yml.asc",
     "dox": "cat src/*.js | dox > gh-pages/_data/dox.json",
     "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > gh-pages/index.md; cat README.md >> gh-pages/index.md",
     "gh-pages:_data": "npm run package.json; npm run dox",
