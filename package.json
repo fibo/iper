@@ -57,6 +57,7 @@
     "katex": "^0.5.1"
   },
   "dependencies": {
+    "lodash.uniqueid": "^3.0.0",
     "strict-mode": "^0.4.1"
   },
   "homepage": "http://www.g14n.info/iper"

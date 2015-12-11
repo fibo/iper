@@ -1,6 +1,6 @@
 var getIncidentEdgeIds = require('./getIncidentEdgeIds')
 var getOrphanEdgeIds = require('./getOrphanEdgeIds')
-var uniqueId = require('./uniqueId')
+var uniqueId = require('lodash.uniqueid')
 
 /**
  * Hypergraph
