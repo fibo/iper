@@ -1,4 +1,4 @@
-require('strict-mode')(function () {
+require('strict-mode')(() => {
   exports.Graph = require('./Graph')
 
   exports.getAdjacentNodeIds = require('./getAdjacentNodeIds')

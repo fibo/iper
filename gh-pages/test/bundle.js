@@ -1,9 +1,30 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var getIncidentEdgeIds = require('./getIncidentEdgeIds'),
-    getOrphanEdgeIds = require('./getOrphanEdgeIds'),
-    uniqueId = require('./uniqueId');
+module.exports = require('./src');
+
+},{"./src":10}],2:[function(require,module,exports){
+
+// Cheating npm require.
+module.exports = require('../..')
+
+
+},{"../..":1}],3:[function(require,module,exports){
+
+// IN browserify context, fall back to a no op
+module.exports = function (cb) { cb() }
+
+
+},{}],4:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var getIncidentEdgeIds = require('./getIncidentEdgeIds');
+var getOrphanEdgeIds = require('./getOrphanEdgeIds');
+var uniqueId = require('./uniqueId');
 
 /**
  * Hypergraph
@@ -11,115 +32,124 @@ var getIncidentEdgeIds = require('./getIncidentEdgeIds'),
  *
  * http://en.wikipedia.org/wiki/Hypergraph
  *
+ * @class
  * @param {Object} graph
  */
 
-function Graph() {
-  var arg = arguments[0] || {};
+var Graph = (function () {
+  function Graph() {
+    _classCallCheck(this, Graph);
 
-  this.edges = arg.edges || {};
-  this.nodes = arg.nodes || {};
-}
+    var arg = arguments[0] || {};
 
-/**
- *
- * @param {Array} nodeIds
- * @returns {String} id
- */
+    this.edges = arg.edges || {};
+    this.nodes = arg.nodes || {};
+  }
 
-function addEdge(nodeIds) {
-  var id = uniqueId();
+  /**
+   *
+   * @param {Array} nodeIds
+   * @returns {String} id
+   */
 
-  this.edges[id] = nodeIds;
+  _createClass(Graph, [{
+    key: 'addEdge',
+    value: function addEdge(nodeIds) {
+      var id = uniqueId();
 
-  return id;
-}
+      this.edges[id] = nodeIds;
 
-Graph.prototype.addEdge = addEdge;
+      return id;
+    }
 
-/**
- *
- * @param {Any} data
- * @returns {String} id
- */
+    /**
+     *
+     * @param {Any} data
+     * @returns {String} id
+     */
 
-function addNode(data) {
-  var id = uniqueId();
+  }, {
+    key: 'addNode',
+    value: function addNode(data) {
+      var id = uniqueId();
 
-  this.nodes[id] = data;
+      this.nodes[id] = data;
 
-  return id;
-}
+      return id;
+    }
 
-Graph.prototype.addNode = addNode;
+    /**
+     *
+     * @param {String} id
+     * @returns
+     */
 
-/**
- *
- * @param {String} id
- * @returns
- */
+  }, {
+    key: 'delEdge',
+    value: function delEdge(id) {
+      var nodeIds = this.edges[id];
 
-function delEdge(id) {
-  var nodeIds = this.edges[id];
+      delete this.edges[id];
 
-  delete this.edges[id];
+      return nodeIds;
+    }
 
-  return nodeIds;
-}
+    /**
+     *
+     * @param {String} id
+     * @returns {Any} data
+     */
 
-Graph.prototype.delEdge = delEdge;
+  }, {
+    key: 'delNode',
+    value: function delNode(id) {
+      var data = this.nodes[id];
+      delete this.nodes[id];
 
-/**
- *
- * @param {String} id
- * @returns {Any} data
- */
+      var incidentEdgeIds = getIncidentEdgeIds(this.edges, id);
 
-function delNode(id) {
-  var edges = this.edges;
+      for (var edgeId in incidentEdgeIds) {
+        this.delEdge(edgeId);
+      }
 
-  var data = this.nodes[id];
-  delete this.nodes[id];
+      return data;
+    }
+  }]);
 
-  var incidentEdgeIds = getIncidentEdgeIds.bind(this)(id);
-  incidentEdgeIds.forEach(delEdge.bind(this));
-
-  return data;
-}
-
-Graph.prototype.delNode = delNode;
+  return Graph;
+})();
 
 module.exports = Graph;
 
-},{"./getIncidentEdgeIds":4,"./getOrphanEdgeIds":5,"./uniqueId":8}],2:[function(require,module,exports){
-"use strict"
+},{"./getIncidentEdgeIds":7,"./getOrphanEdgeIds":8,"./uniqueId":11}],5:[function(require,module,exports){
+"use strict";
 
 /**
  * Compute adjacent nodes
  *
+ * @param {Array} edges
  * @param {String} nodeId
  * @returns {Array} adjacentNodeIds
  */
 
-;
-function getAdjacentNodeIds(nodeId) {
+var getAdjacentNodeIds = function getAdjacentNodeIds(edges, nodeId) {
   var adjacentNodeIds = [];
 
-  var edges = this.edges;
-
-  function givenNodeId(id) {
+  var givenNodeId = function givenNodeId(id) {
     return id !== nodeId;
-  }
+  };
 
-  function foundNodeIds(id) {
+  var foundNodeIds = function foundNodeIds(id) {
     return adjacentNodeIds.indexOf(id) === -1;
-  }
+  };
 
   for (var edgeId in edges) {
     var edge = edges[edgeId];
 
     // Nothing to do if edge does not contain nodeId.
-    if (edge.indexOf(nodeId) === -1) continue;
+    if (edge.indexOf(nodeId) === -1) {
+      continue;
+    }
 
     // Take all nodeIds except given nodeId, avoid repetitions.
     var nodeIds = edge.filter(givenNodeId).filter(foundNodeIds);
@@ -128,31 +158,31 @@ function getAdjacentNodeIds(nodeId) {
   }
 
   return adjacentNodeIds;
-}
+};
 
 module.exports = getAdjacentNodeIds;
 
-},{}],3:[function(require,module,exports){
-"use strict"
+},{}],6:[function(require,module,exports){
+"use strict";
 
 /**
  * The degree of a vertex is the number of incident edges, with loops counted twice.
- * 
+ *
  * http://en.wikipedia.org/wiki/Degree_(graph_theory)
- * 
+ *
+ * @param {Array} edges
  * @param {String} nodeId
  * @returns {Number} degree
  */
 
-;
-function getDegree(nodeId) {
+var getDegree = function getDegree(edges, nodeId) {
   var degree = 0;
 
-  var edges = this.edges;
-
-  function countIncidents(id) {
-    if (id === nodeId) degree++;
-  }
+  var countIncidents = function countIncidents(id) {
+    if (id === nodeId) {
+      degree++;
+    }
+  };
 
   for (var edgeId in edges) {
     var edge = edges[edgeId];
@@ -161,32 +191,30 @@ function getDegree(nodeId) {
   }
 
   return degree;
-}
+};
 
 module.exports = getDegree;
 
-},{}],4:[function(require,module,exports){
-"use strict"
+},{}],7:[function(require,module,exports){
+"use strict";
 
 /**
  * Edges incident to given node
- * 
+ *
+ * @param {Array} edges
  * @param {String} nodeId
  * @returns {Array} incidentEdgeIds
  */
 
-;
-function getIncidentEdgeIds(nodeId) {
+var getIncidentEdgeIds = function getIncidentEdgeIds(edges, nodeId) {
   var incidentEdgeIds = [];
 
-  var edges = this.edges;
-
-  function pushUniqueIncidents(edgeId, nodeId, id) {
-    var isIncident = id === nodeId,
-        isUnique = incidentEdgeIds.indexOf(edgeId) < 0;
+  var pushUniqueIncidents = function pushUniqueIncidents(edgeId, nodeId, id) {
+    var isIncident = id === nodeId;
+    var isUnique = incidentEdgeIds.indexOf(edgeId) < 0;
 
     if (isIncident && isUnique) incidentEdgeIds.push(edgeId);
-  }
+  };
 
   for (var edgeId in edges) {
     var edge = edges[edgeId];
@@ -195,80 +223,79 @@ function getIncidentEdgeIds(nodeId) {
   }
 
   return incidentEdgeIds;
-}
+};
 
 module.exports = getIncidentEdgeIds;
 
-},{}],5:[function(require,module,exports){
-'use strict'
+},{}],8:[function(require,module,exports){
+'use strict';
 
 /**
  * Compute edges which does not refer to existing nodeIds
  *
+ * @param {Array} edges
+ * @param {Array} nodes
  * @param {Object} graph
  * @returns {Array} orphanEdgeIds
  */
 
-;
-function getOrphanEdgeIds() {
+var getOrphanEdgeIds = function getOrphanEdgeIds(edges, nodes) {
   var orphanEdgeIds = [];
 
-  var edges = this.edges,
-      nodes = this.nodes;
-
-  function nodeIdsNotFound(nodeId) {
+  var nodeIdsNotFound = function nodeIdsNotFound(nodeId) {
     return typeof nodes[nodeId] === 'undefined';
-  }
+  };
 
   for (var edgeId in edges) {
     var edge = edges[edgeId];
 
-    if (edge.filter(nodeIdsNotFound).length > 0) orphanEdgeIds.push(edgeId);
+    if (edge.filter(nodeIdsNotFound).length > 0) {
+      orphanEdgeIds.push(edgeId);
+    }
   }
 
   return orphanEdgeIds;
-}
+};
 
 module.exports = getOrphanEdgeIds;
 
-},{}],6:[function(require,module,exports){
-"use strict"
+},{}],9:[function(require,module,exports){
+"use strict";
 
 /**
   The rank is the maximum cardinality of any of the edges in the hypergraph
  *
+ * @params {Array} edges
  * @returns {Number} rank
  */
 
-;
-function getRank() {
+var getRank = function getRank(edges) {
   var rank = 0;
-
-  var edges = this.edges;
 
   for (var edgeId in edges) {
     var edge = edges[edgeId];
-
     rank = Math.max(rank, edge.length);
   }
 
   return rank;
-}
+};
 
 module.exports = getRank;
 
-},{}],7:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
-exports.Graph = require('./Graph');
+require('strict-mode')(function () {
+  exports.Graph = require('./Graph');
 
-exports.getAdjacentNodeIds = require('./getAdjacentNodeIds');
-exports.getDegree = require('./getDegree');
-exports.getIncidentEdgeIds = require('./getIncidentEdgeIds');
-exports.getOrphanEdgeIds = require('./getOrphanEdgeIds');
-exports.getRank = require('./getRank');
+  exports.getAdjacentNodeIds = require('./getAdjacentNodeIds');
+  exports.getDegree = require('./getDegree');
+  exports.getIncidentEdgeIds = require('./getIncidentEdgeIds');
+  exports.getOrphanEdgeIds = require('./getOrphanEdgeIds');
+  exports.getRank = require('./getRank');
+});
 
-},{"./Graph":1,"./getAdjacentNodeIds":2,"./getDegree":3,"./getIncidentEdgeIds":4,"./getOrphanEdgeIds":5,"./getRank":6}],8:[function(require,module,exports){
+},{"./Graph":4,"./getAdjacentNodeIds":5,"./getDegree":6,"./getIncidentEdgeIds":7,"./getOrphanEdgeIds":8,"./getRank":9,"strict-mode":3}],11:[function(require,module,exports){
 'use strict';
 
 var nextId = 0;
@@ -279,37 +306,27 @@ var nextId = 0;
  * @returns {String} nextId
  */
 
-function uniqueId() {
+var uniqueId = function uniqueId() {
   return ++nextId + '';
-}
+};
 
 module.exports = uniqueId;
 
-},{}],9:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
-
-module.exports = require('./build');
-
-},{"./build":7}],10:[function(require,module,exports){
-
-// Cheating npm require.
-module.exports = require('../..')
-
-
-},{"../..":9}],11:[function(require,module,exports){
-'use strict';
-
-var _iper = require('iper');
-
-var graph = new _iper.Graph();
-var nodeIds = undefined;
-var nodeData1 = 'foo';
-var nodeData2 = ['bar'];
-var edgeId1 = undefined;
-var nodeId1 = undefined;
-var nodeId2 = undefined;
 
 describe('Graph', function () {
+  var Graph = require('iper').Graph;
+
+  var nodeData1 = 'foo';
+  var nodeData2 = ['bar'];
+
+  var graph = new Graph();
+  var nodeIds;
+  var nodeId1;
+  var nodeId2;
+  var edgeId1;
+
   describe('addNode()', function () {
     it('creates a node', function () {
       nodeId1 = graph.addNode(nodeData1);
@@ -367,7 +384,7 @@ describe('Graph', function () {
   });
 });
 
-},{"iper":10}],12:[function(require,module,exports){
+},{"iper":2}],13:[function(require,module,exports){
 module.exports={
   "nodes": {
     "1": "foo",
@@ -375,10 +392,10 @@ module.exports={
   },
   "edges": {
     "0": ["1", "2"]
-  } 
+  }
 }
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 module.exports={
   "edges": {
     "0": ["a", "b", "c"],
@@ -392,7 +409,7 @@ module.exports={
   }
 }
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 module.exports={
   "nodes": {
     "isolated": "node",
@@ -404,7 +421,7 @@ module.exports={
   }
 }
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports={
   "nodes": {
     "0": "foo"
@@ -414,7 +431,7 @@ module.exports={
   }
 }
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports={
   "nodes": {
     "1": "foo",
@@ -425,7 +442,7 @@ module.exports={
   } 
 }
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports={
   "nodes": {
     "1": "foo",
@@ -438,189 +455,156 @@ module.exports={
   } 
 }
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
-var _iper = require('iper');
-
-var _graph = require('./examples/graphs/graph1.json');
-
-var _graph2 = _interopRequireDefault(_graph);
-
-var _graph3 = require('./examples/graphs/graph2.json');
-
-var _graph4 = _interopRequireDefault(_graph3);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var getAdjacentNodeIds1 = _iper.getAdjacentNodeIds.bind(_graph2.default);
-var getAdjacentNodeIds2 = _iper.getAdjacentNodeIds.bind(_graph4.default);
-
 describe('getAdjacentNodeIds', function () {
+  var getAdjacentNodeIds = require('iper').getAdjacentNodeIds;
+
+  var graph1 = require('./examples/graphs/graph1.json');
+  var graph2 = require('./examples/graphs/graph2.json');
+
   it('is mutual', function () {
+    var edges = graph1.edges;
     var nodeId1 = '1';
     var nodeId2 = '2';
 
-    getAdjacentNodeIds1(nodeId1).should.be.eql([nodeId2]);
-    getAdjacentNodeIds1(nodeId2).should.be.eql([nodeId1]);
+    getAdjacentNodeIds(edges, nodeId1).should.be.eql([nodeId2]);
+    getAdjacentNodeIds(edges, nodeId2).should.be.eql([nodeId1]);
   });
 
   it('returns an empty array if there is no adjacent node', function () {
+    var edges = graph1.edges;
     var nodeId = 'not found';
-    getAdjacentNodeIds1(nodeId).should.be.eql([]);
+
+    getAdjacentNodeIds(edges, nodeId).should.be.eql([]);
   });
 
   it('returns adjacent nodes', function () {
-    var nodeId = undefined;
+    var edges = graph2.edges;
+    var nodeId;
 
     nodeId = 'a';
-    getAdjacentNodeIds2(nodeId).should.be.eql(['b', 'c']);
+    getAdjacentNodeIds(edges, nodeId).should.be.eql(['b', 'c']);
 
     nodeId = 'b';
-    getAdjacentNodeIds2(nodeId).should.be.eql(['a', 'c']);
+    getAdjacentNodeIds(edges, nodeId).should.be.eql(['a', 'c']);
   });
 });
 
-},{"./examples/graphs/graph1.json":12,"./examples/graphs/graph2.json":13,"iper":10}],19:[function(require,module,exports){
+},{"./examples/graphs/graph1.json":13,"./examples/graphs/graph2.json":14,"iper":2}],20:[function(require,module,exports){
 'use strict';
 
-var _iper = require('iper');
-
-var _graph = require('./examples/graphs/graph1.json');
-
-var _graph2 = _interopRequireDefault(_graph);
-
-var _isolatedNode = require('./examples/graphs/isolatedNode.json');
-
-var _isolatedNode2 = _interopRequireDefault(_isolatedNode);
-
-var _loop = require('./examples/graphs/loop1.json');
-
-var _loop2 = _interopRequireDefault(_loop);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var getDegree1 = _iper.getDegree.bind(_graph2.default);
-var getDegreeOfIsolatedNode = _iper.getDegree.bind(_graph2.default);
-var getDegreeOfLoop1 = _iper.getDegree.bind(_loop2.default);
-
 describe('getDegree', function () {
+  var getDegree = require('iper').getDegree;
+
+  var graph1 = require('./examples/graphs/graph1.json');
+  var isolatedNode = require('./examples/graphs/isolatedNode.json');
+  var loop1 = require('./examples/graphs/loop1.json');
+
   it('returns number of incident edges', function () {
-    getDegree1('1').should.be.eql(1);
-    getDegree1('2').should.be.eql(1);
+    var edges = graph1.edges;
+    getDegree(edges, '1').should.be.eql(1);
+    getDegree(edges, '2').should.be.eql(1);
   });
 
   it('is 0 for isolated nodes', function () {
-    getDegreeOfIsolatedNode('isolated').should.be.eql(0);
+    var edges = isolatedNode.edges;
+    getDegree(edges, 'isolated').should.be.eql(0);
   });
 
   it('counts loops twice', function () {
-    getDegreeOfLoop1('0').should.be.eql(2);
+    var edges = loop1.edges;
+    getDegree(edges, '0').should.be.eql(2);
   });
 });
 
-},{"./examples/graphs/graph1.json":12,"./examples/graphs/isolatedNode.json":14,"./examples/graphs/loop1.json":15,"iper":10}],20:[function(require,module,exports){
+},{"./examples/graphs/graph1.json":13,"./examples/graphs/isolatedNode.json":15,"./examples/graphs/loop1.json":16,"iper":2}],21:[function(require,module,exports){
 'use strict';
 
-var _iper = require('iper');
-
-var _graph = require('./examples/graphs/graph1.json');
-
-var _graph2 = _interopRequireDefault(_graph);
-
-var _graph3 = require('./examples/graphs/graph2.json');
-
-var _graph4 = _interopRequireDefault(_graph3);
-
-var _isolatedNode = require('./examples/graphs/isolatedNode.json');
-
-var _isolatedNode2 = _interopRequireDefault(_isolatedNode);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var getIncidentEdgeIds1 = _iper.getIncidentEdgeIds.bind(_graph2.default);
-var getIncidentEdgeIds2 = _iper.getIncidentEdgeIds.bind(_graph4.default);
-
 describe('getIncidentEdgeIds', function () {
+  var getIncidentEdgeIds = require('iper').getIncidentEdgeIds;
+
+  var graph1 = require('./examples/graphs/graph1.json');
+  var graph2 = require('./examples/graphs/graph2.json');
+  var isolatedNode = require('./examples/graphs/isolatedNode.json');
+
+  var edges;
+  var nodeId;
+
   it('returns an empty array if there is no incident edge', function () {
-    var nodeId = 'isolated';
-    _iper.getIncidentEdgeIds.bind(_isolatedNode2.default)(nodeId).should.be.eql([]);
+    //nodeId = 'isolated'
+    //edges = isolatedNode.edges
+    //getIncidentEdgeIds(edges, nodeId).should.be.eql([])
   });
 
   it('returns incident edges', function () {
-    var nodeId = undefined;
+    var result;
 
     nodeId = '1';
-    getIncidentEdgeIds1(nodeId).should.be.eql(['0']);
+    edges = graph1.edges;
+    result = ['0'];
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result);
 
     nodeId = '2';
-    getIncidentEdgeIds1(nodeId).should.be.eql(['0']);
+    edges = graph1.edges;
+    result = ['0'];
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result);
 
     nodeId = 'a';
-    getIncidentEdgeIds2(nodeId).should.be.eql(['0', '1', '2']);
+    edges = graph2.edges;
+    result = ['0', '1', '2'];
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result);
 
     nodeId = 'b';
-    getIncidentEdgeIds2(nodeId).should.be.eql(['0', '1', '2']);
+    edges = graph2.edges;
+    result = ['0', '1', '2'];
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result);
 
     nodeId = 'c';
-    getIncidentEdgeIds2(nodeId).should.be.eql(['0', '1', '2']);
+    edges = graph2.edges;
+    result = ['0', '1', '2'];
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result);
   });
 });
 
-},{"./examples/graphs/graph1.json":12,"./examples/graphs/graph2.json":13,"./examples/graphs/isolatedNode.json":14,"iper":10}],21:[function(require,module,exports){
+},{"./examples/graphs/graph1.json":13,"./examples/graphs/graph2.json":14,"./examples/graphs/isolatedNode.json":15,"iper":2}],22:[function(require,module,exports){
 'use strict';
 
-var _iper = require('iper');
-
-var _graph = require('./examples/graphs/graph1.json');
-
-var _graph2 = _interopRequireDefault(_graph);
-
-var _orphanEdges = require('./examples/graphs/orphanEdges1.json');
-
-var _orphanEdges2 = _interopRequireDefault(_orphanEdges);
-
-var _orphanEdges3 = require('./examples/graphs/orphanEdges2.json');
-
-var _orphanEdges4 = _interopRequireDefault(_orphanEdges3);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 describe('getOrphanEdgeIds', function () {
-  it('returns orphan edges', function () {
-    _iper.getOrphanEdgeIds.bind(_orphanEdges2.default)().should.be.eql(['0']);
+  var getOrphanEdgeIds = require('iper').getOrphanEdgeIds;
 
-    _iper.getOrphanEdgeIds.bind(_orphanEdges4.default)().should.be.eql(['3', '6']);
+  var graph1 = require('./examples/graphs/graph1.json');
+  var orphanEdges1 = require('./examples/graphs/orphanEdges1.json');
+  var orphanEdges2 = require('./examples/graphs/orphanEdges2.json');
+
+  it('returns orphan edges', function () {
+    getOrphanEdgeIds(orphanEdges1.edges, orphanEdges1.nodes).should.be.eql(['0']);
+
+    getOrphanEdgeIds(orphanEdges2.edges, orphanEdges2.nodes).should.be.eql(['3', '6']);
   });
 
   it('returns an empty array if there is no orphan edge', function () {
-    _iper.getOrphanEdgeIds.bind(_graph2.default)().should.be.eql([]);
+    var edges = graph1.edges;
+    var nodes = graph1.nodes;
+
+    getOrphanEdgeIds(edges, nodes).should.be.eql([]);
   });
 });
 
-},{"./examples/graphs/graph1.json":12,"./examples/graphs/orphanEdges1.json":16,"./examples/graphs/orphanEdges2.json":17,"iper":10}],22:[function(require,module,exports){
+},{"./examples/graphs/graph1.json":13,"./examples/graphs/orphanEdges1.json":17,"./examples/graphs/orphanEdges2.json":18,"iper":2}],23:[function(require,module,exports){
 'use strict';
 
-var _iper = require('iper');
-
-var _graph = require('./examples/graphs/graph1.json');
-
-var _graph2 = _interopRequireDefault(_graph);
-
-var _graph3 = require('./examples/graphs/graph2.json');
-
-var _graph4 = _interopRequireDefault(_graph3);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var getRank1 = _iper.getRank.bind(_graph2.default);
-var getRank2 = _iper.getRank.bind(_graph4.default);
-
 describe('getRank', function () {
+  var getRank = require('iper').getRank;
+
+  var graph1 = require('./examples/graphs/graph1.json');
+  var graph2 = require('./examples/graphs/graph2.json');
+
   it('returns the maximum cardinality of the edges', function () {
-    getRank1().should.be.eql(2);
-    getRank2().should.be.eql(3);
+    getRank(graph1.edges).should.be.eql(2);
+    getRank(graph2.edges).should.be.eql(3);
   });
 });
 
-},{"./examples/graphs/graph1.json":12,"./examples/graphs/graph2.json":13,"iper":10}]},{},[11,18,19,20,21,22]);
+},{"./examples/graphs/graph1.json":13,"./examples/graphs/graph2.json":14,"iper":2}]},{},[12,19,20,21,22,23]);

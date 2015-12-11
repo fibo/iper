@@ -1,10 +1,10 @@
-import {getOrphanEdgeIds} from 'iper'
-
-import graph1 from './examples/graphs/graph1.json'
-import orphanEdges1 from './examples/graphs/orphanEdges1.json'
-import orphanEdges2 from './examples/graphs/orphanEdges2.json'
-
 describe('getOrphanEdgeIds', () => {
+  var getOrphanEdgeIds = require('iper').getOrphanEdgeIds
+
+  var graph1 = require('./examples/graphs/graph1.json')
+  var orphanEdges1 = require('./examples/graphs/orphanEdges1.json')
+  var orphanEdges2 = require('./examples/graphs/orphanEdges2.json')
+
   it('returns orphan edges', () => {
     getOrphanEdgeIds(orphanEdges1.edges, orphanEdges1.nodes).should.be.eql(['0'])
 

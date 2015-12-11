@@ -1,13 +1,13 @@
-import {getIncidentEdgeIds} from 'iper'
-
-import graph1 from './examples/graphs/graph1.json'
-import graph2 from './examples/graphs/graph2.json'
-import isolatedNode from './examples/graphs/isolatedNode.json'
-
-var edges
-var nodeId
-
 describe('getIncidentEdgeIds', () => {
+  var getIncidentEdgeIds = require('iper').getIncidentEdgeIds
+
+  var graph1 = require('./examples/graphs/graph1.json')
+  var graph2 = require('./examples/graphs/graph2.json')
+  var isolatedNode = require('./examples/graphs/isolatedNode.json')
+
+  var edges
+  var nodeId
+
   it('returns an empty array if there is no incident edge', () => {
     //nodeId = 'isolated'
     //edges = isolatedNode.edges

@@ -32,7 +32,7 @@
     "tex": "npm run tex:display; npm run tex:inline",
     "tex:display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
     "tex:inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
-    "test": "mocha --compilers js:babel-register --bail --require should --reporter min --recursive"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -47,6 +47,8 @@
     "url": "https://github.com/fibo/iper/issues"
   },
   "devDependencies": {
+    "mocha": "^2.3.4",
+    "should": "^8.0.0",
     "babel-preset-es2015": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^12.0.1",
@@ -55,10 +57,7 @@
     "katex": "^0.5.1"
   },
   "dependencies": {
-    "mocha": "^2.3.4",
-    "should": "^8.0.0",
-    "strict-mode": "^0.4.1",
-    "underscore": "^1.6.0"
+    "strict-mode": "^0.4.1"
   },
   "homepage": "http://www.g14n.info/iper"
 }
