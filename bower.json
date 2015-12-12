@@ -1,7 +1,7 @@
 {
   "name": "iper",
   "main": "dist/iper.js",
-  "version": "0.1.1",
+  "version": "0.3.0",
   "homepage": "http://g14n.info/iper",
   "authors": [
     "Gianluca Casati"
