@@ -2,7 +2,7 @@
   "name": "iper",
   "version": "0.3.0",
   "engines": {
-    "node": ">=4.2.2"
+    "node": ">=4.2.3"
   },
   "description": "Hypergraphs for breakfast",
   "author": {
@@ -55,6 +55,7 @@
     "coveralls": "^2.11.6",
     "dox": "^0.8.0",
     "istanbul": "^0.4.1",
+    "jshint": "^2.8.0",
     "katex": "^0.5.1",
     "mocha": "^2.3.4",
     "should": "^8.0.0"
