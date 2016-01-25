@@ -3,16 +3,16 @@ describe('getIncidentEdgeIds', () => {
 
   var graph1 = require('./examples/graphs/graph1.json')
   var graph2 = require('./examples/graphs/graph2.json')
-  var isolatedNode = require('./examples/graphs/isolatedNode.json')
 
   var edges
   var nodeId
 
-  it('returns an empty array if there is no incident edge', () => {
-    //nodeId = 'isolated'
-    //edges = isolatedNode.edges
-    //getIncidentEdgeIds(edges, nodeId).should.be.eql([])
-  })
+  it('returns an empty array if there is no incident edge'/*, () => {
+    var isolatedNode = require('./examples/graphs/isolatedNode.json')
+    nodeId = 'isolated'
+    edges = isolatedNode.edges
+    getIncidentEdgeIds(edges, nodeId).should.be.eql([])
+  }*/)
 
   it('returns incident edges', () => {
     var result

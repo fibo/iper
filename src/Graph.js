@@ -1,5 +1,4 @@
 var getIncidentEdgeIds = require('./getIncidentEdgeIds')
-var getOrphanEdgeIds = require('./getOrphanEdgeIds')
 var uniqueId = require('lodash.uniqueid')
 
 /**
@@ -68,7 +67,7 @@ class Graph {
    * @returns {Any} data
    */
 
-   delNode (id) {
+  delNode (id) {
     let data = this.nodes[id]
     delete this.nodes[id]
 

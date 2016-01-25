@@ -1,4 +1,3 @@
-
 /**
  * Compute adjacent nodes
  *
@@ -26,11 +25,11 @@ const getAdjacentNodeIds = (edges, nodeId) => {
       continue
     }
 
-      // Take all nodeIds except given nodeId, avoid repetitions.
-      let nodeIds = edge.filter(givenNodeId)
+    // Take all nodeIds except given nodeId, avoid repetitions.
+    let nodeIds = edge.filter(givenNodeId)
                         .filter(foundNodeIds)
 
-      adjacentNodeIds = adjacentNodeIds.concat(nodeIds)
+    adjacentNodeIds = adjacentNodeIds.concat(nodeIds)
   }
 
   return adjacentNodeIds

@@ -40,7 +40,7 @@ describe('Graph', () => {
 
       var nodeNotDefined = (typeof graph.nodes[nodeId1] === 'undefined')
       nodeNotDefined.should.be.true
-   })
+    })
 
     it('removes incident edges', () => {
       var incidentEdgeRemoved = (typeof graph.edges[edgeId1] === 'undefined')

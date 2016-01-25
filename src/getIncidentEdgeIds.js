@@ -13,8 +13,9 @@ const getIncidentEdgeIds = (edges, nodeId) => {
     let isIncident = (id === nodeId)
     let isUnique = (incidentEdgeIds.indexOf(edgeId) < 0)
 
-    if (isIncident && isUnique)
+    if (isIncident && isUnique) {
       incidentEdgeIds.push(edgeId)
+    }
   }
 
   for (let edgeId in edges) {
