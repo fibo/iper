@@ -1,23 +1,128 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (global){
 /**
- * lodash 3.0.0 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.7.0 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ * lodash 3.1.0 (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright 2012-2016 The Dojo Foundation <http://dojofoundation.org/>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright 2009-2016 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  * Available under MIT license <https://lodash.com/license>
  */
-var baseToString = require('lodash._basetostring');
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/** Used for built-in method references. */
+var objectProto = global.Object.prototype;
 
 /** Used to generate unique IDs. */
 var idCounter = 0;
+
+/**
+ * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Built-in value references. */
+var _Symbol = global.Symbol;
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = _Symbol ? _Symbol.prototype : undefined,
+    symbolToString = _Symbol ? symbolProto.toString : undefined;
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+}
+
+/**
+ * Converts `value` to a string if it's not one. An empty string is returned
+ * for `null` and `undefined` values. The sign of `-0` is preserved.
+ *
+ * @static
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ * @example
+ *
+ * _.toString(null);
+ * // => ''
+ *
+ * _.toString(-0);
+ * // => '-0'
+ *
+ * _.toString([1, 2, 3]);
+ * // => '1,2,3'
+ */
+function toString(value) {
+  // Exit early for strings to avoid a performance hit in some environments.
+  if (typeof value == 'string') {
+    return value;
+  }
+  if (value == null) {
+    return '';
+  }
+  if (isSymbol(value)) {
+    return _Symbol ? symbolToString.call(value) : '';
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
 
 /**
  * Generates a unique ID. If `prefix` is provided the ID is appended to it.
  *
  * @static
  * @memberOf _
- * @category Utility
+ * @category Util
  * @param {string} [prefix] The value to prefix the ID with.
  * @returns {string} Returns the unique ID.
  * @example
@@ -30,50 +135,24 @@ var idCounter = 0;
  */
 function uniqueId(prefix) {
   var id = ++idCounter;
-  return baseToString(prefix) + id;
+  return toString(prefix) + id;
 }
 
 module.exports = uniqueId;
 
-},{"lodash._basetostring":2}],2:[function(require,module,exports){
-/**
- * lodash 3.0.1 (Custom Build) <https://lodash.com/>
- * Build: `lodash modern modularize exports="npm" -o ./`
- * Copyright 2012-2015 The Dojo Foundation <http://dojofoundation.org/>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- * Available under MIT license <https://lodash.com/license>
- */
-
-/**
- * Converts `value` to a string if it's not one. An empty string is returned
- * for `null` or `undefined` values.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- */
-function baseToString(value) {
-  return value == null ? '' : (value + '');
-}
-
-module.exports = baseToString;
-
-},{}],3:[function(require,module,exports){
-
-// IN browserify context, fall back to a no op
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(require,module,exports){
+// In browserify context, *strict-mode* fall back to a no op.
 module.exports = function (cb) { cb() }
 
-
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var getIncidentEdgeIds = require('./getIncidentEdgeIds');
-var getOrphanEdgeIds = require('./getOrphanEdgeIds');
 var uniqueId = require('lodash.uniqueid');
 
 /**
@@ -86,7 +165,7 @@ var uniqueId = require('lodash.uniqueid');
  * @param {Object} graph
  */
 
-var Graph = (function () {
+var Graph = function () {
   function Graph() {
     _classCallCheck(this, Graph);
 
@@ -167,11 +246,11 @@ var Graph = (function () {
   }]);
 
   return Graph;
-})();
+}();
 
 module.exports = Graph;
 
-},{"./getIncidentEdgeIds":7,"./getOrphanEdgeIds":8,"lodash.uniqueid":1}],5:[function(require,module,exports){
+},{"./getIncidentEdgeIds":6,"lodash.uniqueid":1}],4:[function(require,module,exports){
 "use strict";
 
 /**
@@ -212,7 +291,7 @@ var getAdjacentNodeIds = function getAdjacentNodeIds(edges, nodeId) {
 
 module.exports = getAdjacentNodeIds;
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 /**
@@ -245,7 +324,7 @@ var getDegree = function getDegree(edges, nodeId) {
 
 module.exports = getDegree;
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 /**
@@ -263,7 +342,9 @@ var getIncidentEdgeIds = function getIncidentEdgeIds(edges, nodeId) {
     var isIncident = id === nodeId;
     var isUnique = incidentEdgeIds.indexOf(edgeId) < 0;
 
-    if (isIncident && isUnique) incidentEdgeIds.push(edgeId);
+    if (isIncident && isUnique) {
+      incidentEdgeIds.push(edgeId);
+    }
   };
 
   for (var edgeId in edges) {
@@ -277,7 +358,7 @@ var getIncidentEdgeIds = function getIncidentEdgeIds(edges, nodeId) {
 
 module.exports = getIncidentEdgeIds;
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 /**
@@ -309,7 +390,7 @@ var getOrphanEdgeIds = function getOrphanEdgeIds(edges, nodes) {
 
 module.exports = getOrphanEdgeIds;
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 /**
@@ -332,7 +413,7 @@ var getRank = function getRank(edges) {
 
 module.exports = getRank;
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 require('strict-mode')(function () {
@@ -345,9 +426,9 @@ require('strict-mode')(function () {
   exports.getRank = require('./getRank');
 });
 
-},{"./Graph":4,"./getAdjacentNodeIds":5,"./getDegree":6,"./getIncidentEdgeIds":7,"./getOrphanEdgeIds":8,"./getRank":9,"strict-mode":3}],"iper":[function(require,module,exports){
+},{"./Graph":3,"./getAdjacentNodeIds":4,"./getDegree":5,"./getIncidentEdgeIds":6,"./getOrphanEdgeIds":7,"./getRank":8,"strict-mode":2}],"iper":[function(require,module,exports){
 'use strict';
 
 module.exports = require('./src');
 
-},{"./src":10}]},{},[]);
+},{"./src":9}]},{},[]);
