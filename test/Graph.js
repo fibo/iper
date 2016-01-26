@@ -1,5 +1,5 @@
 describe('Graph', () => {
-  var Graph = require('iper').Graph
+  var Graph = require('..').Graph
 
   var nodeData1 = 'foo'
   var nodeData2 = ['bar']

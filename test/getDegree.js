@@ -1,5 +1,5 @@
 describe('getDegree', () => {
-  var getDegree = require('iper').getDegree
+  var getDegree = require('..').getDegree
 
   var graph1 = require('./examples/graphs/graph1.json')
   var isolatedNode = require('./examples/graphs/isolatedNode.json')

@@ -17,8 +17,8 @@
     "_pull": "git pull origin master && npm run gh-pages_pull",
     "_push": "git push origin master && npm run gh-pages_push",
     "browserify": "npm run browserify_dist; npm run browserify_test",
-    "browserify_dist": "browserify -r ./index.js:${npm_package_name} -t strictify -o dist/${npm_package_name}.js",
-    "browserify_test": "browserify test/*.js -t strictify -o gh-pages/test/bundle.js",
+    "browserify_dist": "browserify -r ./index.js:${npm_package_name} -t babelify -o dist/${npm_package_name}.js",
+    "browserify_test": "browserify test/*js -t babelify -o gh-pages/test/bundle.js",
     "check-deps": "npm outdated",
     "coverage": "npm run istanbul && npm run coveralls",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
@@ -35,7 +35,7 @@
     "lint": "for x in src test; do npm run lint_$x; done",
     "lint_src": "standard src/*js",
     "lint_test": "standard --global describe --global it test/*js",
-    "minify": "uglifyjs dist/${npm_package_name}.js --output dist/${npm_package_name}.min.js --compress --mangle",
+    "minify": "uglifyjs dist/${npm_package_name}.js --output dist/${npm_package_name}.min.js --compress",
     "postversion": "git push origin v${npm_package_version}; npm publish; npm run _push",
     "tex": "npm run tex_display; npm run tex_inline",
     "tex_display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
@@ -72,7 +72,6 @@
     "pre-commit": "^1.1.2",
     "should": "^8.0.0",
     "standard": "^5.4.1",
-    "strictify": "^0.2.0",
     "uglify-js": "^2.6.1"
   }
 }

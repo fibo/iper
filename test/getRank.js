@@ -1,5 +1,5 @@
 describe('getRank', () => {
-  var getRank = require('iper').getRank
+  var getRank = require('..').getRank
 
   var graph1 = require('./examples/graphs/graph1.json')
   var graph2 = require('./examples/graphs/graph2.json')

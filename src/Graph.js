@@ -3,7 +3,6 @@ var uniqueId = require('lodash.uniqueid')
 
 /**
  * Hypergraph
- * @class
  *
  * http://en.wikipedia.org/wiki/Hypergraph
  *

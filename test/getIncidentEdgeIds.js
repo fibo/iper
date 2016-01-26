@@ -1,5 +1,5 @@
 describe('getIncidentEdgeIds', () => {
-  var getIncidentEdgeIds = require('iper').getIncidentEdgeIds
+  var getIncidentEdgeIds = require('..').getIncidentEdgeIds
 
   var graph1 = require('./examples/graphs/graph1.json')
   var graph2 = require('./examples/graphs/graph2.json')

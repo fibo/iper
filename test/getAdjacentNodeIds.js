@@ -1,5 +1,5 @@
 describe('getAdjacentNodeIds', () => {
-  var getAdjacentNodeIds = require('iper').getAdjacentNodeIds
+  var getAdjacentNodeIds = require('..').getAdjacentNodeIds
 
   var graph1 = require('./examples/graphs/graph1.json')
   var graph2 = require('./examples/graphs/graph2.json')
