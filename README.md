@@ -25,7 +25,7 @@ $ bower install iper
 ## API
 
 <a name="graph-constructor"></a>
-### `new Graph(graph)`
+### new Graph(graph)
 
 > Hypergraph
 
@@ -33,43 +33,43 @@ $ bower install iper
 var graph = new Graph()
 ```
 
-||||
----|---|---|
-|`@param {Object}`|[graph]|
-|`@param {Object}`|[graph.edge]|
-|`@param {Object}`|[graph.node]|
+|                 |              |
+| --------------- | ------------ |
+| @param {Object} | [graph]      |
+| @param {Object} | [graph.edge] |
+| @param {Object} | [graph.node] |
 
 <a name="graph-addedge"></a>
-### `graph.addEdge()`
+### graph.addEdge()
 
-||||
----|---|---|
-|`@param {Array}`|nodeIds|
-|`@returns {String}`|id|
+|                   |         |
+| ----------------- | ------- |
+| @param {Array}    | nodeIds |
+| @returns {String} | id      |
 
 <a name="graph-addnode"></a>
-### `graph.addNode()`
+### graph.addNode()
 
-||||
----|---|---|
-|`@param {Any}`|data|
-|`@returns {String}`|id|
+|                   |      |
+| ----------------- | ---- |
+| @param {Any}      | data |
+| @returns {String} | id   |
 
 <a name="graph-deledge"></a>
-### `graph.delEdge()`
+### graph.delEdge()
 
-||||
----|---|---|
-|`@param {String}`|id|
-|`@returns {Array}`|nodeIds|
+|                  |       |
+| ---------------- | ----- |
+| @param {String}  |id     |
+| @returns {Array} |nodeIds|
 
 <a name="graph-delnode"></a>
-### `graph.delNode()`
+### graph.delNode()
 
-||||
----|---|---|
-|`@param {String}`|id|
-|`@returns {Any}`|data|
+|                 |      |
+| --------------- | ---- |
+| @param {String} | id   |
+| @returns {Any}  | data |
 
 ## License
 
