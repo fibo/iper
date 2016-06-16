@@ -49,7 +49,7 @@ class Graph {
   /**
    *
    * @param {String} id
-   * @returns
+   * @returns {Array} nodeIds
    */
 
   delEdge (id) {
@@ -63,7 +63,7 @@ class Graph {
   /**
    *
    * @param {String} id
-   * @returns {Any} data
+   * @returns {*} data
    */
 
   delNode (id) {
