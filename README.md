@@ -12,61 +12,69 @@
 
 With [npm](https://npmjs.org/) do
 
-```
+```bash
 npm install iper
 ```
 
 With [bower](http://bower.io/) do
 
 ```bash
-$ bower install iper
+bower install iper
 ```
 
 ## API
 
-### new Graph([graph])
+### `new Graph([graph])`
 
-> Hypergraph
+> Hypergraph constructor.
 
-```
+```javascript
 var graph = new Graph()
 ```
 
-|                 |              |
-| --------------- | ------------ |
-| @param {Object} | [graph]      |
-| @param {Object} | [graph.edge] |
-| @param {Object} | [graph.node] |
+* **@param** `{Object}` [graph]
+* **@param** `{Object}` [graph.edge]
+* **@param** `{Object}` [graph.node]
 
 ### graph.addEdge(nodeIds)
 
-|                   |         |
-| ----------------- | ------- |
-| @param {Array}    | nodeIds |
-| @returns {String} | id      |
+> Add an hyperedge that connects given nodeIds.
+
+* **@param** `{Array}` nodeIds
+* **@returns** `{String}` id
 
 ### graph.addNode(data)
 
-|                   |      |
-| ----------------- | ---- |
-| @param {Any}      | data |
-| @returns {String} | id   |
+> Add a node, containing given data.
+
+```javascript
+var nodeId = graph.addNode({ label: 'foo' })
+```
+
+* **@param** `{*}` [data]
+* **@returns** `{String}` id of the node created
+
+### graph.degreeOf(nodeId)
+
+> Returns the degree of a node, that is the number of incident edges with loops counted twice.
+
+* **@param** `{String}` id
+* **@returns** `{void}`
 
 ### graph.delEdge(id)
 
-|                  |       |
-| ---------------- | ----- |
-| @param {String}  |id     |
-| @returns {Array} |nodeIds|
+> Delete edge by given id.
+
+* **@param** `{String}` id
+* **@returns** `{void}`
 
 ### graph.delNode(id)
 
-|                 |      |
-| --------------- | ---- |
-| @param {String} | id   |
-| @returns {Any}  | data |
+> Delete node by given id.
+
+* **@param** `{String}` id
+* **@returns** `{void}`
 
 ## License
 
 [MIT](http://www.g14n.info/mit-license)
-

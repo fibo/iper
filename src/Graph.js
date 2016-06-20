@@ -1,5 +1,6 @@
 var getIncidentEdgeIds = require('./getIncidentEdgeIds')
 var uniqueId = require('lodash.uniqueid')
+var getDegree = require('./getDegree')
 
 /**
  * Hypergraph
@@ -7,9 +8,13 @@ var uniqueId = require('lodash.uniqueid')
  * http://en.wikipedia.org/wiki/Hypergraph
  *
  * @class
- * @param {Object} graph
+ * @param {Object} [graph]
  */
 
+// TODO add options (arg, opt) like
+// * pseudograph: false, cannot create loops
+// * multigraph: false, cannot duplicate edges
+// * rank, maxDegree, etc
 class Graph {
   constructor () {
     var arg = arguments[0] || {}
@@ -19,7 +24,6 @@ class Graph {
   }
 
   /**
-   *
    * @param {Array} nodeIds
    * @returns {String} id
    */
@@ -33,7 +37,6 @@ class Graph {
   }
 
   /**
-   *
    * @param {Any} data
    * @returns {String} id
    */
@@ -47,27 +50,29 @@ class Graph {
   }
 
   /**
-   *
-   * @param {String} id
-   * @returns {Array} nodeIds
+   * @param {String} nodeId
+   * @returns {Number} degree
    */
 
-  delEdge (id) {
-    var nodeIds = this.edges[id]
-
-    delete this.edges[id]
-
-    return nodeIds
+  degreeOf (nodeId) {
+    return getDegree(this.edges, nodeId)
   }
 
   /**
-   *
    * @param {String} id
-   * @returns {*} data
+   * @returns {void}
+   */
+
+  delEdge (id) {
+    delete this.edges[id]
+  }
+
+  /**
+   * @param {String} id
+   * @returns {void}
    */
 
   delNode (id) {
-    let data = this.nodes[id]
     delete this.nodes[id]
 
     let incidentEdgeIds = getIncidentEdgeIds(this.edges, id)
@@ -75,8 +80,6 @@ class Graph {
     for (let edgeId in incidentEdgeIds) {
       this.delEdge(edgeId)
     }
-
-    return data
   }
 }
 

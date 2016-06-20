@@ -34,6 +34,12 @@ describe('Graph', () => {
     })
   })
 
+  describe('degreeOf(nodeId)', () => {
+    it('returns the degree of a node', () => {
+      graph.degreeOf(nodeId1).should.be.eql(1)
+    })
+  })
+
   describe('delNode()', () => {
     it('removes a node', () => {
       graph.delNode(nodeId1)
@@ -46,20 +52,16 @@ describe('Graph', () => {
       var incidentEdgeRemoved = (typeof graph.edges[edgeId1] === 'undefined')
       incidentEdgeRemoved.should.be.true
     })
-
-    it('returns node data', () => {
-      graph.delNode(nodeId2).should.be.eql(nodeData2)
-    })
   })
 
   describe('delEdge()', () => {
-    it('removes an edge, returns nodeIds', () => {
+    it('removes an edge', () => {
       nodeId1 = graph.addNode(nodeData1)
       nodeId2 = graph.addNode(nodeData2)
       nodeIds = [nodeId1, nodeId2]
       edgeId1 = graph.addEdge(nodeIds)
 
-      graph.delEdge(edgeId1).should.be.eql(nodeIds)
+      graph.delEdge(edgeId1)
 
       var edgeNotDefined = (typeof graph.edges[edgeId1] === 'undefined')
       edgeNotDefined.should.be.true
