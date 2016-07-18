@@ -68,6 +68,7 @@
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "coveralls": "^2.11.6",
+    "dot-editorconfig": "^0.1.0",
     "istanbul": "^0.4.1",
     "katex": "^0.5.1",
     "mocha": "^2.4.1",
