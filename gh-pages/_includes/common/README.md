@@ -8,6 +8,8 @@ The following g14n.info microsites are involved:
 * [dflow](http://g14n.info/dflow)
 * [flow-view](http://g14n.info/flow-view)
 * [geohash-neighbours](http://g14n.info/geohash-neighbours)
+* [iper](http://g14n.info/iper)
+* [tris3d-canvas](http://g14n.info/tris3d-canvas)
 
 ## Setup
 
@@ -31,3 +33,24 @@ In a working tree with all modifications committed, launch
 ```
 git subtree --prefix=gh-pages/_includes/common/ pull common_includes master
 ```
+
+## Content
+
+### analytics.html
+
+Add to your *_config.yml*
+
+```
+google-analytics:
+  id: UA-12635045-12
+```
+
+### github-corner.html
+
+Comes from [GitHub corners](http://tholman.com/github-corners/).
+
+### github-markdown-css.html
+
+[github-markdown-css](https://github.com/sindresorhus/github-markdown-css) is
+
+> The minimal amount of CSS to replicate the GitHub Markdown style
