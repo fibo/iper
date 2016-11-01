@@ -13,7 +13,7 @@
     "node": ">=4.2.3"
   },
   "scripts": {
-    "build": "npm test && npm run browserify && npm run minify && npm run tex && npm run jekyll; git status",
+    "build": "npm test && npm run browserify && npm run minify && npm run jekyll; git status",
     "browserify": "npm run browserify_dist; npm run browserify_test",
     "browserify_dist": "browserify -r ./index.js:${npm_package_name} -t babelify -o dist/${npm_package_name}.js",
     "browserify_test": "browserify test/*js -t babelify -o gh-pages/test/bundle.js",
@@ -35,10 +35,9 @@
     "postversion": "git push origin v${npm_package_version}; npm publish; npm run _push",
     "pull": "git pull origin master && npm run gh-pages_pull",
     "push": "git push origin master && npm run gh-pages_push",
-    "tex": "npm run tex_display; npm run tex_inline",
-    "tex_display": "ls gh-pages/tex-snippets/display/*.tex | while read texfile; do cat $texfile | katex --display-mode > gh-pages/_includes/display/$(basename ${texfile%.tex}).html; done",
-    "tex_inline": "ls gh-pages/tex-snippets/inline/*.tex | while read texfile; do cat $texfile | katex > gh-pages/_includes/inline/$(basename ${texfile%.tex}).html; done",
-    "test": "mocha"
+    "postupdate-deps": "npm test && git commit -am 'updated deps' || git checkout -- package.json",
+    "test": "mocha",
+    "update-deps": "npm update --save --dev"
   },
   "pre-commit": [
     "check-deps",
@@ -57,20 +56,22 @@
     "url": "https://github.com/fibo/iper/issues"
   },
   "dependencies": {
-    "lodash.uniqueid": "^3.0.0",
-    "strict-mode": "^0.4.1"
+    "lodash.uniqby": "^4.7.0",
+    "lodash.uniqueid": "^4.0.0",
+    "not-defined": "^1.1.0",
+    "strict-mode": "^1.0.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.5.0",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "coveralls": "^2.11.6",
+    "dot-editorconfig": "^0.2.0",
     "istanbul": "^0.4.1",
-    "katex": "^0.5.1",
-    "mocha": "^2.4.1",
+    "mocha": "^3.1.2",
     "pre-commit": "^1.1.2",
-    "should": "^8.0.0",
-    "standard": "^5.4.1",
+    "should": "^9.0.0",
+    "standard": "^8.5.0",
     "uglify-js": "^2.6.1"
   }
 }

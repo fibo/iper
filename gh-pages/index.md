@@ -36,8 +36,9 @@ var graph = new Graph()
 ```
 
 * **@param** `{Object}` [graph]
-* **@param** `{Object}` [graph.edge]
-* **@param** `{Object}` [graph.node]
+* **@param** `{Object}` [graph.edges]
+* **@param** `{Object}` [graph.nodes]
+* **@param** `{Boolean}` [graph.pseudograph] cannot create loops
 
 ### graph.addEdge(nodeIds)
 
