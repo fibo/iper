@@ -15,8 +15,8 @@
   "scripts": {
     "build": "npm test && npm run browserify && npm run minify && npm run jekyll; git status",
     "browserify": "npm run browserify_dist; npm run browserify_test",
-    "browserify_dist": "browserify -r ./index.js:${npm_package_name} -t babelify -o dist/${npm_package_name}.js",
-    "browserify_test": "browserify test/*js -t babelify -o gh-pages/test/bundle.js",
+    "browserify_dist": "NODE_PATH=src browserify -r ./${npm_package_main}:${npm_package_name} -t babelify -o dist/${npm_package_name}.js",
+    "browserify_test": "NODE_PATH=src browserify test/*js -t babelify -o gh-pages/test/bundle.js",
     "check-deps": "npm outdated",
     "coverage": "npm run istanbul && npm run coveralls",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",

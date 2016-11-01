@@ -38,7 +38,9 @@ var graph = new Graph()
 * **@param** `{Object}` [graph]
 * **@param** `{Object}` [graph.edges]
 * **@param** `{Object}` [graph.nodes]
-* **@param** `{Boolean}` [graph.pseudograph] cannot create loops
+* **@param** `{Boolean}` [graph.multigraph] can contain duplicated edges
+* **@param** `{Boolean}` [graph.pseudograph] is a multigraph with loops allowed
+* **@param** `{Number}` [graph.uniform] all edges has the same cardinality (i.e. number of nodes)
 
 ### graph.addEdge(nodeIds)
 
