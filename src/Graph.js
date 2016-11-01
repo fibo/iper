@@ -1,10 +1,12 @@
 const isequal = require('lodash.isequal')
+const isInteger = require('is-integer')
 const uniqueid = require('lodash.uniqueid')
 const uniqby = require('lodash.uniqby')
 const staticProps = require('static-props')
 
 const getDegree = require('./getDegree')
 const getIncidentEdgeIds = require('./getIncidentEdgeIds')
+const getRank = require('./getRank')
 
 /**
  * Hypergraph
@@ -16,6 +18,8 @@ const getIncidentEdgeIds = require('./getIncidentEdgeIds')
  * @param {Object} [graph.nodes]
  * @param {Boolean} [graph.multigraph] can contain duplicated edges
  * @param {Boolean} [graph.pseudograph] is a multigraph with loops allowed
+ * @param {Number} [graph.uniform] all edges has the same cardinality (i.e. number of nodes)
+ *
  * @class
  */
 
@@ -27,6 +31,14 @@ class Graph {
     const arg = arguments[0] || {}
     var obj = {}
 
+    if (isInteger(arg.uniform)) {
+      if (arg.uniform < 2) {
+        throw new TypeError('Argument uniform cannot be less than 2')
+      } else {
+        obj.uniform = arg.uniform
+      }
+    }
+
     if (arg.multigraph === true) obj.multigraph = true
 
     if (arg.pseudograph === true) {
@@ -37,7 +49,8 @@ class Graph {
     obj.edges = arg.edges || {}
     obj.nodes = arg.nodes || {}
 
-    staticProps(this)(obj)
+    const enumerable = true
+    staticProps(this)(obj, enumerable)
   }
 
   /**
@@ -48,6 +61,20 @@ class Graph {
    */
 
   addEdge (nodeIds) {
+    if (nodeIds.length < 2) {
+      throw new Error('An edge must point at two or more nodes')
+    }
+
+    const uniform = this.uniform
+
+    if (uniform) {
+      const cardinality = nodeIds.length
+
+      if (uniform !== cardinality) {
+        throw new Error(`Cannot add an edge with cardinality ${cardinality} to a ${uniform}-uniform graph`)
+      }
+    }
+
     if (!this.pseudograph) {
       if (uniqby(nodeIds).length < nodeIds.length) {
         throw new Error('This is not a pseudograph, it is not allowed to create loops')
@@ -64,7 +91,14 @@ class Graph {
       }
     }
 
-    // TODO throw error nodeIds not found
+    const nodeIdsNotFound = nodeIds.filter((id) => {
+      return !this.nodes.hasOwnProperty(id)
+    })
+
+    if (nodeIdsNotFound.length > 0) {
+      throw new Error('Edge points to some nodeId not found in this graph; ' + nodeIdsNotFound.join(','))
+    }
+
     const id = uniqueid()
 
     this.edges[id] = nodeIds
@@ -127,6 +161,18 @@ class Graph {
     for (var edgeId in incidentEdgeIds) {
       this.delEdge(edgeId)
     }
+  }
+
+  /**
+   * Returns the max cardinality of any of the edges in the hypergraph.
+   *
+   * @returns {Number} rank
+   */
+
+  getRank () {
+    if (this.uniform) return this.uniform
+
+    return getRank(this.edges)
   }
 }
 

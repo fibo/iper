@@ -43,6 +43,41 @@ describe('default Graph', () => {
       graph.edges[edgeId1].should.be.eql(nodeIds)
     })
 
+    it('requires at least two nodeIds', () => {
+      const nodeId = graph.addNode()
+
+      const nodeIds = [nodeId]
+
+      ;(() => {
+        graph.addEdge(nodeIds)
+      }).should.throw()
+    })
+
+    it('cannot create an edge pointing to some nodeId not found', () => {
+      const nodeId1 = graph.addNode()
+      const nodeId2 = graph.addNode()
+
+      const nodeIds = [nodeId1, 'nodeIdNotFound', nodeId2]
+
+      ;(() => {
+        graph.addEdge(nodeIds)
+      }).should.throw()
+    })
+
+    it('can create edges with cardinality greater than 2', () => {
+      const graph = new Graph()
+
+      const nodeId1 = graph.addNode()
+      const nodeId2 = graph.addNode()
+      const nodeId3 = graph.addNode()
+
+      const nodeIds = [nodeId1, nodeId2, nodeId3]
+
+      const edgeId1 = graph.addEdge(nodeIds)
+
+      graph.edges[edgeId1].should.be.eql(nodeIds)
+    })
+
     it('returns an id', () => {
       edgeId1.should.be.a.String
     })
@@ -50,8 +85,10 @@ describe('default Graph', () => {
     it('cannot create loops', () => {
       const nodeId = graph.addNode()
 
+      const nodeIds = [nodeId, nodeId]
+
       ;(() => {
-        graph.addEdge([nodeId, nodeId])
+        graph.addEdge(nodeIds)
       }).should.throw()
     })
 
@@ -98,6 +135,31 @@ describe('default Graph', () => {
 
       var edgeNotDefined = (typeof graph.edges[edgeId1] === 'undefined')
       edgeNotDefined.should.be.true
+    })
+  })
+
+  describe('getRank()', () => {
+    it('returns the max cardinality of any edge', () => {
+      const graph = new Graph()
+
+      const nodeId1 = graph.addNode()
+      const nodeId2 = graph.addNode()
+      const nodeId3 = graph.addNode()
+      const nodeId4 = graph.addNode()
+
+      graph.addEdge([nodeId1, nodeId2])
+      graph.addEdge([nodeId3, nodeId2])
+      graph.addEdge([nodeId1, nodeId4])
+
+      graph.getRank().should.be.eql(2)
+
+      graph.addEdge([nodeId1, nodeId2, nodeId3])
+
+      graph.getRank().should.be.eql(3)
+
+      graph.addEdge([nodeId4, nodeId1, nodeId2, nodeId3])
+
+      graph.getRank().should.be.eql(4)
     })
   })
 })
