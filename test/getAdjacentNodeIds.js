@@ -1,27 +1,27 @@
 describe('getAdjacentNodeIds', () => {
-  var getAdjacentNodeIds = require('..').getAdjacentNodeIds
+  const getAdjacentNodeIds = require('..').getAdjacentNodeIds
 
-  var graph1 = require('./examples/graphs/graph1.json')
-  var graph2 = require('./examples/graphs/graph2.json')
+  const graph1 = require('./examples/graphs/graph1.json')
+  const graph2 = require('./examples/graphs/graph2.json')
 
   it('is mutual', () => {
-    var edges = graph1.edges
-    var nodeId1 = '1'
-    var nodeId2 = '2'
+    const edges = graph1.edges
+    const nodeId1 = '1'
+    const nodeId2 = '2'
 
     getAdjacentNodeIds(edges, nodeId1).should.be.eql([nodeId2])
     getAdjacentNodeIds(edges, nodeId2).should.be.eql([nodeId1])
   })
 
   it('returns an empty array if there is no adjacent node', () => {
-    var edges = graph1.edges
-    var nodeId = 'not found'
+    const edges = graph1.edges
+    const nodeId = 'not found'
 
     getAdjacentNodeIds(edges, nodeId).should.be.eql([])
   })
 
   it('returns adjacent nodes', () => {
-    var edges = graph2.edges
+    const edges = graph2.edges
     var nodeId
 
     nodeId = 'a'

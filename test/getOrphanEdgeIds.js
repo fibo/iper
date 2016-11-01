@@ -1,9 +1,9 @@
 describe('getOrphanEdgeIds', () => {
-  var getOrphanEdgeIds = require('..').getOrphanEdgeIds
+  const getOrphanEdgeIds = require('..').getOrphanEdgeIds
 
-  var graph1 = require('./examples/graphs/graph1.json')
-  var orphanEdges1 = require('./examples/graphs/orphanEdges1.json')
-  var orphanEdges2 = require('./examples/graphs/orphanEdges2.json')
+  const graph1 = require('./examples/graphs/graph1.json')
+  const orphanEdges1 = require('./examples/graphs/orphanEdges1.json')
+  const orphanEdges2 = require('./examples/graphs/orphanEdges2.json')
 
   it('returns orphan edges', () => {
     getOrphanEdgeIds(orphanEdges1.edges, orphanEdges1.nodes).should.be.eql(['0'])
@@ -12,8 +12,8 @@ describe('getOrphanEdgeIds', () => {
   })
 
   it('returns an empty array if there is no orphan edge', () => {
-    var edges = graph1.edges
-    var nodes = graph1.nodes
+    const edges = graph1.edges
+    const nodes = graph1.nodes
 
     getOrphanEdgeIds(edges, nodes).should.be.eql([])
   })

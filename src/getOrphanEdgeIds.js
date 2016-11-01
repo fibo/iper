@@ -1,18 +1,17 @@
+const no = require('not-defined')
+
 /**
  * Compute edges which does not refer to existing nodeIds
  *
- * @param {Array} edges
- * @param {Array} nodes
- * @param {Object} graph
+ * @param {Object} edges
+ * @param {Object} nodes
  * @returns {Array} orphanEdgeIds
  */
 
 const getOrphanEdgeIds = (edges, nodes) => {
   var orphanEdgeIds = []
 
-  const nodeIdsNotFound = (nodeId) => {
-    return typeof nodes[nodeId] === 'undefined'
-  }
+  const nodeIdsNotFound = (nodeId) => (no(nodes[nodeId]))
 
   for (var edgeId in edges) {
     var edge = edges[edgeId]

@@ -1,7 +1,7 @@
 /**
   The rank is the maximum cardinality of any of the edges in the hypergraph
  *
- * @params {Array} edges
+ * @params {Object} edges
  * @returns {Number} rank
  */
 

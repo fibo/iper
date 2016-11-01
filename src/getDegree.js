@@ -3,7 +3,7 @@
  *
  * http://en.wikipedia.org/wiki/Degree_(graph_theory)
  *
- * @param {Array} edges
+ * @param {Object} edges
  * @param {String} nodeId
  * @returns {Number} degree
  */

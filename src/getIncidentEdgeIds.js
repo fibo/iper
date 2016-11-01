@@ -1,25 +1,25 @@
 /**
  * Edges incident to given node
  *
- * @param {Array} edges
+ * @param {Object} edges
  * @param {String} nodeId
  * @returns {Array} incidentEdgeIds
  */
 
 const getIncidentEdgeIds = (edges, nodeId) => {
-  let incidentEdgeIds = []
+  var incidentEdgeIds = []
 
   const pushUniqueIncidents = (edgeId, nodeId, id) => {
-    let isIncident = (id === nodeId)
-    let isUnique = (incidentEdgeIds.indexOf(edgeId) < 0)
+    var isIncident = (id === nodeId)
+    var isUnique = (incidentEdgeIds.indexOf(edgeId) < 0)
 
     if (isIncident && isUnique) {
       incidentEdgeIds.push(edgeId)
     }
   }
 
-  for (let edgeId in edges) {
-    let edge = edges[edgeId]
+  for (var edgeId in edges) {
+    var edge = edges[edgeId]
 
     edge.forEach(pushUniqueIncidents.bind(null, edgeId, nodeId))
   }

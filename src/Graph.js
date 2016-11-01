@@ -1,6 +1,8 @@
-var getIncidentEdgeIds = require('./getIncidentEdgeIds')
-var uniqueId = require('lodash.uniqueid')
-var getDegree = require('./getDegree')
+const getIncidentEdgeIds = require('./getIncidentEdgeIds')
+const uniqueId = require('lodash.uniqueid')
+const uniqBy = require('lodash.uniqby')
+const getDegree = require('./getDegree')
+const defaultGraph = require('./defaultGraph')
 
 /**
  * Hypergraph
@@ -12,24 +14,34 @@ var getDegree = require('./getDegree')
  */
 
 // TODO add options (arg, opt) like
-// * pseudograph: false, cannot create loops
 // * multigraph: false, cannot duplicate edges
 // * rank, maxDegree, etc
 class Graph {
   constructor () {
-    var arg = arguments[0] || {}
+    var arg = arguments[0] || defaultGraph
 
-    this.edges = arg.edges || {}
-    this.nodes = arg.nodes || {}
+    if (arg.pseudograph === true) this.pseudograph = true
+
+    this.edges = arg.edges || defaultGraph.edges
+    this.nodes = arg.nodes || defaultGraph.nodes
   }
 
   /**
+   * Add an hyperedge that connects given nodeIds.
+   *
    * @param {Array} nodeIds
    * @returns {String} id
    */
 
   addEdge (nodeIds) {
-    var id = uniqueId()
+    if (this.pseudograph) {
+      if (uniqBy(nodeIds).length < nodeIds.length) {
+        throw new Error('In a pseudograph it is not allowed to create loops')
+      }
+    }
+
+    // TODO throw error nodeIds not found
+    const id = uniqueId()
 
     this.edges[id] = nodeIds
 
@@ -37,12 +49,14 @@ class Graph {
   }
 
   /**
-   * @param {Any} data
-   * @returns {String} id
+   * Add a node, containing given data.
+   *
+   * @param {*} data
+   * @returns {String} id of the node created
    */
 
   addNode (data) {
-    var id = uniqueId()
+    const id = uniqueId()
 
     this.nodes[id] = data
 
@@ -50,6 +64,8 @@ class Graph {
   }
 
   /**
+   * Returns the degree of a node, that is the number of incident edges with loops counted twice.
+   *
    * @param {String} nodeId
    * @returns {Number} degree
    */
@@ -59,6 +75,8 @@ class Graph {
   }
 
   /**
+   * Delete edge by given id.
+   *
    * @param {String} id
    * @returns {void}
    */
@@ -68,6 +86,8 @@ class Graph {
   }
 
   /**
+   * Delete node by given id.
+   *
    * @param {String} id
    * @returns {void}
    */
@@ -75,9 +95,12 @@ class Graph {
   delNode (id) {
     delete this.nodes[id]
 
-    let incidentEdgeIds = getIncidentEdgeIds(this.edges, id)
+    const incidentEdgeIds = getIncidentEdgeIds(this.edges, id)
 
-    for (let edgeId in incidentEdgeIds) {
+    // TODO in an hypergraph it should not remove the edge, but
+    // remove the nodeIds from edges. and remove the edge if it is empty.
+    // Document in the README and the jsdoc above that it removes also edges
+    for (var edgeId in incidentEdgeIds) {
       this.delEdge(edgeId)
     }
   }
