@@ -22,7 +22,6 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
     "cp": "npm run cp_package.json",
     "cp_package.json": "cp package.json gh-pages/_data",
-    "decrypt_.coveralls.yml": "keybase decrypt -o .coveralls.yml .coveralls.yml.asc",
     "gh-pages_push": "git subtree --prefix gh-pages push origin gh-pages",
     "gh-pages_pull": "git subtree --prefix gh-pages pull origin gh-pages",
     "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > gh-pages/index.md; cat README.md >> gh-pages/index.md",
