@@ -1,6 +1,7 @@
 describe('default Graph', () => {
+  const no = require('not-defined')
+  const should = require('should')
   const Graph = require('..').Graph
-  const defaultGraph = require('../src/defaultGraph')
 
   const nodeData1 = 'foo'
   const nodeData2 = ['bar']
@@ -11,9 +12,12 @@ describe('default Graph', () => {
   var edgeId1
 
   describe('constructor', () => {
-    it('defaults to defaultGraph', () => {
-      graph.edges.should.deepEqual(defaultGraph.edges)
-      graph.nodes.should.deepEqual(defaultGraph.nodes)
+    it('defaults to an empty graph', () => {
+      graph.edges.should.deepEqual({})
+      graph.nodes.should.deepEqual({})
+
+      should.not.exist(graph.multigraph)
+      should.not.exist(graph.pseudograph)
     })
   })
 
@@ -32,7 +36,9 @@ describe('default Graph', () => {
   describe('addEdge()', () => {
     it('creates an edge', () => {
       const nodeIds = [nodeId1, nodeId2]
+
       edgeId1 = graph.addEdge(nodeIds)
+
       graph.edges[edgeId1].should.be.eql(nodeIds)
     })
 
@@ -40,13 +46,23 @@ describe('default Graph', () => {
       edgeId1.should.be.a.String
     })
 
-    it('can create loops', () => {
+    it('cannot create loops', () => {
       const nodeId = graph.addNode()
-      const nodeIds = [nodeId, nodeId]
 
-      const edgeId = graph.addEdge(nodeIds)
+      ;(() => {
+        graph.addEdge([nodeId, nodeId])
+      }).should.throw()
+    })
 
-      graph.edges[edgeId].should.be.eql(nodeIds)
+    it('cannot create duplicated edges', () => {
+      const nodeId1 = graph.addNode()
+      const nodeId2 = graph.addNode()
+
+      graph.addEdge([nodeId1, nodeId2])
+
+      ;(() => {
+        graph.addEdge([nodeId1, nodeId2])
+      }).should.throw()
     })
   })
 
@@ -60,12 +76,12 @@ describe('default Graph', () => {
     it('removes a node', () => {
       graph.delNode(nodeId1)
 
-      var nodeNotDefined = (typeof graph.nodes[nodeId1] === 'undefined')
+      const nodeNotDefined = no(graph.nodes[nodeId1])
       nodeNotDefined.should.be.true
     })
 
     it('removes incident edges', () => {
-      var incidentEdgeRemoved = (typeof graph.edges[edgeId1] === 'undefined')
+      const incidentEdgeRemoved = no(graph.edges[edgeId1])
       incidentEdgeRemoved.should.be.true
     })
   })

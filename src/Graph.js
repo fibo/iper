@@ -1,29 +1,43 @@
-const getIncidentEdgeIds = require('./getIncidentEdgeIds')
-const uniqueId = require('lodash.uniqueid')
-const uniqBy = require('lodash.uniqby')
+const isequal = require('lodash.isequal')
+const uniqueid = require('lodash.uniqueid')
+const uniqby = require('lodash.uniqby')
+const staticProps = require('static-props')
+
 const getDegree = require('./getDegree')
-const defaultGraph = require('./defaultGraph')
+const getIncidentEdgeIds = require('./getIncidentEdgeIds')
 
 /**
  * Hypergraph
  *
  * http://en.wikipedia.org/wiki/Hypergraph
  *
- * @class
  * @param {Object} [graph]
+ * @param {Object} [graph.edges]
+ * @param {Object} [graph.nodes]
+ * @param {Boolean} [graph.multigraph] can contain duplicated edges
+ * @param {Boolean} [graph.pseudograph] is a multigraph with loops allowed
+ * @class
  */
 
-// TODO add options (arg, opt) like
-// * multigraph: false, cannot duplicate edges
+// TODO add options like
 // * rank, maxDegree, etc
+// if it is directed, an a -> b edge is different from b -> a
 class Graph {
   constructor () {
-    var arg = arguments[0] || defaultGraph
+    const arg = arguments[0] || {}
+    var obj = {}
 
-    if (arg.pseudograph === true) this.pseudograph = true
+    if (arg.multigraph === true) obj.multigraph = true
 
-    this.edges = arg.edges || defaultGraph.edges
-    this.nodes = arg.nodes || defaultGraph.nodes
+    if (arg.pseudograph === true) {
+      obj.multigraph = true
+      obj.pseudograph = true
+    }
+
+    obj.edges = arg.edges || {}
+    obj.nodes = arg.nodes || {}
+
+    staticProps(this)(obj)
   }
 
   /**
@@ -34,14 +48,24 @@ class Graph {
    */
 
   addEdge (nodeIds) {
-    if (this.pseudograph) {
-      if (uniqBy(nodeIds).length < nodeIds.length) {
-        throw new Error('In a pseudograph it is not allowed to create loops')
+    if (!this.pseudograph) {
+      if (uniqby(nodeIds).length < nodeIds.length) {
+        throw new Error('This is not a pseudograph, it is not allowed to create loops')
+      }
+    }
+
+    if (!this.multigraph) {
+      for (let edgeId in this.edges) {
+        let edge = this.edges[edgeId]
+
+        if (isequal(nodeIds, edge)) {
+          throw new Error('This is not a multigraph, you cannot add duplicated edges')
+        }
       }
     }
 
     // TODO throw error nodeIds not found
-    const id = uniqueId()
+    const id = uniqueid()
 
     this.edges[id] = nodeIds
 
@@ -56,7 +80,7 @@ class Graph {
    */
 
   addNode (data) {
-    const id = uniqueId()
+    const id = uniqueid()
 
     this.nodes[id] = data
 
