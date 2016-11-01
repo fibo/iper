@@ -1,5 +1,5 @@
 describe('getDegree', () => {
-  const getDegree = require('..').getDegree
+  const getDegree = require('./utils').getDegree
 
   const graph1 = require('./examples/graphs/graph1.json')
   const isolatedNode = require('./examples/graphs/isolatedNode.json')

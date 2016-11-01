@@ -1,5 +1,5 @@
 describe('getAdjacentNodeIds', () => {
-  const getAdjacentNodeIds = require('..').getAdjacentNodeIds
+  const getAdjacentNodeIds = require('./utils').getAdjacentNodeIds
 
   const graph1 = require('./examples/graphs/graph1.json')
   const graph2 = require('./examples/graphs/graph2.json')

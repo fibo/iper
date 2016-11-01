@@ -1,5 +1,5 @@
 describe('getOrphanEdgeIds', () => {
-  const getOrphanEdgeIds = require('..').getOrphanEdgeIds
+  const getOrphanEdgeIds = require('./utils').getOrphanEdgeIds
 
   const graph1 = require('./examples/graphs/graph1.json')
   const orphanEdges1 = require('./examples/graphs/orphanEdges1.json')

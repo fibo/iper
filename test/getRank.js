@@ -1,5 +1,5 @@
 describe('getRank', () => {
-  const getRank = require('..').getRank
+  const getRank = require('./utils').getRank
 
   const graph1 = require('./examples/graphs/graph1.json')
   const graph2 = require('./examples/graphs/graph2.json')

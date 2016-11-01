@@ -8,7 +8,7 @@
     "url": "http://g14n.info"
   },
   "license": "MIT",
-  "main": "index.js",
+  "main": "src/iper.js",
   "engines": {
     "node": ">=4.2.3"
   },
@@ -35,7 +35,7 @@
     "pull": "git pull origin master && npm run gh-pages_pull",
     "push": "git push origin master && npm run gh-pages_push",
     "postupdate-deps": "npm test && git commit -am 'updated deps' || git checkout -- package.json",
-    "test": "mocha",
+    "test": "NODE_PATH=src mocha",
     "update-deps": "npm update --save --dev"
   },
   "pre-commit": [

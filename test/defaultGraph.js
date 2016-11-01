@@ -1,7 +1,8 @@
 describe('default Graph', () => {
   const no = require('not-defined')
   const should = require('should')
-  const Graph = require('..').Graph
+
+  const Graph = require('iper').Graph
 
   const nodeData1 = 'foo'
   const nodeData2 = ['bar']

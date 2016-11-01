@@ -1,6 +1,7 @@
 describe('multi Graph', () => {
   const should = require('should')
-  const Graph = require('..').Graph
+
+  const Graph = require('iper').Graph
 
   const graph = new Graph({ multigraph: true })
 

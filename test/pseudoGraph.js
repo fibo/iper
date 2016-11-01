@@ -1,5 +1,5 @@
 describe('pseudo Graph', () => {
-  const Graph = require('..').Graph
+  const Graph = require('iper').Graph
 
   const graph = new Graph({ pseudograph: true })
 
