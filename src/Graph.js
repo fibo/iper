@@ -1,3 +1,6 @@
+// TODO figure out which of there deps is so heavy that the dist/iper.js build
+// is more than 100k! If it is not really necessary remove it, for example the IsInteger
+// is not really necessary.
 const isequal = require('lodash.isequal')
 const isInteger = require('is-integer')
 const uniqueid = require('lodash.uniqueid')

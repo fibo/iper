@@ -78,6 +78,12 @@ var nodeId = graph.addNode({ label: 'foo' })
 * **@param** `{String}` id
 * **@returns** `{void}`
 
+### graph.getRank()
+
+> Returns the max cardinality of any of the edges in the hypergraph.
+
+* **@returns** `{Number}`
+
 ## License
 
 [MIT](http://www.g14n.info/mit-license)
