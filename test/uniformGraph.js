@@ -5,11 +5,15 @@ describe('uniform Graph', () => {
   const graph = new Graph({ uniform: k })
 
   describe('constructor', () => {
-    it('accepts uniform flag and adds it to attributes', () => {
+    it('accepts uniform arg and adds it to attributes', () => {
       graph.uniform.should.be.eql(k)
     })
 
-    it('required uniform to be equal or grater than 2', () => {
+    it('requires uniform to be an integer equal or grater than 2', () => {
+      ;(() => {
+        Graph({ uniform: 7.5 })
+      }).should.throw()
+
       ;(() => {
         Graph({ uniform: -2 })
       }).should.throw()

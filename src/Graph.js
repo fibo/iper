@@ -1,5 +1,3 @@
-const isequal = require('lodash.isequal')
-const uniqueid = require('lodash.uniqueid')
 const staticProps = require('static-props')
 
 const getDegree = require('./getDegree')
@@ -26,11 +24,15 @@ class Graph {
     const arg = arguments[0] || {}
     var obj = {}
 
-    if (Number.isInteger(arg.uniform)) {
-      if (arg.uniform < 2) {
-        throw new TypeError('Argument uniform cannot be less than 2')
+    if (arg.uniform) {
+      if (Number.isInteger(arg.uniform)) {
+        if (arg.uniform < 2) {
+          throw new TypeError('Argument uniform cannot be less than 2')
+        } else {
+          obj.uniform = arg.uniform
+        }
       } else {
-        obj.uniform = arg.uniform
+        throw new TypeError('Argument uniform must be an integer')
       }
     }
 
@@ -83,7 +85,9 @@ class Graph {
       for (let edgeId in this.edges) {
         let edge = this.edges[edgeId]
 
-        if (isequal(nodeIds, edge)) {
+        const newEdgeAlreadyExists = (JSON.stringify(nodeIds) === JSON.stringify(edge))
+
+        if (newEdgeAlreadyExists) {
           throw new Error('This is not a multigraph, you cannot add duplicated edges')
         }
       }
@@ -97,7 +101,7 @@ class Graph {
       throw new Error('Edge points to some nodeId not found in this graph; ' + nodeIdsNotFound.join(','))
     }
 
-    const id = uniqueid()
+    const id = this.generateId()
 
     this.edges[id] = nodeIds
 
@@ -112,7 +116,7 @@ class Graph {
    */
 
   addNode (data) {
-    const id = uniqueid()
+    const id = this.generateId()
 
     this.nodes[id] = data
 
@@ -159,6 +163,22 @@ class Graph {
     for (var edgeId in incidentEdgeIds) {
       this.delEdge(edgeId)
     }
+  }
+
+  /**
+   * Generate a random string to be used as id.
+   * Override this method if you want to customize id generation.
+   */
+
+  generateId () {
+    const length = 4
+    var result = ''
+
+    while (result.length < length) {
+      result += String.fromCharCode(97 + Math.floor(Math.random() * 26))
+    }
+
+    return result
   }
 
   /**

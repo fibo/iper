@@ -80,6 +80,28 @@ var nodeId = graph.addNode({ label: 'foo' })
 * **@param** `{String}` id
 * **@returns** `{void}`
 
+### graph.generateId()
+
+> Returns a random string to be used as id.
+
+* **@returns** `{String}`
+
+Override this methos if you want to customize how ids look like, for example
+
+```javascript
+const uniqueid = require('lodash.uniqueid')
+const Graph = require('iper').Graph
+
+class MyGraph extends Graph {
+  generateId () {
+    return uniqueid()
+  }
+}
+
+module.exports = MyGraph
+```
+
+
 ### graph.getRank()
 
 > Returns the max cardinality of any of the edges in the hypergraph.

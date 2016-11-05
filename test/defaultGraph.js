@@ -13,12 +13,13 @@ describe('default Graph', () => {
   var edgeId1
 
   describe('constructor', () => {
-    it('defaults to an empty graph', () => {
+    it('defaults to an empty generic graph', () => {
       graph.edges.should.deepEqual({})
       graph.nodes.should.deepEqual({})
 
       should.not.exist(graph.multigraph)
       should.not.exist(graph.pseudograph)
+      should.not.exist(graph.uniform)
     })
   })
 

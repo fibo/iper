@@ -10,8 +10,10 @@
     "node"
   ],
   "keywords": [
-    "dataflow",
-    "visual"
+    "math",
+    "graph",
+    "hyper",
+    "hypergraph"
   ],
   "license": "MIT",
   "ignore": [
