@@ -29,7 +29,9 @@ bower install iper
 > Hypergraph constructor.
 
 ```javascript
-var graph = new Graph()
+const Graph = require('iper').Graph
+
+const graph = new Graph()
 ```
 
 * **@param** `{Object}` [graph]
