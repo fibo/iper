@@ -1,6 +1,5 @@
 const isequal = require('lodash.isequal')
 const uniqueid = require('lodash.uniqueid')
-const uniqby = require('lodash.uniqby')
 const staticProps = require('static-props')
 
 const getDegree = require('./getDegree')
@@ -22,9 +21,6 @@ const getRank = require('./getRank')
  * @class
  */
 
-// TODO add options like
-// * rank, maxDegree, etc
-// if it is directed, an a -> b edge is different from b -> a
 class Graph {
   constructor () {
     const arg = arguments[0] || {}
@@ -75,7 +71,10 @@ class Graph {
     }
 
     if (!this.pseudograph) {
-      if (uniqby(nodeIds).length < nodeIds.length) {
+      const uniqNodeIds = nodeIds.filter((id, i) => nodeIds.indexOf(id) === i)
+      const foundDuplicates = (uniqNodeIds.length < nodeIds.length)
+
+      if (foundDuplicates) {
         throw new Error('This is not a pseudograph, it is not allowed to create loops')
       }
     }

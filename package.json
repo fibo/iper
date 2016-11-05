@@ -57,7 +57,6 @@
   },
   "dependencies": {
     "lodash.isequal": "^4.4.0",
-    "lodash.uniqby": "^4.7.0",
     "lodash.uniqueid": "^4.0.0",
     "not-defined": "^1.1.0",
     "static-props": "^1.0.0",
