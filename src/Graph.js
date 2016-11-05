@@ -1,8 +1,4 @@
-// TODO figure out which of there deps is so heavy that the dist/iper.js build
-// is more than 100k! If it is not really necessary remove it, for example the IsInteger
-// is not really necessary.
 const isequal = require('lodash.isequal')
-const isInteger = require('is-integer')
 const uniqueid = require('lodash.uniqueid')
 const uniqby = require('lodash.uniqby')
 const staticProps = require('static-props')
@@ -34,7 +30,7 @@ class Graph {
     const arg = arguments[0] || {}
     var obj = {}
 
-    if (isInteger(arg.uniform)) {
+    if (Number.isInteger(arg.uniform)) {
       if (arg.uniform < 2) {
         throw new TypeError('Argument uniform cannot be less than 2')
       } else {
