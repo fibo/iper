@@ -44,14 +44,14 @@ const graph = new Graph()
 * **@param** `{Boolean}` [graph.pseudograph] is a multigraph with loops allowed
 * **@param** `{Number}` [graph.uniform] all edges has the same cardinality (i.e. number of nodes)
 
-### graph.addEdge(nodeIds)
+### `graph.addEdge(nodeIds)`
 
 > Add an hyperedge that connects given nodeIds.
 
 * **@param** `{Array}` nodeIds
 * **@returns** `{String}` id
 
-### graph.addNode(data)
+### `graph.addNode(data)`
 
 > Add a node, containing given data.
 
@@ -62,34 +62,34 @@ var nodeId = graph.addNode({ label: 'foo' })
 * **@param** `{*}` [data]
 * **@returns** `{String}` id of the node created
 
-### graph.degreeOf(nodeId)
+### `graph.degreeOf(nodeId)`
 
 > Returns the degree of a node, that is the number of incident edges with loops counted twice.
 
 * **@param** `{String}` id
 * **@returns** `{void}`
 
-### graph.delEdge(id)
+### `graph.delEdge(id)`
 
 > Delete edge by given id.
 
 * **@param** `{String}` id
 * **@returns** `{void}`
 
-### graph.delNode(id)
+### `graph.delNode(id)`
 
 > Delete node by given id.
 
 * **@param** `{String}` id
 * **@returns** `{void}`
 
-### graph.generateId()
+### `graph.generateId()`
 
 > Returns a random string to be used as id.
 
 * **@returns** `{String}`
 
-Override this methos if you want to customize how ids look like, for example
+Override this method if you want to customize how ids are generated, for example
 
 ```javascript
 const uniqueid = require('lodash.uniqueid')
@@ -105,7 +105,7 @@ module.exports = MyGraph
 ```
 
 
-### graph.getRank()
+### `graph.getRank()`
 
 > Returns the max cardinality of any of the edges in the hypergraph.
 

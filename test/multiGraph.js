@@ -7,7 +7,7 @@ describe('multi Graph', () => {
 
   describe('constructor', () => {
     it('accepts multigraph flag and adds it to attributes', () => {
-      graph.multigraph.should.be.true
+      graph.multigraph.should.be.true()
     })
   })
 

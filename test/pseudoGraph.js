@@ -5,11 +5,11 @@ describe('pseudo Graph', () => {
 
   describe('constructor', () => {
     it('accepts pseudograph flag and adds it to attributes', () => {
-      graph.pseudograph.should.be.true
+      graph.pseudograph.should.be.true()
     })
 
     it('implies multigraph', () => {
-      graph.multigraph.should.be.true
+      graph.multigraph.should.be.true()
     })
   })
 

@@ -3,7 +3,6 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
  * @param {Object} obj
  * @returns {Function}
  */
-
 function staticProps (obj) {
   /**
    * @param {Object} props
@@ -11,30 +10,27 @@ function staticProps (obj) {
    */
   return function (props, enumerable) {
     var staticProps = {}
-
     for (var propName in props) {
       var staticProp = {
         configurable: false,
         enumerable: enumerable
       }
       var prop = props[propName]
-
-      if (typeof prop === 'function') staticProp.get = prop
-      else {
+      if (typeof prop === 'function') {
+        staticProp.get = prop
+      } else {
         staticProp.value = prop
-
         staticProp.writable = false
       }
-
       staticProps[propName] = staticProp
     }
     Object.defineProperties(obj, staticProps)
   }
 }
-module.exports = staticProps
+module.exports = exports.default = staticProps
 
 },{}],2:[function(require,module,exports){
-// In browserify context, *strict-mode* fall back to a no op.
+// In browserify context, fall back to a no op.
 module.exports = function (cb) { cb() }
 
 },{}],3:[function(require,module,exports){
@@ -200,9 +196,11 @@ class Graph {
     // TODO in an hypergraph it should not remove the edge, but
     // remove the nodeIds from edges. and remove the edge if it is empty.
     // Document in the README and the jsdoc above that it removes also edges
-    for (var edgeId in incidentEdgeIds) {
-      this.delEdge(edgeId)
-    }
+    incidentEdgeIds.forEach((edgeId) => {
+      if (this.edges[edgeId].length === 2) {
+        this.delEdge(edgeId)
+      }
+    })
   }
 
   /**
