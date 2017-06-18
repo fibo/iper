@@ -2,6 +2,11 @@
 
 > Hypergraphs for breakfast!
 
+[Installation](#installation) |
+[API](#api) |
+[Examples](#examples) |
+[License](#license)
+
 [![Node engine](https://img.shields.io/node/v/iper.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/iper.svg)](http://badge.fury.io/js/iper) [![Build Status](https://travis-ci.org/fibo/iper.svg?branch=master)](https://travis-ci.org/fibo/iper?branch=master) [![Dependency Status](https://gemnasium.com/fibo/iper.svg)](https://gemnasium.com/fibo/iper) [![Coverage Status](https://coveralls.io/repos/fibo/iper/badge.svg?branch=master)](https://coveralls.io/r/fibo/iper?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/iper/test)
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
@@ -105,12 +110,21 @@ class MyGraph extends Graph {
 module.exports = MyGraph
 ```
 
-
 ### `graph.getRank()`
 
 > Returns the max cardinality of any of the edges in the hypergraph.
 
 * **@returns** `{Number}`
+
+## Examples
+
+### Classic graph
+
+```javascript
+const Graph = require('iper').Graph
+
+const classicGraph = new Graph({ uniform: 2 })
+```
 
 ## License
 
