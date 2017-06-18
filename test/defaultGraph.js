@@ -1,19 +1,12 @@
 describe('default Graph', () => {
   const no = require('not-defined')
   const should = require('should')
-
   const Graph = require('iper').Graph
-
-  const nodeData1 = 'foo'
-  const nodeData2 = ['bar']
-
-  const graph = new Graph()
-  var nodeId1
-  var nodeId2
-  var edgeId1
 
   describe('constructor', () => {
     it('defaults to an empty generic graph', () => {
+      const graph = new Graph()
+
       graph.edges.should.deepEqual({})
       graph.nodes.should.deepEqual({})
 
@@ -25,26 +18,39 @@ describe('default Graph', () => {
 
   describe('addNode()', () => {
     it('creates a node', () => {
-      nodeId1 = graph.addNode(nodeData1)
-      graph.nodes[nodeId1].should.be.eql(nodeData1)
+      const graph = new Graph()
+      const nodeData = 'foo'
+
+      const nodeId = graph.addNode(nodeData)
+
+      graph.nodes[nodeId].should.be.eql(nodeData)
     })
 
     it('returns an id', () => {
-      nodeId2 = graph.addNode(nodeData2)
-      nodeId2.should.be.a.String
+      const graph = new Graph()
+
+      const nodeId = graph.addNode()
+
+      nodeId.should.be.a.String()
     })
   })
 
   describe('addEdge()', () => {
     it('creates an edge', () => {
+      const graph = new Graph()
+
+      const nodeId1 = graph.addNode()
+      const nodeId2 = graph.addNode()
       const nodeIds = [nodeId1, nodeId2]
 
-      edgeId1 = graph.addEdge(nodeIds)
+      const edgeId = graph.addEdge(nodeIds)
 
-      graph.edges[edgeId1].should.be.eql(nodeIds)
+      graph.edges[edgeId].should.be.eql(nodeIds)
     })
 
     it('requires at least two nodeIds', () => {
+      const graph = new Graph()
+
       const nodeId = graph.addNode()
 
       const nodeIds = [nodeId]
@@ -55,6 +61,8 @@ describe('default Graph', () => {
     })
 
     it('cannot create an edge pointing to some nodeId not found', () => {
+      const graph = new Graph()
+
       const nodeId1 = graph.addNode()
       const nodeId2 = graph.addNode()
 
@@ -80,10 +88,21 @@ describe('default Graph', () => {
     })
 
     it('returns an id', () => {
-      edgeId1.should.be.a.String
+      const graph = new Graph()
+
+      const nodeId1 = graph.addNode()
+      const nodeId2 = graph.addNode()
+
+      const nodeIds = [nodeId1, nodeId2]
+
+      const edgeId = graph.addEdge(nodeIds)
+
+      edgeId.should.be.a.String()
     })
 
     it('cannot create loops', () => {
+      const graph = new Graph()
+
       const nodeId = graph.addNode()
 
       const nodeIds = [nodeId, nodeId]
@@ -94,48 +113,78 @@ describe('default Graph', () => {
     })
 
     it('cannot create duplicated edges', () => {
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
+      const graph = new Graph()
 
-      graph.addEdge([nodeId1, nodeId2])
+      const nodeId = graph.addNode()
+      const nodeIds = [nodeId, nodeId]
 
       ;(() => {
-        graph.addEdge([nodeId1, nodeId2])
+        graph.addEdge(nodeIds)
       }).should.throw()
     })
   })
 
   describe('degreeOf(nodeId)', () => {
     it('returns the degree of a node', () => {
+      const graph = new Graph()
+
+      const nodeId1 = graph.addNode()
+      const nodeId2 = graph.addNode()
+      const nodeIds = [nodeId1, nodeId2]
+
+      graph.addEdge(nodeIds)
+
       graph.degreeOf(nodeId1).should.be.eql(1)
     })
   })
 
   describe('delNode()', () => {
     it('removes a node', () => {
-      graph.delNode(nodeId1)
+      const graph = new Graph()
+      const nodeData = 'foo'
 
-      const nodeNotDefined = no(graph.nodes[nodeId1])
-      nodeNotDefined.should.be.true
+      const nodeId = graph.addNode(nodeData)
+
+      graph.nodes[nodeId].should.be.eql(nodeData)
+
+      graph.delNode(nodeId)
+
+      const nodeNotDefined = no(graph.nodes[nodeId])
+
+      nodeNotDefined.should.be.true()
     })
 
     it('removes incident edges', () => {
-      const incidentEdgeRemoved = no(graph.edges[edgeId1])
-      incidentEdgeRemoved.should.be.true
+      const graph = new Graph()
+
+      const nodeId1 = graph.addNode()
+      const nodeId2 = graph.addNode()
+      const nodeIds = [nodeId1, nodeId2]
+
+      const edgeId = graph.addEdge(nodeIds)
+
+      graph.edges[edgeId].should.be.eql(nodeIds)
+
+      graph.delNode(nodeId1)
+
+      const incidentEdgeRemoved = no(graph.edges[edgeId])
+      incidentEdgeRemoved.should.be.true()
     })
   })
 
   describe('delEdge()', () => {
     it('removes an edge', () => {
-      nodeId1 = graph.addNode(nodeData1)
-      nodeId2 = graph.addNode(nodeData2)
+      const graph = new Graph()
+      const nodeId1 = graph.addNode()
+      const nodeId2 = graph.addNode()
       const nodeIds = [nodeId1, nodeId2]
-      edgeId1 = graph.addEdge(nodeIds)
 
-      graph.delEdge(edgeId1)
+      const edgeId = graph.addEdge(nodeIds)
 
-      var edgeNotDefined = (typeof graph.edges[edgeId1] === 'undefined')
-      edgeNotDefined.should.be.true
+      graph.delEdge(edgeId)
+
+      const edgeNotDefined = no(graph.edges[edgeId])
+      edgeNotDefined.should.be.true()
     })
   })
 

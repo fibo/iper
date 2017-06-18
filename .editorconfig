@@ -1,8 +1,8 @@
 # EditorConfig is awesome: http://EditorConfig.org
 
-# This file was created by command
+# This file was created via command line
 #
-# npm install dot-editorconfig --save-dev
+#     npm install dot-editorconfig
 
 # top-most EditorConfig file
 root = true
@@ -10,19 +10,14 @@ root = true
 [*]
 end_of_line = lf
 trim_trailing_whitespace = true
-
-[*{.jade,.js,.json,.html,.yaml,.yml,rc}]
 charset = utf-8
 indent_style = space
 indent_size = 2
 
 [*{.conf,.pl,.pm,.py}]
-charset = utf-8
-indent_style = space
 indent_size = 4
 
 [*{.glsl,.go,.sh,.sql}]
-charset = utf-8
 indent_style = tab
 
 [Makefile]

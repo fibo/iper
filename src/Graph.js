@@ -160,9 +160,11 @@ class Graph {
     // TODO in an hypergraph it should not remove the edge, but
     // remove the nodeIds from edges. and remove the edge if it is empty.
     // Document in the README and the jsdoc above that it removes also edges
-    for (var edgeId in incidentEdgeIds) {
-      this.delEdge(edgeId)
-    }
+    incidentEdgeIds.forEach((edgeId) => {
+      if (this.edges[edgeId].length === 2) {
+        this.delEdge(edgeId)
+      }
+    })
   }
 
   /**

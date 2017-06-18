@@ -16,23 +16,19 @@
     "build": "npm test && npm run browserify && npm run jekyll; git status",
     "browserify": "npm run browserify_dist; npm run browserify_test",
     "browserify_dist": "NODE_PATH=src browserify -r ./${npm_package_main}:${npm_package_name} -o dist/${npm_package_name}.js",
-    "browserify_test": "NODE_PATH=src browserify test/*js -o gh-pages/test/bundle.js",
+    "browserify_test": "NODE_PATH=src browserify test/*js -o docs/test/bundle.js",
     "check-deps": "npm outdated",
     "coverage": "npm run istanbul && npm run coveralls",
     "coveralls": "cat ./coverage/lcov.info | coveralls --verbose",
     "cp": "npm run cp_package.json",
-    "cp_package.json": "cp package.json gh-pages/_data",
-    "gh-pages_push": "git subtree --prefix gh-pages push origin gh-pages",
-    "gh-pages_pull": "git subtree --prefix gh-pages pull origin gh-pages",
-    "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > gh-pages/index.md; cat README.md >> gh-pages/index.md",
+    "cp_package.json": "cp package.json docs/_data",
+    "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > docs/index.md; cat README.md >> docs/index.md",
     "istanbul": "istanbul cover _mocha",
-    "jekyll": "npm run homepage; npm run cp; cd gh-pages; jekyll build; cd ..",
+    "jekyll": "npm run homepage; npm run cp; cd docs; jekyll build; cd ..",
     "lint": "for x in src test; do npm run lint_$x; done",
     "lint_src": "standard src/*js",
     "lint_test": "standard --global describe --global it test/*js",
-    "postversion": "git push origin v${npm_package_version}; npm publish; npm run push",
-    "pull": "git pull origin master && npm run gh-pages_pull",
-    "push": "git push origin master && npm run gh-pages_push",
+    "postversion": "git push origin v${npm_package_version}; npm publish; git push origin master",
     "postupdate-deps": "npm test && git commit -am 'updated deps' || git checkout -- package.json",
     "test": "NODE_PATH=src mocha",
     "update-deps": "npm update --save --dev"
@@ -57,17 +53,17 @@
   },
   "dependencies": {
     "not-defined": "^1.1.0",
-    "static-props": "^1.0.0",
-    "strict-mode": "^1.0.0"
+    "static-props": "^1.1.0",
+    "strict-mode": "^1.1.0"
   },
   "devDependencies": {
-    "browserify": "^13.0.0",
+    "browserify": "^14.4.0",
     "coveralls": "^2.11.6",
-    "dot-editorconfig": "^0.3.0",
+    "dot-editorconfig": "^1.0.1",
     "istanbul": "^0.4.1",
-    "mocha": "^3.1.2",
-    "pre-commit": "^1.1.2",
+    "mocha": "^3.4.2",
+    "pre-commit": "^1.2.2",
     "should": "^11.1.1",
-    "standard": "^8.5.0"
+    "standard": "^10.0.2"
   }
 }
