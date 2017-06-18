@@ -66,18 +66,22 @@ var nodeId = graph.addNode({ label: 'foo' })
 * **@param** `{String}` id
 * **@returns** `{void}`
 
-### `graph.delEdge(id)`
+### `graph.delEdge(edgeId)`
 
 > Delete edge by given id.
 
-* **@param** `{String}` id
+The node id will be removed from every edge connected.
+If some edge after this operation will result having only one or zero
+vertices left, it will be removed too.
+
+* **@param** `{String}` edgeId
 * **@returns** `{void}`
 
-### `graph.delNode(id)`
+### `graph.delNode(nodeId)`
 
 > Delete node by given id.
 
-* **@param** `{String}` id
+* **@param** `{String}` nodeId
 * **@returns** `{void}`
 
 ### `graph.generateId()`

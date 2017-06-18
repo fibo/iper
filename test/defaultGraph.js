@@ -161,16 +161,40 @@ describe('default Graph', () => {
 
       const nodeId1 = graph.addNode()
       const nodeId2 = graph.addNode()
-      const nodeIds = [nodeId1, nodeId2]
+      const nodeId3 = graph.addNode()
+      const nodeId4 = graph.addNode()
 
-      const edgeId = graph.addEdge(nodeIds)
+      const nodeIds12 = [nodeId1, nodeId2]
+      const nodeIds23 = [nodeId2, nodeId3]
+      const nodeIds1234 = [nodeId1, nodeId2, nodeId3, nodeId4]
 
-      graph.edges[edgeId].should.be.eql(nodeIds)
+      const edgeId1 = graph.addEdge(nodeIds12)
+      const edgeId2 = graph.addEdge(nodeIds23)
+      const edgeId3 = graph.addEdge(nodeIds1234)
+
+      graph.edges[edgeId1].should.be.eql(nodeIds12)
+      graph.edges[edgeId2].should.be.eql(nodeIds23)
+      graph.edges[edgeId2].should.be.eql(nodeIds23)
 
       graph.delNode(nodeId1)
 
-      const incidentEdgeRemoved = no(graph.edges[edgeId])
-      incidentEdgeRemoved.should.be.true()
+      const incidentEdgeRemoved1 = no(graph.edges[edgeId1])
+      incidentEdgeRemoved1.should.be.true()
+
+      graph.edges[edgeId2].should.be.Array()
+      graph.edges[edgeId3].should.be.Array()
+
+      graph.delNode(nodeId2)
+
+      const incidentEdgeRemoved2 = no(graph.edges[edgeId2])
+      incidentEdgeRemoved2.should.be.true()
+
+      graph.edges[edgeId3].should.be.Array()
+
+      graph.delNode(nodeId4)
+
+      const incidentEdgeRemoved3 = no(graph.edges[edgeId3])
+      incidentEdgeRemoved3.should.be.true()
     })
   })
 

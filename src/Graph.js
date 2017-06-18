@@ -137,33 +137,35 @@ class Graph {
   /**
    * Delete edge by given id.
    *
-   * @param {String} id
+   * @param {String} edgeId
+   *
    * @returns {void}
    */
 
-  delEdge (id) {
-    delete this.edges[id]
+  delEdge (edgeId) {
+    delete this.edges[edgeId]
   }
 
   /**
    * Delete node by given id.
+   * The node id will be removed from every edge connected.
+   * If some edge after this operation will result having only
+   * one or zero vertices left, it will be removed too.
    *
-   * @param {String} id
+   * @param {String} nodeId
+   *
    * @returns {void}
    */
 
-  delNode (id) {
-    delete this.nodes[id]
+  delNode (nodeId) {
+    delete this.nodes[nodeId]
 
-    const incidentEdgeIds = getIncidentEdgeIds(this.edges, id)
+    const incidentEdgeIds = getIncidentEdgeIds(this.edges, nodeId)
 
-    // TODO in an hypergraph it should not remove the edge, but
-    // remove the nodeIds from edges. and remove the edge if it is empty.
-    // Document in the README and the jsdoc above that it removes also edges
     incidentEdgeIds.forEach((edgeId) => {
       // Remove all nodeIds found in edge.
-      while (this.edges[edgeId].indexOf(id) > -1) {
-        this.edges[edgeId].splice(this.edges[edgeId].indexOf(id), 1)
+      while (this.edges[edgeId].indexOf(nodeId) > -1) {
+        this.edges[edgeId].splice(this.edges[edgeId].indexOf(nodeId), 1)
       }
 
       // If edge has one or zero vertices left, remove it.
