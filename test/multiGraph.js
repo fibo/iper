@@ -12,7 +12,7 @@ describe('multi Graph', () => {
   })
 
   describe('addEdge()', () => {
-    it('cannot add duplicated edges', () => {
+    it('can add duplicated edges', () => {
       const nodeId1 = graph.addNode()
       const nodeId2 = graph.addNode()
 

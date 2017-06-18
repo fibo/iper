@@ -161,7 +161,13 @@ class Graph {
     // remove the nodeIds from edges. and remove the edge if it is empty.
     // Document in the README and the jsdoc above that it removes also edges
     incidentEdgeIds.forEach((edgeId) => {
-      if (this.edges[edgeId].length === 2) {
+      // Remove all nodeIds found in edge.
+      while (this.edges[edgeId].indexOf(id) > -1) {
+        this.edges[edgeId].splice(this.edges[edgeId].indexOf(id), 1)
+      }
+
+      // If edge has one or zero vertices left, remove it.
+      if (this.edges[edgeId].length < 2) {
         this.delEdge(edgeId)
       }
     })
@@ -170,6 +176,8 @@ class Graph {
   /**
    * Generate a random string to be used as id.
    * Override this method if you want to customize id generation.
+   *
+   * @returns {String} id
    */
 
   generateId () {

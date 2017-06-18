@@ -115,11 +115,13 @@ describe('default Graph', () => {
     it('cannot create duplicated edges', () => {
       const graph = new Graph()
 
-      const nodeId = graph.addNode()
-      const nodeIds = [nodeId, nodeId]
+      const nodeId1 = graph.addNode()
+      const nodeId2 = graph.addNode()
+
+      graph.addEdge([nodeId1, nodeId2])
 
       ;(() => {
-        graph.addEdge(nodeIds)
+        graph.addEdge([nodeId1, nodeId2])
       }).should.throw()
     })
   })
