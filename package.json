@@ -54,7 +54,7 @@
   "dependencies": {
     "not-defined": "^1.1.0",
     "static-props": "^1.1.0",
-    "strict-mode": "^1.1.0"
+    "strict-mode": "^1.1.1"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
