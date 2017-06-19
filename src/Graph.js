@@ -1,3 +1,4 @@
+const no = require('not-defined')
 const staticProps = require('static-props')
 
 const getDegree = require('./getDegree')
@@ -101,7 +102,7 @@ class Graph {
       throw new Error('Edge points to some nodeId not found in this graph; ' + nodeIdsNotFound.join(','))
     }
 
-    const id = this.generateId()
+    const id = this._generateUniqueId()
 
     this.edges[id] = nodeIds
 
@@ -116,7 +117,7 @@ class Graph {
    */
 
   addNode (data) {
-    const id = this.generateId()
+    const id = this._generateUniqueId()
 
     this.nodes[id] = data
 
@@ -178,6 +179,8 @@ class Graph {
   /**
    * Generate a random string to be used as id.
    * Override this method if you want to customize id generation.
+   * This method is called by a wrapper which ensures the id generated
+   * was not used yet.
    *
    * @returns {String} id
    */
@@ -191,6 +194,22 @@ class Graph {
     }
 
     return result
+  }
+
+  /**
+   * Generate an id and make sure it is unique.
+   *
+   * @returns {String} id
+   */
+
+  _generateUniqueId () {
+    const id = this.generateId()
+
+    if (no(this.edges[id]) && no(this.nodes[id])) {
+      return id
+    } else {
+      return this._generateUniqueId()
+    }
   }
 
   /**
