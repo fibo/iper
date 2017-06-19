@@ -22,6 +22,16 @@ describe('uniform Graph', () => {
         Graph({ uniform: 1 })
       }).should.throw()
     })
+
+    it('checks that edges are uniform', () => {
+      ;(() => {
+        Graph({
+          uniform: 2,
+          nodes: { a: 1, b: 2, c: 3 },
+          edges: { e: [ 'a', 'b', 'c' ] }
+        })
+      }).should.throw()
+    })
   })
 
   describe('addEdge()', () => {

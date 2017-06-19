@@ -14,6 +14,15 @@ describe('default Graph', () => {
       should.not.exist(graph.pseudograph)
       should.not.exist(graph.uniform)
     })
+
+    it('checks for orphan nodes', () => {
+      ;(() => {
+        Graph({
+          nodes: { a: null },
+          edges: { e: ['a', 'b'] }
+        })
+      }).should.throw()
+    })
   })
 
   describe('addNode()', () => {

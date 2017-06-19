@@ -25,6 +25,25 @@ class Graph {
     const arg = arguments[0] || {}
     var obj = {}
 
+    obj.edges = arg.edges || {}
+    obj.nodes = arg.nodes || {}
+
+    // Check for orphan nodes.
+
+    var nodeIdsNotFound = []
+
+    Object.keys(obj.edges).forEach((edgeId) => {
+      obj.edges[edgeId].forEach((nodeId) => {
+        if (no(obj[nodeId])) {
+          nodeIdsNotFound.push(nodeId)
+        }
+      })
+    })
+
+    if (nodeIdsNotFound.length > 0) {
+      throw new TypeError('Orphan nodes found ' + nodeIdsNotFound.join(','))
+    }
+
     if (arg.uniform) {
       if (Number.isInteger(arg.uniform)) {
         if (arg.uniform < 2) {
@@ -35,6 +54,20 @@ class Graph {
       } else {
         throw new TypeError('Argument uniform must be an integer')
       }
+
+      // Check that all edges are uniform.
+
+      var notUniformEdges = {}
+
+      Object.keys(obj.edges).forEach((edgeId) => {
+        if (obj.edges[edgeId].length !== obj.uniform) {
+          notUniformEdges[edgeId] = obj.edgeId[edgeId]
+        }
+      })
+
+      if (Object.keys(notUniformEdges).length > 0) {
+        throw new TypeError('Graph is not ' + obj.uniform + '-uniform ' + JSON.stringify(notUniformEdges))
+      }
     }
 
     if (arg.multigraph === true) obj.multigraph = true
@@ -43,9 +76,6 @@ class Graph {
       obj.multigraph = true
       obj.pseudograph = true
     }
-
-    obj.edges = arg.edges || {}
-    obj.nodes = arg.nodes || {}
 
     const enumerable = true
     staticProps(this)(obj, enumerable)
