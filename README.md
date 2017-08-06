@@ -21,12 +21,6 @@ With [npm](https://npmjs.org/) do
 npm install iper
 ```
 
-With [bower](http://bower.io/) do
-
-```bash
-bower install iper
-```
-
 ## API
 
 ### `new Graph([graph])`

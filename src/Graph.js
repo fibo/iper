@@ -21,9 +21,8 @@ const getRank = require('./getRank')
  */
 
 class Graph {
-  constructor () {
-    const arg = arguments[0] || {}
-    var obj = {}
+  constructor (arg = {}) {
+    let obj = {}
 
     obj.edges = arg.edges || {}
     obj.nodes = arg.nodes || {}
@@ -57,7 +56,7 @@ class Graph {
 
       // Check that all edges are uniform.
 
-      var notUniformEdges = {}
+      let notUniformEdges = {}
 
       Object.keys(obj.edges).forEach((edgeId) => {
         if (obj.edges[edgeId].length !== obj.uniform) {

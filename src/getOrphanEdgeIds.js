@@ -9,12 +9,12 @@ const no = require('not-defined')
  */
 
 const getOrphanEdgeIds = (edges, nodes) => {
-  var orphanEdgeIds = []
+  let orphanEdgeIds = []
 
   const nodeIdsNotFound = (nodeId) => (no(nodes[nodeId]))
 
-  for (var edgeId in edges) {
-    var edge = edges[edgeId]
+  for (const edgeId in edges) {
+    const edge = edges[edgeId]
 
     if (edge.filter(nodeIdsNotFound).length > 0) {
       orphanEdgeIds.push(edgeId)

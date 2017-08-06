@@ -6,12 +6,11 @@
  */
 
 const getRank = (edges) => {
-  var rank = 0
+  let rank = 0
 
-  for (var edgeId in edges) {
-    var edge = edges[edgeId]
-    rank = Math.max(rank, edge.length)
-  }
+  Object
+    .values(edges)
+    .forEach(edge => { rank = Math.max(rank, edge.length) })
 
   return rank
 }

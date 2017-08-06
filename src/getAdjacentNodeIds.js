@@ -17,18 +17,15 @@ const getAdjacentNodeIds = (edges, nodeId) => {
     return adjacentNodeIds.indexOf(id) === -1
   }
 
-  for (let edgeId in edges) {
-    let edge = edges[edgeId]
-
+  Object.values(edges).forEach(edge => {
     // Nothing to do if edge does not contain nodeId.
-    if (edge.indexOf(nodeId) === -1) continue
+    if (edge.indexOf(nodeId) === -1) return
 
     // Take all nodeIds except given nodeId, avoid repetitions.
-    let nodeIds = edge.filter(givenNodeId)
-                      .filter(foundNodeIds)
+    let nodeIds = edge.filter(givenNodeId).filter(foundNodeIds)
 
     adjacentNodeIds = adjacentNodeIds.concat(nodeIds)
-  }
+  })
 
   return adjacentNodeIds
 }

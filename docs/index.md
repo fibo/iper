@@ -5,6 +5,11 @@ title: iper
 
 > Hypergraphs for breakfast!
 
+[Installation](#installation) |
+[API](#api) |
+[Examples](#examples) |
+[License](#license)
+
 [![Node engine](https://img.shields.io/node/v/iper.svg)](https://nodejs.org/en/) [![NPM version](https://badge.fury.io/js/iper.svg)](http://badge.fury.io/js/iper) [![Build Status](https://travis-ci.org/fibo/iper.svg?branch=master)](https://travis-ci.org/fibo/iper?branch=master) [![Dependency Status](https://gemnasium.com/fibo/iper.svg)](https://gemnasium.com/fibo/iper) [![Coverage Status](https://coveralls.io/repos/fibo/iper/badge.svg?branch=master)](https://coveralls.io/r/fibo/iper?branch=master) [![Test page](https://img.shields.io/badge/test-page-blue.svg)](http://g14n.info/iper/test)
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
@@ -17,12 +22,6 @@ With [npm](https://npmjs.org/) do
 
 ```bash
 npm install iper
-```
-
-With [bower](http://bower.io/) do
-
-```bash
-bower install iper
 ```
 
 ## API
@@ -42,7 +41,7 @@ const graph = new Graph()
 * **@param** `{Object}` [graph.nodes]
 * **@param** `{Boolean}` [graph.multigraph] can contain duplicated edges
 * **@param** `{Boolean}` [graph.pseudograph] is a multigraph with loops allowed
-* **@param** `{Number}` [graph.uniform] all edges has the same cardinality (i.e. number of nodes)
+* **@param** `{Number}` [graph.uniform] all edges have the same cardinality (i.e. number of nodes)
 
 ### `graph.addEdge(nodeIds)`
 
@@ -69,18 +68,22 @@ var nodeId = graph.addNode({ label: 'foo' })
 * **@param** `{String}` id
 * **@returns** `{void}`
 
-### `graph.delEdge(id)`
+### `graph.delEdge(edgeId)`
 
 > Delete edge by given id.
 
-* **@param** `{String}` id
+The node id will be removed from every edge connected.
+If some edge after this operation will result having only one or zero
+vertices left, it will be removed too.
+
+* **@param** `{String}` edgeId
 * **@returns** `{void}`
 
-### `graph.delNode(id)`
+### `graph.delNode(nodeId)`
 
 > Delete node by given id.
 
-* **@param** `{String}` id
+* **@param** `{String}` nodeId
 * **@returns** `{void}`
 
 ### `graph.generateId()`
@@ -104,12 +107,21 @@ class MyGraph extends Graph {
 module.exports = MyGraph
 ```
 
-
 ### `graph.getRank()`
 
 > Returns the max cardinality of any of the edges in the hypergraph.
 
 * **@returns** `{Number}`
+
+## Examples
+
+### Classic graph
+
+```javascript
+const Graph = require('iper').Graph
+
+const classicGraph = new Graph({ uniform: 2 })
+```
 
 ## License
 

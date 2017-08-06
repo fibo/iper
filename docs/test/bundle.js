@@ -34,22 +34,22 @@ function placeHoldersCount (b64) {
 
 function byteLength (b64) {
   // base64 is 4/3 + up to two characters of the original data
-  return b64.length * 3 / 4 - placeHoldersCount(b64)
+  return (b64.length * 3 / 4) - placeHoldersCount(b64)
 }
 
 function toByteArray (b64) {
-  var i, j, l, tmp, placeHolders, arr
+  var i, l, tmp, placeHolders, arr
   var len = b64.length
   placeHolders = placeHoldersCount(b64)
 
-  arr = new Arr(len * 3 / 4 - placeHolders)
+  arr = new Arr((len * 3 / 4) - placeHolders)
 
   // if there are placeholders, only get up to the last complete 4 chars
   l = placeHolders > 0 ? len - 4 : len
 
   var L = 0
 
-  for (i = 0, j = 0; i < l; i += 4, j += 3) {
+  for (i = 0; i < l; i += 4) {
     tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
     arr[L++] = (tmp >> 16) & 0xFF
     arr[L++] = (tmp >> 8) & 0xFF
@@ -221,7 +221,7 @@ function from (value, encodingOrOffset, length) {
     throw new TypeError('"value" argument must not be a number')
   }
 
-  if (value instanceof ArrayBuffer) {
+  if (isArrayBuffer(value)) {
     return fromArrayBuffer(value, encodingOrOffset, length)
   }
 
@@ -481,7 +481,7 @@ function byteLength (string, encoding) {
   if (Buffer.isBuffer(string)) {
     return string.length
   }
-  if (isArrayBufferView(string) || string instanceof ArrayBuffer) {
+  if (isArrayBufferView(string) || isArrayBuffer(string)) {
     return string.byteLength
   }
   if (typeof string !== 'string') {
@@ -1811,6 +1811,14 @@ function blitBuffer (src, dst, offset, length) {
     dst[i + offset] = src[i]
   }
   return i
+}
+
+// ArrayBuffers from another context (i.e. an iframe) do not pass the `instanceof` check
+// but they should be treated as valid. See: https://github.com/feross/buffer/issues/166
+function isArrayBuffer (obj) {
+  return obj instanceof ArrayBuffer ||
+    (obj != null && obj.constructor != null && obj.constructor.name === 'ArrayBuffer' &&
+      typeof obj.byteLength === 'number')
 }
 
 // Node 0.10 supports `ArrayBuffer` but lacks `ArrayBuffer.isView`
@@ -6214,11 +6222,18 @@ module.exports = exports.default = staticProps
 module.exports = function (cb) { cb() }
 
 },{}],14:[function(require,module,exports){
-const staticProps = require('static-props')
+'use strict';
 
-const getDegree = require('./getDegree')
-const getIncidentEdgeIds = require('./getIncidentEdgeIds')
-const getRank = require('./getRank')
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var no = require('not-defined');
+var staticProps = require('static-props');
+
+var getDegree = require('./getDegree');
+var getIncidentEdgeIds = require('./getIncidentEdgeIds');
+var _getRank = require('./getRank');
 
 /**
  * Hypergraph
@@ -6235,35 +6250,68 @@ const getRank = require('./getRank')
  * @class
  */
 
-class Graph {
-  constructor () {
-    const arg = arguments[0] || {}
-    var obj = {}
+var Graph = function () {
+  function Graph() {
+    var arg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    _classCallCheck(this, Graph);
+
+    var obj = {};
+
+    obj.edges = arg.edges || {};
+    obj.nodes = arg.nodes || {};
+
+    // Check for orphan nodes.
+
+    var nodeIdsNotFound = [];
+
+    Object.keys(obj.edges).forEach(function (edgeId) {
+      obj.edges[edgeId].forEach(function (nodeId) {
+        if (no(obj[nodeId])) {
+          nodeIdsNotFound.push(nodeId);
+        }
+      });
+    });
+
+    if (nodeIdsNotFound.length > 0) {
+      throw new TypeError('Orphan nodes found ' + nodeIdsNotFound.join(','));
+    }
 
     if (arg.uniform) {
       if (Number.isInteger(arg.uniform)) {
         if (arg.uniform < 2) {
-          throw new TypeError('Argument uniform cannot be less than 2')
+          throw new TypeError('Argument uniform cannot be less than 2');
         } else {
-          obj.uniform = arg.uniform
+          obj.uniform = arg.uniform;
         }
       } else {
-        throw new TypeError('Argument uniform must be an integer')
+        throw new TypeError('Argument uniform must be an integer');
+      }
+
+      // Check that all edges are uniform.
+
+      var notUniformEdges = {};
+
+      Object.keys(obj.edges).forEach(function (edgeId) {
+        if (obj.edges[edgeId].length !== obj.uniform) {
+          notUniformEdges[edgeId] = obj.edgeId[edgeId];
+        }
+      });
+
+      if (Object.keys(notUniformEdges).length > 0) {
+        throw new TypeError('Graph is not ' + obj.uniform + '-uniform ' + JSON.stringify(notUniformEdges));
       }
     }
 
-    if (arg.multigraph === true) obj.multigraph = true
+    if (arg.multigraph === true) obj.multigraph = true;
 
     if (arg.pseudograph === true) {
-      obj.multigraph = true
-      obj.pseudograph = true
+      obj.multigraph = true;
+      obj.pseudograph = true;
     }
 
-    obj.edges = arg.edges || {}
-    obj.nodes = arg.nodes || {}
-
-    const enumerable = true
-    staticProps(this)(obj, enumerable)
+    var enumerable = true;
+    staticProps(this)(obj, enumerable);
   }
 
   /**
@@ -6273,148 +6321,203 @@ class Graph {
    * @returns {String} id
    */
 
-  addEdge (nodeIds) {
-    if (nodeIds.length < 2) {
-      throw new Error('An edge must point at two or more nodes')
-    }
+  _createClass(Graph, [{
+    key: 'addEdge',
+    value: function addEdge(nodeIds) {
+      var _this = this;
 
-    const uniform = this.uniform
-
-    if (uniform) {
-      const cardinality = nodeIds.length
-
-      if (uniform !== cardinality) {
-        throw new Error(`Cannot add an edge with cardinality ${cardinality} to a ${uniform}-uniform graph`)
+      if (nodeIds.length < 2) {
+        throw new Error('An edge must point at two or more nodes');
       }
-    }
 
-    if (!this.pseudograph) {
-      const uniqNodeIds = nodeIds.filter((id, i) => nodeIds.indexOf(id) === i)
-      const foundDuplicates = (uniqNodeIds.length < nodeIds.length)
+      var uniform = this.uniform;
 
-      if (foundDuplicates) {
-        throw new Error('This is not a pseudograph, it is not allowed to create loops')
-      }
-    }
+      if (uniform) {
+        var cardinality = nodeIds.length;
 
-    if (!this.multigraph) {
-      for (let edgeId in this.edges) {
-        let edge = this.edges[edgeId]
-
-        const newEdgeAlreadyExists = (JSON.stringify(nodeIds) === JSON.stringify(edge))
-
-        if (newEdgeAlreadyExists) {
-          throw new Error('This is not a multigraph, you cannot add duplicated edges')
+        if (uniform !== cardinality) {
+          throw new Error('Cannot add an edge with cardinality ' + cardinality + ' to a ' + uniform + '-uniform graph');
         }
       }
-    }
 
-    const nodeIdsNotFound = nodeIds.filter((id) => {
-      return !this.nodes.hasOwnProperty(id)
-    })
+      if (!this.pseudograph) {
+        var uniqNodeIds = nodeIds.filter(function (id, i) {
+          return nodeIds.indexOf(id) === i;
+        });
+        var foundDuplicates = uniqNodeIds.length < nodeIds.length;
 
-    if (nodeIdsNotFound.length > 0) {
-      throw new Error('Edge points to some nodeId not found in this graph; ' + nodeIdsNotFound.join(','))
-    }
-
-    const id = this.generateId()
-
-    this.edges[id] = nodeIds
-
-    return id
-  }
-
-  /**
-   * Add a node, containing given data.
-   *
-   * @param {*} data
-   * @returns {String} id of the node created
-   */
-
-  addNode (data) {
-    const id = this.generateId()
-
-    this.nodes[id] = data
-
-    return id
-  }
-
-  /**
-   * Returns the degree of a node, that is the number of incident edges with loops counted twice.
-   *
-   * @param {String} nodeId
-   * @returns {Number} degree
-   */
-
-  degreeOf (nodeId) {
-    return getDegree(this.edges, nodeId)
-  }
-
-  /**
-   * Delete edge by given id.
-   *
-   * @param {String} id
-   * @returns {void}
-   */
-
-  delEdge (id) {
-    delete this.edges[id]
-  }
-
-  /**
-   * Delete node by given id.
-   *
-   * @param {String} id
-   * @returns {void}
-   */
-
-  delNode (id) {
-    delete this.nodes[id]
-
-    const incidentEdgeIds = getIncidentEdgeIds(this.edges, id)
-
-    // TODO in an hypergraph it should not remove the edge, but
-    // remove the nodeIds from edges. and remove the edge if it is empty.
-    // Document in the README and the jsdoc above that it removes also edges
-    incidentEdgeIds.forEach((edgeId) => {
-      if (this.edges[edgeId].length === 2) {
-        this.delEdge(edgeId)
+        if (foundDuplicates) {
+          throw new Error('This is not a pseudograph, it is not allowed to create loops');
+        }
       }
-    })
-  }
 
-  /**
-   * Generate a random string to be used as id.
-   * Override this method if you want to customize id generation.
-   */
+      if (!this.multigraph) {
+        for (var edgeId in this.edges) {
+          var edge = this.edges[edgeId];
 
-  generateId () {
-    const length = 4
-    var result = ''
+          var newEdgeAlreadyExists = JSON.stringify(nodeIds) === JSON.stringify(edge);
 
-    while (result.length < length) {
-      result += String.fromCharCode(97 + Math.floor(Math.random() * 26))
+          if (newEdgeAlreadyExists) {
+            throw new Error('This is not a multigraph, you cannot add duplicated edges');
+          }
+        }
+      }
+
+      var nodeIdsNotFound = nodeIds.filter(function (id) {
+        return !_this.nodes.hasOwnProperty(id);
+      });
+
+      if (nodeIdsNotFound.length > 0) {
+        throw new Error('Edge points to some nodeId not found in this graph; ' + nodeIdsNotFound.join(','));
+      }
+
+      var id = this._generateUniqueId();
+
+      this.edges[id] = nodeIds;
+
+      return id;
     }
 
-    return result
-  }
+    /**
+     * Add a node, containing given data.
+     *
+     * @param {*} data
+     * @returns {String} id of the node created
+     */
 
-  /**
-   * Returns the max cardinality of any of the edges in the hypergraph.
-   *
-   * @returns {Number} rank
-   */
+  }, {
+    key: 'addNode',
+    value: function addNode(data) {
+      var id = this._generateUniqueId();
 
-  getRank () {
-    if (this.uniform) return this.uniform
+      this.nodes[id] = data;
 
-    return getRank(this.edges)
-  }
-}
+      return id;
+    }
 
-module.exports = Graph
+    /**
+     * Returns the degree of a node, that is the number of incident edges with loops counted twice.
+     *
+     * @param {String} nodeId
+     * @returns {Number} degree
+     */
 
-},{"./getDegree":16,"./getIncidentEdgeIds":17,"./getRank":19,"static-props":12}],15:[function(require,module,exports){
+  }, {
+    key: 'degreeOf',
+    value: function degreeOf(nodeId) {
+      return getDegree(this.edges, nodeId);
+    }
+
+    /**
+     * Delete edge by given id.
+     *
+     * @param {String} edgeId
+     *
+     * @returns {void}
+     */
+
+  }, {
+    key: 'delEdge',
+    value: function delEdge(edgeId) {
+      delete this.edges[edgeId];
+    }
+
+    /**
+     * Delete node by given id.
+     * The node id will be removed from every edge connected.
+     * If some edge after this operation will result having only
+     * one or zero vertices left, it will be removed too.
+     *
+     * @param {String} nodeId
+     *
+     * @returns {void}
+     */
+
+  }, {
+    key: 'delNode',
+    value: function delNode(nodeId) {
+      var _this2 = this;
+
+      delete this.nodes[nodeId];
+
+      var incidentEdgeIds = getIncidentEdgeIds(this.edges, nodeId);
+
+      incidentEdgeIds.forEach(function (edgeId) {
+        // Remove all nodeIds found in edge.
+        while (_this2.edges[edgeId].indexOf(nodeId) > -1) {
+          _this2.edges[edgeId].splice(_this2.edges[edgeId].indexOf(nodeId), 1);
+        }
+
+        // If edge has one or zero vertices left, remove it.
+        if (_this2.edges[edgeId].length < 2) {
+          _this2.delEdge(edgeId);
+        }
+      });
+    }
+
+    /**
+     * Generate a random string to be used as id.
+     * Override this method if you want to customize id generation.
+     * This method is called by a wrapper which ensures the id generated
+     * was not used yet.
+     *
+     * @returns {String} id
+     */
+
+  }, {
+    key: 'generateId',
+    value: function generateId() {
+      var length = 4;
+      var result = '';
+
+      while (result.length < length) {
+        result += String.fromCharCode(97 + Math.floor(Math.random() * 26));
+      }
+
+      return result;
+    }
+
+    /**
+     * Generate an id and make sure it is unique.
+     *
+     * @returns {String} id
+     */
+
+  }, {
+    key: '_generateUniqueId',
+    value: function _generateUniqueId() {
+      var id = this.generateId();
+
+      if (no(this.edges[id]) && no(this.nodes[id])) {
+        return id;
+      } else {
+        return this._generateUniqueId();
+      }
+    }
+
+    /**
+     * Returns the max cardinality of any of the edges in the hypergraph.
+     *
+     * @returns {Number} rank
+     */
+
+  }, {
+    key: 'getRank',
+    value: function getRank() {
+      if (this.uniform) return this.uniform;
+
+      return _getRank(this.edges);
+    }
+  }]);
+
+  return Graph;
+}();
+
+module.exports = Graph;
+
+},{"./getDegree":16,"./getIncidentEdgeIds":17,"./getRank":19,"not-defined":4,"static-props":12}],15:[function(require,module,exports){
+"use strict";
+
 /**
  * Compute adjacent nodes
  *
@@ -6423,36 +6526,35 @@ module.exports = Graph
  * @returns {Array} adjacentNodeIds
  */
 
-const getAdjacentNodeIds = (edges, nodeId) => {
-  let adjacentNodeIds = []
+var getAdjacentNodeIds = function getAdjacentNodeIds(edges, nodeId) {
+  var adjacentNodeIds = [];
 
-  const givenNodeId = (id) => {
-    return id !== nodeId
-  }
+  var givenNodeId = function givenNodeId(id) {
+    return id !== nodeId;
+  };
 
-  const foundNodeIds = (id) => {
-    return adjacentNodeIds.indexOf(id) === -1
-  }
+  var foundNodeIds = function foundNodeIds(id) {
+    return adjacentNodeIds.indexOf(id) === -1;
+  };
 
-  for (let edgeId in edges) {
-    let edge = edges[edgeId]
-
+  Object.values(edges).forEach(function (edge) {
     // Nothing to do if edge does not contain nodeId.
-    if (edge.indexOf(nodeId) === -1) continue
+    if (edge.indexOf(nodeId) === -1) return;
 
     // Take all nodeIds except given nodeId, avoid repetitions.
-    let nodeIds = edge.filter(givenNodeId)
-                      .filter(foundNodeIds)
+    var nodeIds = edge.filter(givenNodeId).filter(foundNodeIds);
 
-    adjacentNodeIds = adjacentNodeIds.concat(nodeIds)
-  }
+    adjacentNodeIds = adjacentNodeIds.concat(nodeIds);
+  });
 
-  return adjacentNodeIds
-}
+  return adjacentNodeIds;
+};
 
-module.exports = getAdjacentNodeIds
+module.exports = getAdjacentNodeIds;
 
 },{}],16:[function(require,module,exports){
+"use strict";
+
 /**
  * The degree of a vertex is the number of incident edges, with loops counted twice.
  *
@@ -6463,27 +6565,27 @@ module.exports = getAdjacentNodeIds
  * @returns {Number} degree
  */
 
-const getDegree = (edges, nodeId) => {
-  var degree = 0
+var getDegree = function getDegree(edges, nodeId) {
+  var degree = 0;
 
-  const countIncidents = (id) => {
+  var countIncidents = function countIncidents(id) {
     if (id === nodeId) {
-      degree++
+      degree++;
     }
-  }
+  };
 
-  for (var edgeId in edges) {
-    var edge = edges[edgeId]
+  Object.values(edges).forEach(function (edge) {
+    return edge.forEach(countIncidents);
+  });
 
-    edge.forEach(countIncidents)
-  }
+  return degree;
+};
 
-  return degree
-}
-
-module.exports = getDegree
+module.exports = getDegree;
 
 },{}],17:[function(require,module,exports){
+"use strict";
+
 /**
  * Edges incident to given node
  *
@@ -6492,31 +6594,33 @@ module.exports = getDegree
  * @returns {Array} incidentEdgeIds
  */
 
-const getIncidentEdgeIds = (edges, nodeId) => {
-  var incidentEdgeIds = []
+var getIncidentEdgeIds = function getIncidentEdgeIds(edges, nodeId) {
+  var incidentEdgeIds = [];
 
-  const pushUniqueIncidents = (edgeId, nodeId, id) => {
-    var isIncident = (id === nodeId)
-    var isUnique = (incidentEdgeIds.indexOf(edgeId) < 0)
+  var pushUniqueIncidents = function pushUniqueIncidents(edgeId, nodeId, id) {
+    var isIncident = id === nodeId;
+    var isUnique = incidentEdgeIds.indexOf(edgeId) < 0;
 
     if (isIncident && isUnique) {
-      incidentEdgeIds.push(edgeId)
+      incidentEdgeIds.push(edgeId);
     }
-  }
+  };
 
   for (var edgeId in edges) {
-    var edge = edges[edgeId]
+    var edge = edges[edgeId];
 
-    edge.forEach(pushUniqueIncidents.bind(null, edgeId, nodeId))
+    edge.forEach(pushUniqueIncidents.bind(null, edgeId, nodeId));
   }
 
-  return incidentEdgeIds
-}
+  return incidentEdgeIds;
+};
 
-module.exports = getIncidentEdgeIds
+module.exports = getIncidentEdgeIds;
 
 },{}],18:[function(require,module,exports){
-const no = require('not-defined')
+'use strict';
+
+var no = require('not-defined');
 
 /**
  * Compute edges which does not refer to existing nodeIds
@@ -6526,25 +6630,29 @@ const no = require('not-defined')
  * @returns {Array} orphanEdgeIds
  */
 
-const getOrphanEdgeIds = (edges, nodes) => {
-  var orphanEdgeIds = []
+var getOrphanEdgeIds = function getOrphanEdgeIds(edges, nodes) {
+  var orphanEdgeIds = [];
 
-  const nodeIdsNotFound = (nodeId) => (no(nodes[nodeId]))
+  var nodeIdsNotFound = function nodeIdsNotFound(nodeId) {
+    return no(nodes[nodeId]);
+  };
 
   for (var edgeId in edges) {
-    var edge = edges[edgeId]
+    var edge = edges[edgeId];
 
     if (edge.filter(nodeIdsNotFound).length > 0) {
-      orphanEdgeIds.push(edgeId)
+      orphanEdgeIds.push(edgeId);
     }
   }
 
-  return orphanEdgeIds
-}
+  return orphanEdgeIds;
+};
 
-module.exports = getOrphanEdgeIds
+module.exports = getOrphanEdgeIds;
 
 },{"not-defined":4}],19:[function(require,module,exports){
+"use strict";
+
 /**
   The rank is the maximum cardinality of any of the edges in the hypergraph
  *
@@ -6552,240 +6660,270 @@ module.exports = getOrphanEdgeIds
  * @returns {Number} rank
  */
 
-const getRank = (edges) => {
-  var rank = 0
+var getRank = function getRank(edges) {
+  var rank = 0;
 
-  for (var edgeId in edges) {
-    var edge = edges[edgeId]
-    rank = Math.max(rank, edge.length)
-  }
+  Object.values(edges).forEach(function (edge) {
+    rank = Math.max(rank, edge.length);
+  });
 
-  return rank
-}
+  return rank;
+};
 
-module.exports = getRank
+module.exports = getRank;
 
 },{}],20:[function(require,module,exports){
-require('strict-mode')(() => {
-  exports.Graph = require('./Graph')
-})
+'use strict';
+
+require('strict-mode')(function () {
+  exports.Graph = require('./Graph');
+});
 
 },{"./Graph":14,"strict-mode":13}],21:[function(require,module,exports){
-describe('default Graph', () => {
-  const no = require('not-defined')
-  const should = require('should')
-  const Graph = require('iper').Graph
+'use strict';
 
-  describe('constructor', () => {
-    it('defaults to an empty generic graph', () => {
-      const graph = new Graph()
+describe('default Graph', function () {
+  var no = require('not-defined');
+  var should = require('should');
+  var Graph = require('iper').Graph;
 
-      graph.edges.should.deepEqual({})
-      graph.nodes.should.deepEqual({})
+  describe('constructor', function () {
+    it('defaults to an empty generic graph', function () {
+      var graph = new Graph();
 
-      should.not.exist(graph.multigraph)
-      should.not.exist(graph.pseudograph)
-      should.not.exist(graph.uniform)
-    })
-  })
+      graph.edges.should.deepEqual({});
+      graph.nodes.should.deepEqual({});
 
-  describe('addNode()', () => {
-    it('creates a node', () => {
-      const graph = new Graph()
-      const nodeData = 'foo'
+      should.not.exist(graph.multigraph);
+      should.not.exist(graph.pseudograph);
+      should.not.exist(graph.uniform);
+    });
 
-      const nodeId = graph.addNode(nodeData)
+    it('checks for orphan nodes', function () {
+      ;(function () {
+        Graph({
+          nodes: { a: null },
+          edges: { e: ['a', 'b'] }
+        });
+      }).should.throw();
+    });
+  });
 
-      graph.nodes[nodeId].should.be.eql(nodeData)
-    })
+  describe('addNode()', function () {
+    it('creates a node', function () {
+      var graph = new Graph();
+      var nodeData = 'foo';
 
-    it('returns an id', () => {
-      const graph = new Graph()
+      var nodeId = graph.addNode(nodeData);
 
-      const nodeId = graph.addNode()
+      graph.nodes[nodeId].should.be.eql(nodeData);
+    });
 
-      nodeId.should.be.a.String()
-    })
-  })
+    it('returns an id', function () {
+      var graph = new Graph();
 
-  describe('addEdge()', () => {
-    it('creates an edge', () => {
-      const graph = new Graph()
+      var nodeId = graph.addNode();
 
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
-      const nodeIds = [nodeId1, nodeId2]
+      nodeId.should.be.a.String();
+    });
+  });
 
-      const edgeId = graph.addEdge(nodeIds)
+  describe('addEdge()', function () {
+    it('creates an edge', function () {
+      var graph = new Graph();
 
-      graph.edges[edgeId].should.be.eql(nodeIds)
-    })
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
+      var nodeIds = [nodeId1, nodeId2];
 
-    it('requires at least two nodeIds', () => {
-      const graph = new Graph()
+      var edgeId = graph.addEdge(nodeIds);
 
-      const nodeId = graph.addNode()
+      graph.edges[edgeId].should.be.eql(nodeIds);
+    });
 
-      const nodeIds = [nodeId]
+    it('requires at least two nodeIds', function () {
+      var graph = new Graph();
 
-      ;(() => {
-        graph.addEdge(nodeIds)
-      }).should.throw()
-    })
+      var nodeId = graph.addNode();
 
-    it('cannot create an edge pointing to some nodeId not found', () => {
-      const graph = new Graph()
+      var nodeIds = [nodeId];(function () {
+        graph.addEdge(nodeIds);
+      }).should.throw();
+    });
 
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
+    it('cannot create an edge pointing to some nodeId not found', function () {
+      var graph = new Graph();
 
-      const nodeIds = [nodeId1, 'nodeIdNotFound', nodeId2]
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
 
-      ;(() => {
-        graph.addEdge(nodeIds)
-      }).should.throw()
-    })
+      var nodeIds = [nodeId1, 'nodeIdNotFound', nodeId2];(function () {
+        graph.addEdge(nodeIds);
+      }).should.throw();
+    });
 
-    it('can create edges with cardinality greater than 2', () => {
-      const graph = new Graph()
+    it('can create edges with cardinality greater than 2', function () {
+      var graph = new Graph();
 
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
-      const nodeId3 = graph.addNode()
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
+      var nodeId3 = graph.addNode();
 
-      const nodeIds = [nodeId1, nodeId2, nodeId3]
+      var nodeIds = [nodeId1, nodeId2, nodeId3];
 
-      const edgeId1 = graph.addEdge(nodeIds)
+      var edgeId1 = graph.addEdge(nodeIds);
 
-      graph.edges[edgeId1].should.be.eql(nodeIds)
-    })
+      graph.edges[edgeId1].should.be.eql(nodeIds);
+    });
 
-    it('returns an id', () => {
-      const graph = new Graph()
+    it('returns an id', function () {
+      var graph = new Graph();
 
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
 
-      const nodeIds = [nodeId1, nodeId2]
+      var nodeIds = [nodeId1, nodeId2];
 
-      const edgeId = graph.addEdge(nodeIds)
+      var edgeId = graph.addEdge(nodeIds);
 
-      edgeId.should.be.a.String()
-    })
+      edgeId.should.be.a.String();
+    });
 
-    it('cannot create loops', () => {
-      const graph = new Graph()
+    it('cannot create loops', function () {
+      var graph = new Graph();
 
-      const nodeId = graph.addNode()
+      var nodeId = graph.addNode();
 
-      const nodeIds = [nodeId, nodeId]
+      var nodeIds = [nodeId, nodeId];(function () {
+        graph.addEdge(nodeIds);
+      }).should.throw();
+    });
 
-      ;(() => {
-        graph.addEdge(nodeIds)
-      }).should.throw()
-    })
+    it('cannot create duplicated edges', function () {
+      var graph = new Graph();
 
-    it('cannot create duplicated edges', () => {
-      const graph = new Graph()
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
 
-      const nodeId = graph.addNode()
-      const nodeIds = [nodeId, nodeId]
+      graph.addEdge([nodeId1, nodeId2]);(function () {
+        graph.addEdge([nodeId1, nodeId2]);
+      }).should.throw();
+    });
+  });
 
-      ;(() => {
-        graph.addEdge(nodeIds)
-      }).should.throw()
-    })
-  })
+  describe('degreeOf(nodeId)', function () {
+    it('returns the degree of a node', function () {
+      var graph = new Graph();
 
-  describe('degreeOf(nodeId)', () => {
-    it('returns the degree of a node', () => {
-      const graph = new Graph()
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
+      var nodeIds = [nodeId1, nodeId2];
 
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
-      const nodeIds = [nodeId1, nodeId2]
+      graph.addEdge(nodeIds);
 
-      graph.addEdge(nodeIds)
+      graph.degreeOf(nodeId1).should.be.eql(1);
+    });
+  });
 
-      graph.degreeOf(nodeId1).should.be.eql(1)
-    })
-  })
+  describe('delNode()', function () {
+    it('removes a node', function () {
+      var graph = new Graph();
+      var nodeData = 'foo';
 
-  describe('delNode()', () => {
-    it('removes a node', () => {
-      const graph = new Graph()
-      const nodeData = 'foo'
+      var nodeId = graph.addNode(nodeData);
 
-      const nodeId = graph.addNode(nodeData)
+      graph.nodes[nodeId].should.be.eql(nodeData);
 
-      graph.nodes[nodeId].should.be.eql(nodeData)
+      graph.delNode(nodeId);
 
-      graph.delNode(nodeId)
+      var nodeNotDefined = no(graph.nodes[nodeId]);
 
-      const nodeNotDefined = no(graph.nodes[nodeId])
+      nodeNotDefined.should.be.true();
+    });
 
-      nodeNotDefined.should.be.true()
-    })
+    it('removes incident edges', function () {
+      var graph = new Graph();
 
-    it('removes incident edges', () => {
-      const graph = new Graph()
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
+      var nodeId3 = graph.addNode();
+      var nodeId4 = graph.addNode();
 
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
-      const nodeIds = [nodeId1, nodeId2]
+      var nodeIds12 = [nodeId1, nodeId2];
+      var nodeIds23 = [nodeId2, nodeId3];
+      var nodeIds1234 = [nodeId1, nodeId2, nodeId3, nodeId4];
 
-      const edgeId = graph.addEdge(nodeIds)
+      var edgeId1 = graph.addEdge(nodeIds12);
+      var edgeId2 = graph.addEdge(nodeIds23);
+      var edgeId3 = graph.addEdge(nodeIds1234);
 
-      graph.edges[edgeId].should.be.eql(nodeIds)
+      graph.edges[edgeId1].should.be.eql(nodeIds12);
+      graph.edges[edgeId2].should.be.eql(nodeIds23);
+      graph.edges[edgeId2].should.be.eql(nodeIds23);
 
-      graph.delNode(nodeId1)
+      graph.delNode(nodeId1);
 
-      const incidentEdgeRemoved = no(graph.edges[edgeId])
-      incidentEdgeRemoved.should.be.true()
-    })
-  })
+      var incidentEdgeRemoved1 = no(graph.edges[edgeId1]);
+      incidentEdgeRemoved1.should.be.true();
 
-  describe('delEdge()', () => {
-    it('removes an edge', () => {
-      const graph = new Graph()
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
-      const nodeIds = [nodeId1, nodeId2]
+      graph.edges[edgeId2].should.be.Array();
+      graph.edges[edgeId3].should.be.Array();
 
-      const edgeId = graph.addEdge(nodeIds)
+      graph.delNode(nodeId2);
 
-      graph.delEdge(edgeId)
+      var incidentEdgeRemoved2 = no(graph.edges[edgeId2]);
+      incidentEdgeRemoved2.should.be.true();
 
-      const edgeNotDefined = no(graph.edges[edgeId])
-      edgeNotDefined.should.be.true()
-    })
-  })
+      graph.edges[edgeId3].should.be.Array();
 
-  describe('getRank()', () => {
-    it('returns the max cardinality of any edge', () => {
-      const graph = new Graph()
+      graph.delNode(nodeId4);
 
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
-      const nodeId3 = graph.addNode()
-      const nodeId4 = graph.addNode()
+      var incidentEdgeRemoved3 = no(graph.edges[edgeId3]);
+      incidentEdgeRemoved3.should.be.true();
+    });
+  });
 
-      graph.addEdge([nodeId1, nodeId2])
-      graph.addEdge([nodeId3, nodeId2])
-      graph.addEdge([nodeId1, nodeId4])
+  describe('delEdge()', function () {
+    it('removes an edge', function () {
+      var graph = new Graph();
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
+      var nodeIds = [nodeId1, nodeId2];
 
-      graph.getRank().should.be.eql(2)
+      var edgeId = graph.addEdge(nodeIds);
 
-      graph.addEdge([nodeId1, nodeId2, nodeId3])
+      graph.delEdge(edgeId);
 
-      graph.getRank().should.be.eql(3)
+      var edgeNotDefined = no(graph.edges[edgeId]);
+      edgeNotDefined.should.be.true();
+    });
+  });
 
-      graph.addEdge([nodeId4, nodeId1, nodeId2, nodeId3])
+  describe('getRank()', function () {
+    it('returns the max cardinality of any edge', function () {
+      var graph = new Graph();
 
-      graph.getRank().should.be.eql(4)
-    })
-  })
-})
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
+      var nodeId3 = graph.addNode();
+      var nodeId4 = graph.addNode();
+
+      graph.addEdge([nodeId1, nodeId2]);
+      graph.addEdge([nodeId3, nodeId2]);
+      graph.addEdge([nodeId1, nodeId4]);
+
+      graph.getRank().should.be.eql(2);
+
+      graph.addEdge([nodeId1, nodeId2, nodeId3]);
+
+      graph.getRank().should.be.eql(3);
+
+      graph.addEdge([nodeId4, nodeId1, nodeId2, nodeId3]);
+
+      graph.getRank().should.be.eql(4);
+    });
+  });
+});
 
 },{"iper":20,"not-defined":4,"should":11}],22:[function(require,module,exports){
 module.exports={
@@ -6859,265 +6997,287 @@ module.exports={
 }
 
 },{}],28:[function(require,module,exports){
-describe('getAdjacentNodeIds', () => {
-  const getAdjacentNodeIds = require('./utils').getAdjacentNodeIds
+'use strict';
 
-  const graph1 = require('./examples/graphs/graph1.json')
-  const graph2 = require('./examples/graphs/graph2.json')
+describe('getAdjacentNodeIds', function () {
+  var getAdjacentNodeIds = require('./utils').getAdjacentNodeIds;
 
-  it('is mutual', () => {
-    const edges = graph1.edges
-    const nodeId1 = '1'
-    const nodeId2 = '2'
+  var graph1 = require('./examples/graphs/graph1.json');
+  var graph2 = require('./examples/graphs/graph2.json');
 
-    getAdjacentNodeIds(edges, nodeId1).should.be.eql([nodeId2])
-    getAdjacentNodeIds(edges, nodeId2).should.be.eql([nodeId1])
-  })
+  it('is mutual', function () {
+    var edges = graph1.edges;
+    var nodeId1 = '1';
+    var nodeId2 = '2';
 
-  it('returns an empty array if there is no adjacent node', () => {
-    const edges = graph1.edges
-    const nodeId = 'not found'
+    getAdjacentNodeIds(edges, nodeId1).should.be.eql([nodeId2]);
+    getAdjacentNodeIds(edges, nodeId2).should.be.eql([nodeId1]);
+  });
 
-    getAdjacentNodeIds(edges, nodeId).should.be.eql([])
-  })
+  it('returns an empty array if there is no adjacent node', function () {
+    var edges = graph1.edges;
+    var nodeId = 'not found';
 
-  it('returns adjacent nodes', () => {
-    const edges = graph2.edges
-    var nodeId
+    getAdjacentNodeIds(edges, nodeId).should.be.eql([]);
+  });
 
-    nodeId = 'a'
-    getAdjacentNodeIds(edges, nodeId).should.be.eql(['b', 'c'])
+  it('returns adjacent nodes', function () {
+    var edges = graph2.edges;
+    var nodeId;
 
-    nodeId = 'b'
-    getAdjacentNodeIds(edges, nodeId).should.be.eql(['a', 'c'])
-  })
-})
+    nodeId = 'a';
+    getAdjacentNodeIds(edges, nodeId).should.be.eql(['b', 'c']);
+
+    nodeId = 'b';
+    getAdjacentNodeIds(edges, nodeId).should.be.eql(['a', 'c']);
+  });
+});
 
 },{"./examples/graphs/graph1.json":22,"./examples/graphs/graph2.json":23,"./utils":36}],29:[function(require,module,exports){
-describe('getDegree', () => {
-  const getDegree = require('./utils').getDegree
+'use strict';
 
-  const graph1 = require('./examples/graphs/graph1.json')
-  const isolatedNode = require('./examples/graphs/isolatedNode.json')
-  const loop1 = require('./examples/graphs/loop1.json')
+describe('getDegree', function () {
+  var getDegree = require('./utils').getDegree;
 
-  it('returns number of incident edges', () => {
-    const edges = graph1.edges
+  var graph1 = require('./examples/graphs/graph1.json');
+  var isolatedNode = require('./examples/graphs/isolatedNode.json');
+  var loop1 = require('./examples/graphs/loop1.json');
 
-    getDegree(edges, '1').should.be.eql(1)
-    getDegree(edges, '2').should.be.eql(1)
-  })
+  it('returns number of incident edges', function () {
+    var edges = graph1.edges;
 
-  it('is 0 for isolated nodes', () => {
-    const edges = isolatedNode.edges
+    getDegree(edges, '1').should.be.eql(1);
+    getDegree(edges, '2').should.be.eql(1);
+  });
 
-    getDegree(edges, 'isolated').should.be.eql(0)
-  })
+  it('is 0 for isolated nodes', function () {
+    var edges = isolatedNode.edges;
 
-  it('counts loops twice', () => {
-    const edges = loop1.edges
+    getDegree(edges, 'isolated').should.be.eql(0);
+  });
 
-    getDegree(edges, '0').should.be.eql(2)
-  })
-})
+  it('counts loops twice', function () {
+    var edges = loop1.edges;
+
+    getDegree(edges, '0').should.be.eql(2);
+  });
+});
 
 },{"./examples/graphs/graph1.json":22,"./examples/graphs/isolatedNode.json":24,"./examples/graphs/loop1.json":25,"./utils":36}],30:[function(require,module,exports){
-describe('getIncidentEdgeIds', () => {
-  const getIncidentEdgeIds = require('./utils').getIncidentEdgeIds
+'use strict';
 
-  const graph1 = require('./examples/graphs/graph1.json')
-  const graph2 = require('./examples/graphs/graph2.json')
-  const isolatedNode = require('./examples/graphs/isolatedNode.json')
+describe('getIncidentEdgeIds', function () {
+  var getIncidentEdgeIds = require('./utils').getIncidentEdgeIds;
 
-  it('returns an empty array if there is no incident edge', () => {
-    const nodeId = 'isolated'
-    const edges = isolatedNode.edges
+  var graph1 = require('./examples/graphs/graph1.json');
+  var graph2 = require('./examples/graphs/graph2.json');
+  var isolatedNode = require('./examples/graphs/isolatedNode.json');
 
-    getIncidentEdgeIds(edges, nodeId).should.be.eql([])
-  })
+  it('returns an empty array if there is no incident edge', function () {
+    var nodeId = 'isolated';
+    var edges = isolatedNode.edges;
 
-  it('returns incident edges', () => {
-    var result
-    var nodeId
-    var edges
+    getIncidentEdgeIds(edges, nodeId).should.be.eql([]);
+  });
 
-    nodeId = '1'
-    edges = graph1.edges
-    result = ['0']
-    getIncidentEdgeIds(edges, nodeId).should.be.eql(result)
+  it('returns incident edges', function () {
+    var result;
+    var nodeId;
+    var edges;
 
-    nodeId = '2'
-    edges = graph1.edges
-    result = ['0']
-    getIncidentEdgeIds(edges, nodeId).should.be.eql(result)
+    nodeId = '1';
+    edges = graph1.edges;
+    result = ['0'];
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result);
 
-    nodeId = 'a'
-    edges = graph2.edges
-    result = ['0', '1', '2']
-    getIncidentEdgeIds(edges, nodeId).should.be.eql(result)
+    nodeId = '2';
+    edges = graph1.edges;
+    result = ['0'];
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result);
 
-    nodeId = 'b'
-    edges = graph2.edges
-    result = ['0', '1', '2']
-    getIncidentEdgeIds(edges, nodeId).should.be.eql(result)
+    nodeId = 'a';
+    edges = graph2.edges;
+    result = ['0', '1', '2'];
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result);
 
-    nodeId = 'c'
-    edges = graph2.edges
-    result = ['0', '1', '2']
-    getIncidentEdgeIds(edges, nodeId).should.be.eql(result)
-  })
-})
+    nodeId = 'b';
+    edges = graph2.edges;
+    result = ['0', '1', '2'];
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result);
+
+    nodeId = 'c';
+    edges = graph2.edges;
+    result = ['0', '1', '2'];
+    getIncidentEdgeIds(edges, nodeId).should.be.eql(result);
+  });
+});
 
 },{"./examples/graphs/graph1.json":22,"./examples/graphs/graph2.json":23,"./examples/graphs/isolatedNode.json":24,"./utils":36}],31:[function(require,module,exports){
-describe('getOrphanEdgeIds', () => {
-  const getOrphanEdgeIds = require('./utils').getOrphanEdgeIds
+'use strict';
 
-  const graph1 = require('./examples/graphs/graph1.json')
-  const orphanEdges1 = require('./examples/graphs/orphanEdges1.json')
-  const orphanEdges2 = require('./examples/graphs/orphanEdges2.json')
+describe('getOrphanEdgeIds', function () {
+  var getOrphanEdgeIds = require('./utils').getOrphanEdgeIds;
 
-  it('returns orphan edges', () => {
-    getOrphanEdgeIds(orphanEdges1.edges, orphanEdges1.nodes).should.be.eql(['0'])
+  var graph1 = require('./examples/graphs/graph1.json');
+  var orphanEdges1 = require('./examples/graphs/orphanEdges1.json');
+  var orphanEdges2 = require('./examples/graphs/orphanEdges2.json');
 
-    getOrphanEdgeIds(orphanEdges2.edges, orphanEdges2.nodes).should.be.eql(['3', '6'])
-  })
+  it('returns orphan edges', function () {
+    getOrphanEdgeIds(orphanEdges1.edges, orphanEdges1.nodes).should.be.eql(['0']);
 
-  it('returns an empty array if there is no orphan edge', () => {
-    const edges = graph1.edges
-    const nodes = graph1.nodes
+    getOrphanEdgeIds(orphanEdges2.edges, orphanEdges2.nodes).should.be.eql(['3', '6']);
+  });
 
-    getOrphanEdgeIds(edges, nodes).should.be.eql([])
-  })
-})
+  it('returns an empty array if there is no orphan edge', function () {
+    var edges = graph1.edges;
+    var nodes = graph1.nodes;
+
+    getOrphanEdgeIds(edges, nodes).should.be.eql([]);
+  });
+});
 
 },{"./examples/graphs/graph1.json":22,"./examples/graphs/orphanEdges1.json":26,"./examples/graphs/orphanEdges2.json":27,"./utils":36}],32:[function(require,module,exports){
-describe('getRank', () => {
-  const getRank = require('./utils').getRank
+'use strict';
 
-  const graph1 = require('./examples/graphs/graph1.json')
-  const graph2 = require('./examples/graphs/graph2.json')
+describe('getRank', function () {
+  var getRank = require('./utils').getRank;
 
-  it('returns the maximum cardinality of the edges', () => {
-    getRank(graph1.edges).should.be.eql(2)
-    getRank(graph2.edges).should.be.eql(3)
-  })
-})
+  var graph1 = require('./examples/graphs/graph1.json');
+  var graph2 = require('./examples/graphs/graph2.json');
+
+  it('returns the maximum cardinality of the edges', function () {
+    getRank(graph1.edges).should.be.eql(2);
+    getRank(graph2.edges).should.be.eql(3);
+  });
+});
 
 },{"./examples/graphs/graph1.json":22,"./examples/graphs/graph2.json":23,"./utils":36}],33:[function(require,module,exports){
-describe('multi Graph', () => {
-  const should = require('should')
+'use strict';
 
-  const Graph = require('iper').Graph
+describe('multi Graph', function () {
+  var should = require('should');
 
-  const graph = new Graph({ multigraph: true })
+  var Graph = require('iper').Graph;
 
-  describe('constructor', () => {
-    it('accepts multigraph flag and adds it to attributes', () => {
-      graph.multigraph.should.be.true()
-    })
-  })
+  var graph = new Graph({ multigraph: true });
 
-  describe('addEdge()', () => {
-    it('cannot add duplicated edges', () => {
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
+  describe('constructor', function () {
+    it('accepts multigraph flag and adds it to attributes', function () {
+      graph.multigraph.should.be.true();
+    });
+  });
 
-      const edgeId1 = graph.addEdge([nodeId1, nodeId2])
-      const edgeId2 = graph.addEdge([nodeId1, nodeId2])
+  describe('addEdge()', function () {
+    it('can add duplicated edges', function () {
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
 
-      should.deepEqual(graph.edges[edgeId1], graph.edges[edgeId2])
-      edgeId1.should.be.not.equal(edgeId2)
-    })
-  })
-})
+      var edgeId1 = graph.addEdge([nodeId1, nodeId2]);
+      var edgeId2 = graph.addEdge([nodeId1, nodeId2]);
+
+      should.deepEqual(graph.edges[edgeId1], graph.edges[edgeId2]);
+      edgeId1.should.be.not.equal(edgeId2);
+    });
+  });
+});
 
 },{"iper":20,"should":11}],34:[function(require,module,exports){
-describe('pseudo Graph', () => {
-  const Graph = require('iper').Graph
+'use strict';
 
-  const graph = new Graph({ pseudograph: true })
+describe('pseudo Graph', function () {
+  var Graph = require('iper').Graph;
 
-  describe('constructor', () => {
-    it('accepts pseudograph flag and adds it to attributes', () => {
-      graph.pseudograph.should.be.true()
-    })
+  var graph = new Graph({ pseudograph: true });
 
-    it('implies multigraph', () => {
-      graph.multigraph.should.be.true()
-    })
-  })
+  describe('constructor', function () {
+    it('accepts pseudograph flag and adds it to attributes', function () {
+      graph.pseudograph.should.be.true();
+    });
 
-  describe('addEdge()', () => {
-    it('can create loops', () => {
-      const nodeId = graph.addNode()
-      const nodeIds = [nodeId, nodeId]
+    it('implies multigraph', function () {
+      graph.multigraph.should.be.true();
+    });
+  });
 
-      const edgeId = graph.addEdge(nodeIds)
+  describe('addEdge()', function () {
+    it('can create loops', function () {
+      var nodeId = graph.addNode();
+      var nodeIds = [nodeId, nodeId];
 
-      graph.edges[edgeId].should.be.eql(nodeIds)
-    })
-  })
-})
+      var edgeId = graph.addEdge(nodeIds);
+
+      graph.edges[edgeId].should.be.eql(nodeIds);
+    });
+  });
+});
 
 },{"iper":20}],35:[function(require,module,exports){
-describe('uniform Graph', () => {
-  const Graph = require('iper').Graph
-  const k = 2
+'use strict';
 
-  const graph = new Graph({ uniform: k })
+describe('uniform Graph', function () {
+  var Graph = require('iper').Graph;
+  var k = 2;
 
-  describe('constructor', () => {
-    it('accepts uniform arg and adds it to attributes', () => {
-      graph.uniform.should.be.eql(k)
-    })
+  var graph = new Graph({ uniform: k });
 
-    it('requires uniform to be an integer equal or grater than 2', () => {
-      ;(() => {
-        Graph({ uniform: 7.5 })
-      }).should.throw()
+  describe('constructor', function () {
+    it('accepts uniform arg and adds it to attributes', function () {
+      graph.uniform.should.be.eql(k);
+    });
 
-      ;(() => {
-        Graph({ uniform: -2 })
-      }).should.throw()
+    it('requires uniform to be an integer equal or grater than 2', function () {
+      ;(function () {
+        Graph({ uniform: 7.5 });
+      }).should.throw();(function () {
+        Graph({ uniform: -2 });
+      }).should.throw();(function () {
+        Graph({ uniform: 1 });
+      }).should.throw();
+    });
 
-      ;(() => {
-        Graph({ uniform: 1 })
-      }).should.throw()
-    })
-  })
+    it('checks that edges are uniform', function () {
+      ;(function () {
+        Graph({
+          uniform: 2,
+          nodes: { a: 1, b: 2, c: 3 },
+          edges: { e: ['a', 'b', 'c'] }
+        });
+      }).should.throw();
+    });
+  });
 
-  describe('addEdge()', () => {
-    it('cannot create edges with cardinality other than k', () => {
-      const nodeId1 = graph.addNode()
-      const nodeId2 = graph.addNode()
-      const nodeId3 = graph.addNode()
+  describe('addEdge()', function () {
+    it('cannot create edges with cardinality other than k', function () {
+      var nodeId1 = graph.addNode();
+      var nodeId2 = graph.addNode();
+      var nodeId3 = graph.addNode();
 
-      const nodeIds = [nodeId1, nodeId2, nodeId3]
+      var nodeIds = [nodeId1, nodeId2, nodeId3];(function () {
+        graph.addEdge(nodeIds);
+      }).should.throw();
+    });
+  });
 
-      ;(() => {
-        graph.addEdge(nodeIds)
-      }).should.throw()
-    })
-  })
+  describe('getRank()', function () {
+    it('returns the value of uniform, even if the graph is still empty', function () {
+      var rank = 10;
 
-  describe('getRank()', () => {
-    it('returns the value of uniform, even if the graph is still empty', () => {
-      const rank = 10
+      var graph = new Graph({ uniform: rank });
 
-      const graph = new Graph({ uniform: rank })
-
-      rank.should.be.equal(graph.getRank())
-    })
-  })
-})
+      rank.should.be.equal(graph.getRank());
+    });
+  });
+});
 
 },{"iper":20}],36:[function(require,module,exports){
-require('strict-mode')(() => {
-  exports.getAdjacentNodeIds = require('../src/getAdjacentNodeIds')
-  exports.getDegree = require('../src/getDegree')
-  exports.getIncidentEdgeIds = require('../src/getIncidentEdgeIds')
-  exports.getOrphanEdgeIds = require('../src/getOrphanEdgeIds')
-  exports.getRank = require('../src/getRank')
-})
+'use strict';
+
+require('strict-mode')(function () {
+  exports.getAdjacentNodeIds = require('../src/getAdjacentNodeIds');
+  exports.getDegree = require('../src/getDegree');
+  exports.getIncidentEdgeIds = require('../src/getIncidentEdgeIds');
+  exports.getOrphanEdgeIds = require('../src/getOrphanEdgeIds');
+  exports.getRank = require('../src/getRank');
+});
 
 },{"../src/getAdjacentNodeIds":15,"../src/getDegree":16,"../src/getIncidentEdgeIds":17,"../src/getOrphanEdgeIds":18,"../src/getRank":19,"strict-mode":13}]},{},[21,28,29,30,31,32,33,34,35,36]);
