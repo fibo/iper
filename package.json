@@ -10,7 +10,7 @@
   "license": "MIT",
   "main": "src/iper.js",
   "engines": {
-    "node": ">=4"
+    "node": ">=8"
   },
   "scripts": {
     "build": "npm test && npm run browserify && npm run jekyll; git status",
