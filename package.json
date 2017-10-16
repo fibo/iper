@@ -23,7 +23,7 @@
     "cp": "npm run cp_package.json",
     "cp_package.json": "cp package.json docs/_data",
     "homepage": "echo \"---\ntitle: $npm_package_name\n---\" > docs/index.md; cat README.md >> docs/index.md",
-    "istanbul": "istanbul cover _mocha",
+    "istanbul": "NODE_PATH=src istanbul cover _mocha",
     "jekyll": "npm run homepage; npm run cp; cd docs; jekyll build; cd ..",
     "lint": "for x in src test; do npm run lint_$x; done",
     "lint_src": "standa src/*js",
@@ -31,9 +31,7 @@
     "minify": "cd dist; uglifyjs ${npm_package_name}.js --source-map --output ${npm_package_name}.min.js --compress --mangle -b beautify=false,preamble='\"// http://g14n.info/iper\"'; cd -",
     "postbrowserify_dist": "npm run minify",
     "postversion": "git push origin v${npm_package_version}; npm publish; git push origin master",
-    "postupdate-deps": "npm test && git commit -am 'updated deps' || git checkout -- package.json",
-    "test": "NODE_PATH=src mocha",
-    "update-deps": "npm update --save --dev"
+    "test": "NODE_PATH=src mocha"
   },
   "pre-commit": [
     "check-deps",
